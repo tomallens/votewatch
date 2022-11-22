@@ -9,10 +9,17 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@expo/webpack-config": "^0.17.2",
+    "configuration": "^3.0.0",
     "expo": "~47.0.7",
     "expo-status-bar": "~1.4.2",
+    "install": "^0.13.0",
     "react": "18.1.0",
-    "react-native": "0.70.5"
+    "react-dom": "18.1.0",
+    "react-native": "0.70.5",
+    "react-native-web": "~0.18.9",
+    "undefined": "//",
+    "web": "^0.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
