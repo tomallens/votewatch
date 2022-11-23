@@ -7,11 +7,12 @@ describe('Client class', () => {
     fetch.resetMocks();
   });
   it('calls fetch and loads data', (done) => {
-    const DivisionsClient = new DivisionsClient();
+    fakeMemberId = 0 
+    const divisionsClient = new DivisionsClient(fakeMemberId);
 
     fetch.mockResponse(JSON.stringify(fakeApiResponse));
 
-    newsClient.loadNews((returnedDataFromApi) => {
+    divisionsClient.getVotesFromApi((returnedDataFromApi) => {
       expect(returnedDataFromApi).toEqual(fakeApiResponse); // Asessing deep equality
       done();
     });
