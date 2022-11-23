@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
-    "cypress": "^11.1.0"
+    "cypress": "^11.2.0"
   },
   "private": true
 }
