@@ -1,5 +1,4 @@
 const DivisionsClient = require('../divisionsClient');
-const fakeApiResponse = require('./fakeApiResponse.json');
 require('jest-fetch-mock').enableMocks();
 
 describe("DivisionsClient Api class", () => {
@@ -14,25 +13,8 @@ describe("DivisionsClient Api class", () => {
       })
     );
     client.getVotesFromApi((callback) => {
-      console.log(callback);
       expect(callback.name).toEqual(["Boris Johnson"]);
       done();
     });
   });
 });
-
-
-  // it('calls fetch and loads data', (done) => {
-  //   fakeMemberId = 0
-  //   const divisionsClient = new DivisionsClient(fakeMemberId);
-  //   divisionsClient._fetchUrl = 
-    
-  //   fetch.mockResponse(JSON.stringify(fakeApiResponse));
-
-  //   divisionsClient.getVotesFromApi((returnedDataFromApi) => {
-  //     console.log(returnedDataFromApi)
-  //     expect(returnedDataFromApi).toEqual(fakeApiResponse); // Asessing deep equality
-  //     done();
-  //   });
-  // });
-
