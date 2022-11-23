@@ -1,18 +1,22 @@
+// const fetch = require("node-fetch");
+// import fetch from 'node-fetch';
 class DivisionsClient {
-	constructor(memberId) {
-		(this._fetchUrl =
-			"https://commonsvotes-api.parliament.uk/swagger/ui/index#!/Divisions/Divisions_GetVotingRecordsForMember"),
-			(this.memberId = memberId);
-	}
+  constructor(memberId) {
+    this.memberId = 4132;
+    this.apiURL = `https://commonsvotes-api.parliament.uk/data/divisions.json/membervoting?memberId=${memberId}`;
+  }
+  getVotesFromApi(callback) {
+    fetch(this.apiURL)
+      .then((response) => response.json())
+      .then((data) => {
+        callback(data);
+      });
+  }
+}
 
-	getVotesFromApi = (callback) => {
-      fetch(this._fetchUrl)
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-          callback(data);
-        });
-    }
+
+    // commonsvotes-api.parliament.uk/data/divisions.json/membervoting?memberId=3977
+  
 
 
         // fetch(this._fetchUrl, {
@@ -32,7 +36,7 @@ class DivisionsClient {
 		// } catch (error) {
 		// 	console.error(error);
 		// }
-	};
+	
 
    
 
