@@ -8,20 +8,25 @@ export default function App() {
   const [isLoadingMp, setLoadingMp] = useState(true);
   const [data, setData] = useState([]);
   const [mpData, setMpData] = useState([]);
-  const [mpName, setMpName] = useState("");
+  const [mpName, setMpName] = useState("Munira Wilson");
 
   useEffect(() => {
     handleFeed();
-  }, []);
+  }, [mpName]);
 
   async function handleFeed() {
-    const memberId = await getMpId();
+    console.log("feed");
+    const split = mpName.split(" ");
+    let firstName = split[0];
+    let secondName = split[1];
+
+    const memberId = await getMpId(firstName, secondName);
     await getDivisions(memberId);
   }
 
-  async function getMpId() {
+  async function getMpId(firstName, secondName) {
     return fetch(
-      `https://members-api.parliament.uk/api/Members/Search?Name=Munira%20Wilson`
+      `https://members-api.parliament.uk/api/Members/Search?Name=${firstName}%20${secondName}`
     )
       .then((response) => response.json())
       .then((json) => {
@@ -33,7 +38,7 @@ export default function App() {
 
   async function getDivisions(memberId) {
     fetch(
-      `https://commonsvotes-api.parliament.uk/data/divisions.json/membervoting?memberId=${memberId.toString()}`
+      `https://commonsvotes-api.parliament.uk/data/divisions.json/membervoting?memberId=${memberId}`
     )
       .then((response) => response.json())
       .then((json) => setData(json))
