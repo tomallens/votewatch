@@ -9,7 +9,7 @@ export default function App() {
 
   useEffect(() => {
     fetch(
-      `https://members-api.parliament.uk/api/Members/Search?Name=Boris%20Johnson&skip=0&take=20`
+      `https://commonsvotes-api.parliament.uk/data/divisions.json/membervoting?memberId=4494`
     )
       .then((response) => response.json())
       .then((json) => setData(json))
@@ -23,14 +23,18 @@ export default function App() {
         <Text>Loading...</Text>
       ) : (
         <View style={styles.container}>
-          <Text>{`${data.items[0].value.id}`}</Text>
+          <Text>{`Date: ${data[0].PublishedDivision.Date}`}</Text>
+          <Text>{`Division id: ${data[0].PublishedDivision.Date}`}</Text>
+          <Text>{`Division title: ${data[0].PublishedDivision.Title}`}</Text>
+          <Text>{`Voted: ${!!data[0].MemberVotedAye ? 'Yes' : 'No'}`}</Text>
+          {/* <Text>{`${data.items[0].value.id}`}</Text>
           <Image
             source={{
               uri: `${data.items[0].value.thumbnailUrl}`,
               width: 60,
               height: 60,
             }}
-          />
+          /> */}
           <StatusBar style="auto" />
         </View>
       )}
