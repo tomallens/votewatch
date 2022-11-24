@@ -7,28 +7,40 @@ export default function App() {
   const [isLoadingMp, setLoadingMp] = useState(true);
   const [data, setData] = useState([]);
   const [mpData, setMpData] = useState([]);
-  console.log(data);
+  console.log('divisions data:', data);
   console.log('MP data: ', mpData);
 
-  useEffect(() => {
-    fetch(
-      `https://members-api.parliament.uk/api/Members/Search?Name=Boris%20Johnson`
-    )
-      .then((response) => response.json())
-      .then((json) => setMpData(json))
-      .catch((error) => console.error(error))
-      .finally(() => setLoadingMp(false));
-  }, []);
+  Promise.resolve(
+    useEffect(() => {
+      fetch(
+        `https://members-api.parliament.uk/api/Members/Search?Name=Boris%20Johnson`
+      )
+        .then((response) => response.json())
+        .then((json) => setMpData(json))
+        .catch((error) => console.error(error))
+        .finally(() => setLoadingMp(false));
+    }, [])
+  ).then(
+    useEffect(() => {
+      fetch(
+        `https://commonsvotes-api.parliament.uk/data/divisions.json/membervoting?memberId=4494`
+      )
+        .then((response) => response.json())
+        .then((json) => setData(json))
+        .catch((error) => console.error(error))
+        .finally(() => setLoading(false));
+    }, [])
+  );
 
-  useEffect(() => {
-    fetch(
-      `https://commonsvotes-api.parliament.uk/data/divisions.json/membervoting?memberId=4494`
-    )
-      .then((response) => response.json())
-      .then((json) => setData(json))
-      .catch((error) => console.error(error))
-      .finally(() => setLoading(false));
-  }, []);
+  // useEffect(() => {
+  //   fetch(
+  //     `https://commonsvotes-api.parliament.uk/data/divisions.json/membervoting?memberId=${mpData.items[0].value.id}`
+  //   )
+  //     .then((response) => response.json())
+  //     .then((json) => setData(json))
+  //     .catch((error) => console.error(error))
+  //     .finally(() => setLoading(false));
+  // }, []);
 
   return (
     <View style={{ flex: 1, padding: 24 }}>
@@ -50,10 +62,10 @@ export default function App() {
               return `\nDate: ${
                 individualData.PublishedDivision.Date
               }\nDivision id: ${
-                data[0].PublishedDivision.Date
-              }\nDivision title: ${data[0].PublishedDivision.Title}\nVoted: ${
-                !!data[0].MemberVotedAye ? 'Yes' : 'No'
-              }\n`;
+                individualData.PublishedDivision.Date
+              }\nDivision title: ${
+                individualData.PublishedDivision.Title
+              }\nVoted: ${!!individualData.MemberVotedAye ? 'Yes' : 'No'}\n`;
             })}
           </Text>
           {/* <Text>{`${data.items[0].value.id}`}</Text>
