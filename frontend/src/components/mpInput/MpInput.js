@@ -1,18 +1,18 @@
 import React from "react";
-import { SafeAreaView, StyleSheet, TextInput, Text } from "react-native";
+import { View, StyleSheet, TextInput } from "react-native";
 
 export const MpInput = () => {
   const [mpName, onChangeMpName] = React.useState("");
 
   return (
-    <SafeAreaView>
+    <View>
       <TextInput
         style={styles.input}
         onChangeText={onChangeMpName}
         value={mpName}
         placeholder="Enter MP name"
       />
-    </SafeAreaView>
+    </View>
   );
 };
 
