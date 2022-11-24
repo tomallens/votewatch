@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Image, Text, View } from 'react-native';
 
 export default function App() {
   const [isLoading, setLoading] = useState(true);
@@ -9,7 +9,7 @@ export default function App() {
 
   useEffect(() => {
     fetch(
-      `https://commonsvotes-api.parliament.uk/data/divisions.json/membervoting?memberId=4494`
+      `https://members-api.parliament.uk/api/Members/Search?Name=Boris%20Johnson&skip=0&take=20`
     )
       .then((response) => response.json())
       .then((json) => setData(json))
@@ -23,8 +23,14 @@ export default function App() {
         <Text>Loading...</Text>
       ) : (
         <View style={styles.container}>
-          <Text>{`${data[5].MemberId}`}</Text>
-          {/* <Image source={`${data[0].MemberId}`} /> */}
+          <Text>{`${data.items[0].value.id}`}</Text>
+          <Image
+            source={{
+              uri: `${data.items[0].value.thumbnailUrl}`,
+              width: 60,
+              height: 60,
+            }}
+          />
           <StatusBar style="auto" />
         </View>
       )}
