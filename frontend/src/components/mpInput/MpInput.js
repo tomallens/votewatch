@@ -1,28 +1,18 @@
-import React from "react";
-import {
-  View,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
+import { useState } from "react";
+import { View, StyleSheet, Text, TextInput } from "react-native";
 
-export const MpInput = () => {
-  const [mpName, onChangeMpName] = React.useState("");
+export const MpInput = ({ setMpName }) => {
+  //const [mpName, setMpName] = useState("");
 
- 
   return (
     <View>
       <TextInput
         style={styles.input}
         placeholder="Enter MP name"
-        onSubmitEditing={(value) => onChangeMpName(value.nativeEvent.text)}
+        onSubmitEditing={(value) => setMpName(value.nativeEvent.text)}
       />
-      <Text>It is { mpName }</Text>  
-      
     </View>
   );
-
 };
 
 const styles = StyleSheet.create({

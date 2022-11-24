@@ -8,6 +8,7 @@ export default function App() {
   const [isLoadingMp, setLoadingMp] = useState(true);
   const [data, setData] = useState([]);
   const [mpData, setMpData] = useState([]);
+  const [mpName, setMpName] = useState("");
 
   useEffect(() => {
     handleFeed();
@@ -45,7 +46,10 @@ export default function App() {
       <Text>Welcome to Votewatch</Text>
       <Text>Keeping eyes on the ayes</Text>
       <StatusBar style="auto" />
-      <MpInput />
+
+      <MpInput mpName={mpName} setMpName={setMpName} />
+      <Text>Your MP is set to: {mpName}</Text>
+
       <View style={{ flex: 1, padding: 24 }}>
         {isLoading ? (
           <Text>Loading...</Text>
