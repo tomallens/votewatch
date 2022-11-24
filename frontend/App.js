@@ -9,6 +9,11 @@ export default function App() {
   const [mpData, setMpData] = useState([]);
   console.log('divisions data:', data);
   console.log('MP data: ', mpData);
+  var memberId = '4494';
+
+  // function updateMemberId() {
+  //   await memberId = mpData.items[0].value.id;
+  // }
 
   Promise.resolve(
     useEffect(() => {
@@ -16,14 +21,23 @@ export default function App() {
         `https://members-api.parliament.uk/api/Members/Search?Name=Boris%20Johnson`
       )
         .then((response) => response.json())
-        .then((json) => setMpData(json))
+        .then((json) => {
+          setMpData(json);
+          console.log('data id from json', json.items[0].value.id);
+          memberId = json.items[0].value.id;
+          console.log('member id', memberId);
+        })
         .catch((error) => console.error(error))
-        .finally(() => setLoadingMp(false));
+        .finally(() => {
+          setLoadingMp(false);
+          console.log('memberId end of function', memberId);
+          return memberId;
+        });
     }, [])
   ).then(
     useEffect(() => {
       fetch(
-        `https://commonsvotes-api.parliament.uk/data/divisions.json/membervoting?memberId=4494`
+        `https://commonsvotes-api.parliament.uk/data/divisions.json/membervoting?memberId=${memberId.toString()}`
       )
         .then((response) => response.json())
         .then((json) => setData(json))
