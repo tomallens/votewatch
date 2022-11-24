@@ -1,13 +1,12 @@
-// const queries = require('./queries')
+const request = require('supertest')
+const server = require('./index')
 
-// describe('Queries', () => {
-//   beforeEach((done) => {
-//   // drop database
-//   done()
-// })
-//   describe('#xx', () => {
-//     it('returns x', () => {
-      
-//     })
-//   })
-// })
+describe("Routes for users", () => {
+  it("Captures all users", (done) => {
+    done()
+    return request(server)
+    .get("users")
+    .expect(200)
+   
+  })
+})
