@@ -8,7 +8,11 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "test": "npm run test:feature",
-    "test:feature": "cypress run"
+    "test:feature": "cypress run",
+    "test:components": "jest"
+  },
+  "jest": {
+    "preset": "react-native"
   },
   "dependencies": {
     "@expo/webpack-config": "^0.17.2",
@@ -21,10 +25,13 @@
     "react-native": "0.70.5",
     "react-native-web": "~0.18.9",
     "web": "^0.0.2"
+  
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
-    "cypress": "^11.2.0"
+    "cypress": "^11.2.0",
+    "react-test-renderer": "18.1.0"
+
   },
   "private": true
 }
