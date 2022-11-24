@@ -23,10 +23,17 @@ export default function App() {
         <Text>Loading...</Text>
       ) : (
         <View style={styles.container}>
-          <Text>{`Date: ${data[0].PublishedDivision.Date}`}</Text>
-          <Text>{`Division id: ${data[0].PublishedDivision.Date}`}</Text>
-          <Text>{`Division title: ${data[0].PublishedDivision.Title}`}</Text>
-          <Text>{`Voted: ${!!data[0].MemberVotedAye ? 'Yes' : 'No'}`}</Text>
+          <Text>
+            {data.map((individualData) => {
+              return `Date: ${
+                individualData.PublishedDivision.Date
+              }\nDivision id: ${
+                data[0].PublishedDivision.Date
+              }\nDivision title: ${data[0].PublishedDivision.Title}\nVoted: ${
+                !!data[0].MemberVotedAye ? 'Yes' : 'No'
+              }\n\n`;
+            })}
+          </Text>
           {/* <Text>{`${data.items[0].value.id}`}</Text>
           <Image
             source={{
