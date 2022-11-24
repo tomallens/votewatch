@@ -23,7 +23,7 @@ Votewatch will optionally notify you every time your MP casts a vote and inform 
 - Android: download the Votewatch .apk [here](wherever we host it)
 - iPhone: download the (how do iphones work?) [here](wherever we host it)
 
-Alternatively, visit the site at [the hosting service](wherever we deploy to)
+Alternatively, us anything with a web browser and visit the site at [the hosting service](wherever we deploy to)
 
 Search for your MP by name or constituency, or alternatively use our postcode search if you've lost track somewhere in all the reshuffles.
 
@@ -43,12 +43,12 @@ Search for your MP by name or constituency, or alternatively use our postcode se
 
 ## The Team
 
-[Ali Bhatti](https://github.com/AliBDev)
-[Benedict Smith](https://github.com/eggs-benny)
-[Chris Aston](https://github.com/AUTOMCAS)
-[Joe Osborne](https://github.com/JoeOsborne77)
-[Patricia Garcia Nieto](https://github.com/PatriciaGN)
-[Tom Allen](https://github.com/tomallens)
+[Ali Bhatti](https://github.com/AliBDev)\
+[Benedict Smith](https://github.com/eggs-benny)\
+[Chris Aston](https://github.com/AUTOMCAS)\
+[Joe Osborne](https://github.com/JoeOsborne77)\
+[Patricia Garcia Nieto](https://github.com/PatriciaGN)\
+[Tom Allen](https://github.com/tomallens)\
 
 You can also get an idea of what our development process was like by checking out [Patricia](Patricia's blog address) or [Joe](Joe's blog address)'s blogs!
 
