@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import { MpInput } from './src/components/mpInput/MpInput';
 
 export default function App() {
   return (
@@ -7,6 +8,7 @@ export default function App() {
       <Text>Welcome to Votewatch</Text>
       <Text>Keeping eyes on the ayes</Text>
       <StatusBar style="auto" />
+      <MpInput/>
     </View>
   );
 }
