@@ -10,6 +10,7 @@ const pool = new Pool({
 // need to put config details in a separate file w/ restrictive permissions
 // when we hit production
 
+
 const getUsers = (request, response) => {
   pool.query('SELECT * FROM users ORDER BY id ASC', (error, results) => {
     if (error) {
