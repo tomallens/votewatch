@@ -11,34 +11,25 @@ export default function App() {
   const [mpData, setMpData] = useState([]);
   const [mpName, setMpName] = useState("Munira Wilson");
 
-
-  // async function handleFeed() {
-  //   console.log("feed");
-  //   const split = mpName.split(" ");
-  //   let firstName = split[0];
-  //   let secondName = split[1];
-
-  //   const memberId = await getMpId(firstName, secondName);
-  //   await getDivisions(memberId);
-  // }
-
-
-  useEffect(() => {
+   useEffect(() => {
     callCommonsApi();
-  }, []);
+  }, [mpName]);
 
   const callCommonsApi = async () => {
-    setLoading(true);
-    // try {
-    const memberId = await getMPName();
-    console.log("memberId:", memberId);
+    
+    const split = mpName.split(" ");
+    let firstName = split[0];
+    let secondName = split[1];
+
+    const memberId = await getMpId(firstName, secondName);
+    
     await getMPVotes(memberId);
   };
 
-  async function getMPName() {
+  async function getMpId(firstName, secondName) {
     const result = await (
       await fetch(
-        `https://members-api.parliament.uk/api/Members/Search?Name=Catherine%20West`
+        `https://members-api.parliament.uk/api/Members/Search?Name=${firstName}%20${secondName}`
       )
     ).json();
     setMpData(result);
@@ -56,48 +47,44 @@ export default function App() {
     setData(finalResult);
     setLoading(false);
   }
-  // } catch (error) {
-  //   console.log(error);
-  // } finally {
-  //   setLoading(false);
 
   return (
-  <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text>Welcome to Votewatch</Text>
       <Text>Keeping eyes on the ayes</Text>
       <StatusBar style="auto" />
 
-      <MpInput mpName={mpName} setMpName={setMpName} />
+      <MpInput setMpName={setMpName} />
       <Text>Your MP is set to: {mpName}</Text>
-    <View style={{ flex: 1, padding: 24 }}>
-      {isLoading ? (
-        <Text>Loading...</Text>
-      ) : (
-        <View style={styles.container}>
-          <Text>
-            <Image
-              source={{
-                uri: `${mpData.items[0].value.thumbnailUrl}`,
-                width: 60,
-                height: 60,
-              }}
-            />
-            <Text>{`${mpData.items[0].value.id}\n`}</Text>
+      <View style={{ flex: 1, padding: 24 }}>
+        {isLoading ? (
+          <Text>Loading...</Text>
+        ) : (
+          <View style={styles.container}>
+            <Text>
+              <Image
+                source={{
+                  uri: `${mpData.items[0].value.thumbnailUrl}`,
+                  width: 60,
+                  height: 60,
+                }}
+              />
+              <Text>{`${mpData.items[0].value.id}\n`}</Text>
 
-            {data.map((individualData) => {
-              return `\nDate: ${
-                individualData.PublishedDivision.Date
-              }\nDivision id: ${
-                individualData.PublishedDivision.Date
-              }\nDivision title: ${
-                individualData.PublishedDivision.Title
-              }\nVoted:${individualData.MemberVotedAye ? "Yes" : "No"}\n`;
-            })}
-          </Text>
-          <StatusBar style="auto" />
-        </View>
-      )}
-    </View>
+              {data.map((individualData) => {
+                return `\nDate: ${
+                  individualData.PublishedDivision.Date
+                }\nDivision id: ${
+                  individualData.PublishedDivision.Date
+                }\nDivision title: ${
+                  individualData.PublishedDivision.Title
+                }\nVoted:${individualData.MemberVotedAye ? "Yes" : "No"}\n`;
+              })}
+            </Text>
+            <StatusBar style="auto" />
+          </View>
+        )}
+      </View>
     </SafeAreaView>
   );
 }
