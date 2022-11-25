@@ -1,12 +1,21 @@
 const request = require('supertest')
-const server = require('./index')
+const app = require('../index')
 
-describe("Routes for users", () => {
-  it("Captures all users", (done) => {
-    done()
-    return request(server)
-    .get("users")
-    .expect(200)
-   
+describe("POST /users", () => {
+  describe("given a username, password, email & postcode", () => {
+    it("should respond with a 201 status code", async () => {
+      const response = await request(app)
+      .post("/users")
+      .send({
+        username: "username",
+        password: "password",
+        email: "one@two.com",
+        mpName: "Boris Johnson"
+      })
+      expect(response.StatusCode).toBe(201)
+    })
+  })
+
+  describe("when the username & password is missing", () => {
   })
 })
