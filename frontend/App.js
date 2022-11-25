@@ -6,8 +6,7 @@ import { MpInput } from "./src/components/mpInput/MpInput";
 
 export default function App() {
   const [isLoading, setLoading] = useState(true);
-  const [isLoadingMp, setLoadingMp] = useState(true);
-  const [data, setData] = useState([]);
+  const [divisionData, setDivisionData] = useState([]);
   const [mpData, setMpData] = useState([]);
   const [mpName, setMpName] = useState("");
 
@@ -15,35 +14,30 @@ export default function App() {
     callCommonsApi();
   }, [mpName]);
 
-  const callCommonsApi = async () => {
+  async function callCommonsApi() {
     if (mpName == "") return;
-    const split = mpName.split(" ");
-    let firstName = split[0];
-    let secondName = split[1];
-    const memberId = await getMpId(firstName, secondName);
-
-    await getMPVotes(memberId);
-  };
-
-  async function getMpId(firstName, secondName) {
-    const result = await (
-      await fetch(
-        `https://members-api.parliament.uk/api/Members/Search?Name=${firstName}%20${secondName}`
-      )
-    ).json();
-    setMpData(result);
-    setLoadingMp(false);
-    return result.items[0].value.id;
+    const memberId = await getMpId(mpName);
+    await getMpVotes(memberId);
   }
 
-  async function getMPVotes(memberId) {
-    console.log("memberId:", memberId);
-    const finalResult = await (
+  async function getMpId(mpName) {
+    const data = await (
+      await fetch(
+        `https://members-api.parliament.uk/api/Members/Search?Name=${mpName}`
+      )
+    ).json();
+    setMpData(data);
+
+    return data.items[0].value.id;
+  }
+
+  async function getMpVotes(memberId) {
+    const votes = await (
       await fetch(
         `https://commonsvotes-api.parliament.uk/data/divisions.json/membervoting?memberId=${memberId}`
       )
     ).json();
-    setData(finalResult);
+    setDivisionData(votes);
     setLoading(false);
   }
 
@@ -70,7 +64,7 @@ export default function App() {
               />
               <Text>{`${mpData.items[0].value.id}\n`}</Text>
 
-              {data.map((individualData) => {
+              {divisionData.map((individualData) => {
                 return `\nDate: ${
                   individualData.PublishedDivision.Date
                 }\nDivision id: ${

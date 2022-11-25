@@ -1,8 +1,6 @@
-import { useState } from "react";
 import { View, StyleSheet, Text, TextInput } from "react-native";
 
 export const MpInput = ({ setMpName }) => {
-  //const [mpName, setMpName] = useState("");
 
   return (
     <View>
