@@ -6,98 +6,78 @@ import { MpInput } from "./src/components/mpInput/MpInput";
 
 export default function App() {
   const [isLoading, setLoading] = useState(true);
-  const [isLoadingMp, setLoadingMp] = useState(true);
-  const [data, setData] = useState([]);
+  const [divisionData, setDivisionData] = useState([]);
   const [mpData, setMpData] = useState([]);
-  const [mpName, setMpName] = useState("Munira Wilson");
-
-
-  // async function handleFeed() {
-  //   console.log("feed");
-  //   const split = mpName.split(" ");
-  //   let firstName = split[0];
-  //   let secondName = split[1];
-
-  //   const memberId = await getMpId(firstName, secondName);
-  //   await getDivisions(memberId);
-  // }
-
+  const [mpName, setMpName] = useState("");
 
   useEffect(() => {
     callCommonsApi();
-  }, []);
+  }, [mpName]);
 
-  const callCommonsApi = async () => {
-    setLoading(true);
-    // try {
-    const memberId = await getMPName();
-    console.log("memberId:", memberId);
-    await getMPVotes(memberId);
-  };
-
-  async function getMPName() {
-    const result = await (
-      await fetch(
-        `https://members-api.parliament.uk/api/Members/Search?Name=Catherine%20West`
-      )
-    ).json();
-    setMpData(result);
-    setLoadingMp(false);
-    return result.items[0].value.id;
+  async function callCommonsApi() {
+    if (mpName == "") return;
+    const memberId = await getMpId(mpName);
+    await getMpVotes(memberId);
   }
 
-  async function getMPVotes(memberId) {
-    console.log("memberId:", memberId);
-    const finalResult = await (
+  async function getMpId(mpName) {
+    const data = await (
+      await fetch(
+        `https://members-api.parliament.uk/api/Members/Search?Name=${mpName}`
+      )
+    ).json();
+    setMpData(data);
+
+    return data.items[0].value.id;
+  }
+
+  async function getMpVotes(memberId) {
+    const votes = await (
       await fetch(
         `https://commonsvotes-api.parliament.uk/data/divisions.json/membervoting?memberId=${memberId}`
       )
     ).json();
-    setData(finalResult);
+    setDivisionData(votes);
     setLoading(false);
   }
-  // } catch (error) {
-  //   console.log(error);
-  // } finally {
-  //   setLoading(false);
 
   return (
-  <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text>Welcome to Votewatch</Text>
       <Text>Keeping eyes on the ayes</Text>
       <StatusBar style="auto" />
 
-      <MpInput mpName={mpName} setMpName={setMpName} />
+      <MpInput setMpName={setMpName} />
       <Text>Your MP is set to: {mpName}</Text>
-    <View style={{ flex: 1, padding: 24 }}>
-      {isLoading ? (
-        <Text>Loading...</Text>
-      ) : (
-        <View style={styles.container}>
-          <Text>
-            <Image
-              source={{
-                uri: `${mpData.items[0].value.thumbnailUrl}`,
-                width: 60,
-                height: 60,
-              }}
-            />
-            <Text>{`${mpData.items[0].value.id}\n`}</Text>
+      <View style={{ flex: 1, padding: 24 }}>
+        {isLoading ? (
+          <Text>Loading...</Text>
+        ) : (
+          <View style={styles.container}>
+            <Text>
+              <Image
+                source={{
+                  uri: `${mpData.items[0].value.thumbnailUrl}`,
+                  width: 60,
+                  height: 60,
+                }}
+              />
+              <Text>{`${mpData.items[0].value.id}\n`}</Text>
 
-            {data.map((individualData) => {
-              return `\nDate: ${
-                individualData.PublishedDivision.Date
-              }\nDivision id: ${
-                individualData.PublishedDivision.Date
-              }\nDivision title: ${
-                individualData.PublishedDivision.Title
-              }\nVoted:${individualData.MemberVotedAye ? "Yes" : "No"}\n`;
-            })}
-          </Text>
-          <StatusBar style="auto" />
-        </View>
-      )}
-    </View>
+              {divisionData.map((individualData) => {
+                return `\nDate: ${
+                  individualData.PublishedDivision.Date
+                }\nDivision id: ${
+                  individualData.PublishedDivision.Date
+                }\nDivision title: ${
+                  individualData.PublishedDivision.Title
+                }\nVoted:${individualData.MemberVotedAye ? "Yes" : "No"}\n`;
+              })}
+            </Text>
+            <StatusBar style="auto" />
+          </View>
+        )}
+      </View>
     </SafeAreaView>
   );
 }
