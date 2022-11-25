@@ -97,7 +97,9 @@ export default function App() {
                 height: 60,
               }}
             />
-              <Text>{` MP ID: ${mpData.items[0].value.id}\n`}</Text>
+              <Text>{`\nMP ID: ${mpData.items[0].value.id}\n`}</Text>
+              <Text>{`MP Name: ${mpData.items[0].value.nameDisplayAs}\n`}</Text>
+              <Text>{console.log("All MP Data:", mpData.items[0].value)}</Text>
               {/* <Text>{console.log("mpContactData:", mpContactData.value)} */}
             </Text>
               
@@ -105,14 +107,14 @@ export default function App() {
                 title="Email this MP" /> */}
 
             {data.map((individualData) => {
-              return  <Text>{"\n"}Date: {
+              return <Text>{"\n"}Date: {
                 individualData.PublishedDivision.Date
-              }{"\n"}Division id: {
-                individualData.PublishedDivision.Date
-              }{"\n"}Division title: {
-                individualData.PublishedDivision.Title
-              }{"\n"}Voted: {!!individualData.MemberVotedAye ? 'Yes' : 'No'};{"\n"}{"\n"}<Button onPress={() => Linking.openURL(`mailto:${getMpEmail()}?subject=${individualData.PublishedDivision.Title}&body=Description`)}
-              title="Email the MP about this vote" />{"\n"}{"\n"}</Text>
+              }{"\n"}Division ID: {
+                  individualData.PublishedDivision.Date
+                }{"\n"}Division Title: {
+                  individualData.PublishedDivision.Title
+                }{"\n"}Voted: {!!individualData.MemberVotedAye ? 'Yes' : 'No'}{"\n"}{"\n"}<Button onPress={() => Linking.openURL(`mailto:${getMpEmail()}?subject=${individualData.PublishedDivision.Title}&body=Description`)}
+                  title="Email the MP about this vote" />{"\n"}{"\n"}</Text>;
             })}
             </Text>
                         
