@@ -7,9 +7,3 @@ npm install
 npm start
 ```
 
-## Running Cypress test:
-```
-cd frontend
-npm start
-npm run test
-```
