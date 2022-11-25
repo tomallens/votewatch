@@ -44,6 +44,19 @@ export default function App() {
       .finally(() => setLoading(false));
 
   }
+
+  async function getMpEmail(memberId) {
+    return fetch(
+      `https://members-api.parliament.uk/api/Members/${memberId.toString()}/Contact`
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        setMpData(json)
+        setLoadingMp(false);
+
+        return json.items[0].value.id;
+      })
+  }
   
 
   // useEffect(() => {
@@ -72,7 +85,7 @@ export default function App() {
             />
               <Text>{` MP ID: ${mpData.items[0].value.id}\n`}</Text>
               
-              <Button onPress={() => Linking.openURL('mailto:support@example.com?subject=SendMail&body=Description')}
+              <Button onPress={() => Linking.openURL(`mailto:${getMpEmail()}?subject=SendMail&body=Description`)}
                 title="Email this MP" />          
 
             {data.map((individualData) => {
