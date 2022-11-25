@@ -9,20 +9,19 @@ export default function App() {
   const [isLoadingMp, setLoadingMp] = useState(true);
   const [data, setData] = useState([]);
   const [mpData, setMpData] = useState([]);
-  const [mpName, setMpName] = useState("Munira Wilson");
+  const [mpName, setMpName] = useState("");
 
-   useEffect(() => {
+  useEffect(() => {
     callCommonsApi();
   }, [mpName]);
 
   const callCommonsApi = async () => {
-    
+    if (mpName == "") return;
     const split = mpName.split(" ");
     let firstName = split[0];
     let secondName = split[1];
-
     const memberId = await getMpId(firstName, secondName);
-    
+
     await getMPVotes(memberId);
   };
 
