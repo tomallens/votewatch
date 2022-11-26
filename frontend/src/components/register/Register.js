@@ -11,7 +11,31 @@ export function Register() {
 
   const onRegisterPressed = () => {
     console.warn("Register");
+    postUser();
   };
+
+  async function postUser() {
+    console.log(name, email, password, mpName);
+    await fetch("http://localhost:3000/users", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        password: password,
+        mpname: mpName,
+      }),
+    }).then((response) => {
+      if (response.status === 201) {
+        console.alert("OK");
+      } else {
+        console.alert("OH NO");
+      }
+    });
+  }
 
   return (
     <View>
