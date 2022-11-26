@@ -4,8 +4,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { HomeScreen } from "./src/components/homeScreen/HomeScreen";
 import { Feed } from "./src/components/feed/Feed";
-import { Register } from "./src/components/register/Register";
 import { Profile } from "./src/components/profile/Profile";
+import { Register } from "./src/components/register/Register";
+import { SignIn } from "./src/components/signIn/SignIn";
 
 const Stack = createNativeStackNavigator();
 
@@ -40,6 +41,11 @@ function App({ navigation }) {
                 />
               ),
             }}
+          />
+          <Stack.Screen
+            name="SignIn"
+            component={SignIn}
+            options={{ title: "SignIn" }}
           />
           <Stack.Screen
             name="Register"

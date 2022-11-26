@@ -3,17 +3,15 @@ import { View, StyleSheet, Text } from "react-native";
 import CustomInput from "../customInput/CustomInput";
 import CustomButton from "../customButton/CustomButton";
 
-export function Register() {
-  const [name, setName] = useState("");
+export function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [mpName, setMpName] = useState("");
 
-  const onRegisterPressed = async () => {
-    await handleRegistration();
+  const onSignInPressed = async () => {
+    //await handleSignIn();
   };
 
-  async function handleRegistration() {
+  async function handleSignIn() {
     await fetch("http://localhost:3000/users", {
       method: "post",
       headers: {
@@ -36,13 +34,7 @@ export function Register() {
   }
   return (
     <View>
-      <Text>Welcome!</Text>
-      <CustomInput
-        placeholder="Name"
-        value={name}
-        setValue={setName}
-      ></CustomInput>
-
+      <Text>Sign in</Text>
       <CustomInput
         placeholder="Email"
         value={email}
@@ -56,13 +48,7 @@ export function Register() {
         secureTextEntry
       ></CustomInput>
 
-      <CustomInput
-        placeholder="Your MP's name"
-        value={mpName}
-        setValue={setMpName}
-      ></CustomInput>
-
-      <CustomButton text="Register" onPress={onRegisterPressed}></CustomButton>
+      <CustomButton text="Register" onPress={onSignInPressed}></CustomButton>
     </View>
   );
 }
