@@ -1,12 +1,17 @@
 import { useState } from "react";
 import { View, StyleSheet, Text, TextInput } from "react-native";
 import CustomInput from "../customInput/CustomInput";
+import CustomButton from "../customButton/CustomButton";
 
 export function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [mpName, setMpName] = useState("");
+
+  const onRegisterPressed = () => {
+    console.warn("Register");
+  };
 
   return (
     <View>
@@ -35,6 +40,8 @@ export function Register() {
         value={mpName}
         setValue={setMpName}
       ></CustomInput>
+
+      <CustomButton text="Register" onPress={onRegisterPressed}></CustomButton>
     </View>
   );
 }
