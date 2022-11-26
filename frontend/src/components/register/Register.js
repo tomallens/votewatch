@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { View, StyleSheet, Text, TextInput } from "react-native";
+import { View, StyleSheet, Text, TextInput, Button } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import CustomInput from "../customInput/CustomInput";
 import CustomButton from "../customButton/CustomButton";
 
@@ -9,13 +10,11 @@ export function Register() {
   const [password, setPassword] = useState("");
   const [mpName, setMpName] = useState("");
 
-  const onRegisterPressed = () => {
-    console.warn("Register");
-    postUser();
+  const onRegisterPressed = async () => {
+    await postUser();
   };
 
   async function postUser() {
-    console.log(name, email, password, mpName);
     await fetch("http://localhost:3000/users", {
       method: "post",
       headers: {
@@ -30,13 +29,12 @@ export function Register() {
       }),
     }).then((response) => {
       if (response.status === 201) {
-        console.alert("OK");
+        console.log("OK");
       } else {
-        console.alert("OH NO");
+        console.log("OH NO");
       }
     });
   }
-
   return (
     <View>
       <Text>Welcome!</Text>
