@@ -1,6 +1,8 @@
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
-
+import { render } from "react-dom";
+import { Button, Linking } from "react-native";
+import "bootstrap/dist/css/bootstrap.min.css";
 import { StyleSheet, Image, Text, View, SafeAreaView } from "react-native";
 import { MpInput } from "./src/components/mpInput/MpInput";
 
@@ -9,6 +11,9 @@ export default function App() {
   const [divisionData, setDivisionData] = useState([]);
   const [mpData, setMpData] = useState([]);
   const [mpName, setMpName] = useState("");
+  const [mpEmail, setMPEmail] = useState([]);
+  const [mpTwitter, setMPTwitter] = useState([]);
+  const [mpWebsite, setMPWebsite] = useState([]);
 
   useEffect(() => {
     callCommonsApi();
@@ -17,6 +22,7 @@ export default function App() {
   async function callCommonsApi() {
     if (mpName == "") return;
     const memberId = await getMpId(mpName);
+    await getMPContactData(memberId);
     await getMpVotes(memberId);
   }
 
@@ -41,6 +47,38 @@ export default function App() {
     setLoading(false);
   }
 
+  async function getMPContactData(memberId) {
+    const contactData = await (
+      await fetch(
+        `https://members-api.parliament.uk/api/Members/${memberId}/Contact`
+      )
+    ).json();
+    setMPEmail(contactData.value[0].email);
+    setMPTwitter(contactData.value[1].line1);
+    // setMPWebsite(contactData.value[1].line1);
+  }
+
+  const getDivisionAndMPData = (individualData) => {
+    return (
+      <Text>
+        {`Division Title: ${individualData.PublishedDivision.Title}\n`}
+        {`Division Date: ${individualData.PublishedDivision.Date}\n`}
+        {`Division ID: ${individualData.PublishedDivision.DivisionId}\n`}
+
+        {`Member Voted: ${individualData.MemberVotedAye ? "Aye" : "Noe"}\n`}
+        <Button
+          onPress={() =>
+            Linking.openURL(
+              `mailto:${mpEmail}?subject=${individualData.PublishedDivision.Title}&body=${individualData.PublishedDivision.Title}`
+            )
+          }
+          title="EMAIL YOUR MP ABOUT THIS"
+        />
+        {`\n\n\n`}
+      </Text>
+    );
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <Text>Welcome to Votewatch</Text>
@@ -62,18 +100,13 @@ export default function App() {
                   height: 60,
                 }}
               />
-              <Text>{`${mpData.items[0].value.id}\n`}</Text>
-
+              <Text>{`\nID: ${mpData.items[0].value.id}\n`}</Text>
+              <Text>{mpTwitter}</Text>
               {divisionData.map((individualData) => {
-                return `\nDate: ${
-                  individualData.PublishedDivision.Date
-                }\nDivision id: ${
-                  individualData.PublishedDivision.Date
-                }\nDivision title: ${
-                  individualData.PublishedDivision.Title
-                }\nVoted:${individualData.MemberVotedAye ? "Yes" : "No"}\n`;
+                return getDivisionAndMPData(individualData);
               })}
             </Text>
+
             <StatusBar style="auto" />
           </View>
         )}
