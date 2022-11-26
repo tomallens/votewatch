@@ -1,31 +1,42 @@
+import { useState } from "react";
 import { View, StyleSheet, Text, TextInput } from "react-native";
+import CustomInput from "../customInput/CustomInput";
 
 export function Register() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [mpName, setMpName] = useState("");
+
   return (
     <View>
-      <Text>Hi</Text>
+      <Text>Welcome!</Text>
+      <CustomInput
+        placeholder="Name"
+        value={name}
+        setValue={setName}
+      ></CustomInput>
+
+      <CustomInput
+        placeholder="Email"
+        value={email}
+        setValue={setEmail}
+      ></CustomInput>
+
+      <CustomInput
+        placeholder="Password"
+        value={password}
+        setValue={setPassword}
+        secureTextEntry
+      ></CustomInput>
+
+      <CustomInput
+        placeholder="Your MP's name"
+        value={mpName}
+        setValue={setMpName}
+      ></CustomInput>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-  },
-  buttonText: {
-    color: "white",
-  },
-  button: {
-    backgroundColor: "black",
-    alignItems: "center",
-    borderRadius: 20,
-    borderBottomRightRadius: 20,
-    height: 40,
-    justifyContent: "center",
-    margin: -1,
-    paddingHorizontal: 20,
-  },
-});
+const styles = StyleSheet.create({});
