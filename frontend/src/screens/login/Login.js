@@ -12,34 +12,36 @@ function Login({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const onLoginPressed = async () => {
-    //await handleLogin();
-  };
+  // const onLoginPressed = async () => {
+  //   //await handleLogin();
+  // };
 
-  async function handleLogin() {
-    await fetch("http://localhost:3000/users", {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-      },
+  // async function handleLogin() {
+  //   await fetch("http://localhost:3000/users", {
+  //     method: "post",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
 
-      body: JSON.stringify({
-        name: name,
-        email: email,
-        password: password,
-        mpname: mpName,
-      }),
-    }).then((response) => {
-      if (response.status === 201) {
-        console.log("OK");
-      } else {
-        console.log("OH NO");
-      }
-    });
-  }
+  //     body: JSON.stringify({
+  //       name: name,
+  //       email: email,
+  //       password: password,
+  //       mpname: mpName,
+  //     }),
+  //   }).then((response) => {
+  //     if (response.status === 201) {
+  //       console.log("OK");
+  //     } else {
+  //       console.log("OH NO");
+  //     }
+  //   });
+  // }
+
   return (
     <View>
       <Text>Login</Text>
+
       <CustomInput
         placeholder="Email"
         value={email}

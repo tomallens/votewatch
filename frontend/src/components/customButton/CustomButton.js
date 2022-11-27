@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { Pressable } from "react-native-web";
+import { Pressable } from "react-native";
 
 function CustomButton({ onPress, text }) {
   return (
