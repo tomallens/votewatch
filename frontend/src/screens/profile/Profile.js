@@ -1,6 +1,7 @@
 import { View, StyleSheet, Text, Button } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import CustomButton from "../customButton/CustomButton";
+import CustomButton from "../../components/customButton/CustomButton";
+import * as SecureStore from "expo-secure-store";
 
 export function Profile() {
   const navigation = useNavigation();

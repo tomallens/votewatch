@@ -1,6 +1,7 @@
+import React from "react";
 import { View, Text, TextInput, StyleSheet } from "react-native-web";
 
-const CustomInput = ({ value, setValue, placeholder, secureTextEntry }) => {
+function CustomInput({ value, setValue, placeholder, secureTextEntry }) {
   return (
     <View style={styles.container}>
       <TextInput
@@ -12,7 +13,7 @@ const CustomInput = ({ value, setValue, placeholder, secureTextEntry }) => {
       />
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {

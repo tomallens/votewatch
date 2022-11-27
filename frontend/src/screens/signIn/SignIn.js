@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { View, StyleSheet, Text } from "react-native";
-import CustomInput from "../customInput/CustomInput";
-import CustomButton from "../customButton/CustomButton";
+import CustomInput from "../../components/customInput/CustomInput";
+import CustomButton from "../../components/customButton/CustomButton";
+import { AuthContext } from "../../components/context/AuthContext";
 
-export function SignIn() {
+function SignIn() {
+  // const { test } = useContext(AuthContext);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -54,3 +57,5 @@ export function SignIn() {
 }
 
 const styles = StyleSheet.create({});
+
+export default SignIn;

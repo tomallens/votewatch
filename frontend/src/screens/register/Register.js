@@ -1,9 +1,10 @@
+import React from "react";
 import { useState } from "react";
 import { View, StyleSheet, Text } from "react-native";
-import CustomInput from "../customInput/CustomInput";
-import CustomButton from "../customButton/CustomButton";
+import CustomButton from "../../components/customButton/CustomButton";
+import CustomInput from "../../components/customInput/CustomInput";
 
-export function Register() {
+function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -68,3 +69,5 @@ export function Register() {
 }
 
 const styles = StyleSheet.create({});
+
+export default Register;
