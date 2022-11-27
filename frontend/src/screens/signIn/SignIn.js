@@ -1,11 +1,13 @@
+import React from "react";
 import { useState, useContext } from "react";
 import { View, StyleSheet, Text } from "react-native";
+
 import CustomInput from "../../components/customInput/CustomInput";
 import CustomButton from "../../components/customButton/CustomButton";
-import { AuthContext } from "../../components/context/AuthContext";
+import { AuthContext } from "../../components/context/AuthContext.js";
 
-function SignIn() {
-  // const { test } = useContext(AuthContext);
+function SignIn({ navigation }) {
+  const { test } = useContext(AuthContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -51,7 +53,8 @@ function SignIn() {
         secureTextEntry
       ></CustomInput>
 
-      <CustomButton text="Register" onPress={onSignInPressed}></CustomButton>
+      <CustomButton text="Sign in" onPress={onSignInPressed}></CustomButton>
+      <Text>{test}</Text>
     </View>
   );
 }

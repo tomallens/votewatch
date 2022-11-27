@@ -3,11 +3,12 @@ import { Button, View, Text } from "react-native";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 // import { AuthProvider } from "../components/context/AuthContext";
 import AuthStack from "./AuthStack";
+import AppStack from "./AppStack";
 
 function AppNav() {
   return (
     <NavigationContainer>
-      // {/* <AppStack/> */}
+      {/* <AppStack /> */}
       <AuthStack />
     </NavigationContainer>
   );

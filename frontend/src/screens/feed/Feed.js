@@ -1,17 +1,14 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Image, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import { MpInput } from "../mpInput/MpInput";
-
-export function Feed() {
+function Feed() {
   const [isLoading, setLoading] = useState(true);
   const [divisionData, setDivisionData] = useState([]);
   const [mpData, setMpData] = useState([]);
-  const [mpName, setMpName] = useState("");
+  const [mpName, setMpName] = useState("Boris Johnson");
 
   useEffect(() => {
     callCommonsApi();
@@ -47,8 +44,7 @@ export function Feed() {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
-
-      <MpInput setMpName={setMpName} />
+      {/* <MpInput setMpName={setMpName} /> */}
       <Text>Your MP is set to: {mpName}</Text>
       <View style={{ flex: 1, padding: 24 }}>
         {isLoading ? (
@@ -88,6 +84,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center",
   },
 });
+
+export default Feed;
