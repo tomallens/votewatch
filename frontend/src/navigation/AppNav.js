@@ -20,7 +20,7 @@ function AppNav() {
       </View>
     );
   }
-
+  console.log("user token from AppNAv", userToken);
   return (
     <NavigationContainer>
       {userToken !== null ? <AppStack /> : <AuthStack />}

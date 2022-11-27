@@ -1,7 +1,6 @@
 import React from "react";
 import { createContext, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -18,24 +17,24 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setIsLoading(true);
     setUserToken(null);
-    AsyncStorage.removeItem("userToken", userToken);
+    AsyncStorage.removeItem("userToken");
     setIsLoading(false);
   };
 
-  const isLoggedIn = async () => {
-    try {
-      setIsLoading(true);
-      let userToken = AsyncStorage.getItem("userToken");
-      setUserToken(userToken);
-      setIsLoading(false);
-    } catch (error) {
-      console.log(`Logged in error ${error}`);
-    }
-  };
+  // const isLoggedIn = async () => {
+  //   try {
+  //     setIsLoading(true);
+  //     let userToken = AsyncStorage.getItem("userToken");
+  //     setUserToken(userToken);
+  //     setIsLoading(false);
+  //   } catch (error) {
+  //     console.log(`Logged in error ${error}`);
+  //   }
+  // };
 
-  useEffect(() => {
-    isLoggedIn();
-  }, []);
+  // useEffect(() => {
+  //   isLoggedIn();
+  // }, []);
 
   return (
     <AuthContext.Provider value={{ login, logout, isLoading, userToken }}>
