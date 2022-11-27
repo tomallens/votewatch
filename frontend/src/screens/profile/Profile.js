@@ -1,11 +1,21 @@
 import * as React from "react";
-import { View, StyleSheet, Text, Button } from "react-native";
-//import CustomButton from "../../components/customButton/CustomButton";
+import { useContext } from "react";
+import { View, StyleSheet, Text } from "react-native";
+
+import { AuthContext } from "../../components/context/AuthContext.js";
+import CustomButton from "../../components/customButton/CustomButton";
 
 function Profile() {
+  const { logout } = useContext(AuthContext);
   return (
     <View style={styles.container}>
       <Text>Profile</Text>
+      <CustomButton
+        text="Logout"
+        onPress={() => {
+          logout();
+        }}
+      ></CustomButton>
     </View>
   );
 }
