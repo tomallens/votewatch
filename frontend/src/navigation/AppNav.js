@@ -1,15 +1,27 @@
 import * as React from "react";
-import { Button, View, Text } from "react-native";
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { useContext } from "react";
+import {
+  NavigationContainer,
+  View,
+  ActivityIndicator,
+} from "@react-navigation/native";
 // import { AuthProvider } from "../components/context/AuthContext";
 import AuthStack from "./AuthStack";
 import AppStack from "./AppStack";
+import { AuthContext } from "../components/context/AuthContext";
 
 function AppNav() {
+  const { isLoading, userToken } = useContext(AuthContext);
+
+  if (isLoading) {
+    <View style={{ flex: 1, justifyContext: "center", alignItems: "center" }}>
+      <ActivityIndicator size={"large"} />{" "}
+    </View>;
+  }
+
   return (
     <NavigationContainer>
-      {/* <AppStack /> */}
-      <AuthStack />
+      {userToken !== null ? <AppStack /> : <AuthStack />}
     </NavigationContainer>
   );
 }

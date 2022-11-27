@@ -4,10 +4,10 @@ import { View, StyleSheet, Text } from "react-native";
 
 import CustomInput from "../../components/customInput/CustomInput";
 import CustomButton from "../../components/customButton/CustomButton";
-//import { AuthContext } from "../../components/context/AuthContext.js";
+import { AuthContext } from "../../components/context/AuthContext.js";
 
 function Login({ navigation }) {
-  //const { test } = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -53,8 +53,12 @@ function Login({ navigation }) {
         secureTextEntry
       ></CustomInput>
 
-      <CustomButton text="Login" onPress={onLoginPressed}></CustomButton>
-      {/* <Text>{test}</Text> */}
+      <CustomButton
+        text="Login"
+        onPress={() => {
+          login();
+        }}
+      ></CustomButton>
     </View>
   );
 }
