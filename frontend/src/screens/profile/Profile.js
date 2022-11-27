@@ -1,7 +1,6 @@
 import { View, StyleSheet, Text, Button } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import CustomButton from "../../components/customButton/CustomButton";
-import * as SecureStore from "expo-secure-store";
 
 export function Profile() {
   const navigation = useNavigation();
@@ -14,8 +13,8 @@ export function Profile() {
       ></CustomButton>
 
       <CustomButton
-        text="Sign In"
-        onPress={() => navigation.navigate("SignIn")}
+        text="Login"
+        onPress={() => navigation.navigate("Login")}
       ></CustomButton>
     </View>
   );

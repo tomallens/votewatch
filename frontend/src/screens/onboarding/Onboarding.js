@@ -17,8 +17,8 @@ function Onboarding({ navigation }) {
       ></CustomButton>
 
       <CustomButton
-        text="Sign In"
-        onPress={() => navigation.navigate("SignIn")}
+        text="Login"
+        onPress={() => navigation.navigate("Login")}
       ></CustomButton>
     </SafeAreaView>
   );

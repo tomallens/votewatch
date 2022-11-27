@@ -4,19 +4,19 @@ import { View, StyleSheet, Text } from "react-native";
 
 import CustomInput from "../../components/customInput/CustomInput";
 import CustomButton from "../../components/customButton/CustomButton";
-import { AuthContext } from "../../components/context/AuthContext.js";
+//import { AuthContext } from "../../components/context/AuthContext.js";
 
-function SignIn({ navigation }) {
-  const { test } = useContext(AuthContext);
+function Login({ navigation }) {
+  //const { test } = useContext(AuthContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const onSignInPressed = async () => {
-    //await handleSignIn();
+  const onLoginPressed = async () => {
+    //await handleLogin();
   };
 
-  async function handleSignIn() {
+  async function handleLogin() {
     await fetch("http://localhost:3000/users", {
       method: "post",
       headers: {
@@ -39,7 +39,7 @@ function SignIn({ navigation }) {
   }
   return (
     <View>
-      <Text>Sign in</Text>
+      <Text>Login</Text>
       <CustomInput
         placeholder="Email"
         value={email}
@@ -53,12 +53,12 @@ function SignIn({ navigation }) {
         secureTextEntry
       ></CustomInput>
 
-      <CustomButton text="Sign in" onPress={onSignInPressed}></CustomButton>
-      <Text>{test}</Text>
+      <CustomButton text="Login" onPress={onLoginPressed}></CustomButton>
+      {/* <Text>{test}</Text> */}
     </View>
   );
 }
 
 const styles = StyleSheet.create({});
 
-export default SignIn;
+export default Login;
