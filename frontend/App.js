@@ -34,6 +34,12 @@ export default function App() {
     };
   }, [mpName]);
 
+  Notifications.setNotificationHandler({ 
+    handleNotification: async () => ({
+      shouldShowAlert: true // shows when app is in foreground too
+    }),
+  });
+
   async function callCommonsApi() {
     if (mpName == "") return;
     const memberId = await getMpId(mpName);
@@ -121,7 +127,7 @@ export default function App() {
   );
 }
 
-async function schedulePushNotification() {
+async function schedulePushNotification() { // this is just for local testing, delete once working
   await Notifications.scheduleNotificationAsync({
     content: {
       title: "You've got mail! 📬",
@@ -144,7 +150,7 @@ async function registerForPushNotificationsAsync() {
     });
   }
 
-  if (Device.isDevice) {
+  if (Device.isDevice) { // gotta be real with you i just copied this part and can't quite explain it
     const { status: existingStatus } = await Notifications.getPermissionsAsync();
     let finalStatus = existingStatus;
     if (existingStatus !== 'granted') {

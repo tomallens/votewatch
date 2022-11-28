@@ -1,3 +1,5 @@
+//start of an attempt to break functionality out of main App, currently unused.
+
 import * as Notifications from 'expo-notifications';
 
 
