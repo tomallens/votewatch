@@ -14,7 +14,7 @@ module.exports = function (app) {
   //user registration
   app.post(
     '/api/v1/signup',
-    [verifyUser.checkExistingUsername],
+    // [verifyUser.checkExistingUsername],
     [verifyUser.checkExistingEmail],
     userServices.signup
   );
