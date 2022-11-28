@@ -18,9 +18,11 @@ function CustomInput({ value, setValue, placeholder, secureTextEntry }) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "white",
-    width: "100%",
+    width: "50%",
+    height: 25,
     borderColor: "black",
-    borderWidth: 1,
+    borderWidth: 2,
+    margin: 2,
     borderRadius: 5,
     paddingHorizontal: 10,
   },

@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { SafeAreaView, StyleSheet, Text } from "react-native";
 import CustomButton from "../../components/customButton/CustomButton";
 import CustomInput from "../../components/customInput/CustomInput";
 
@@ -36,8 +36,8 @@ function Register() {
     });
   }
   return (
-    <View>
-      <Text>Welcome!</Text>
+    <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text style={{fontSize: 36, fontWeight: 'bold'}}>Welcome!</Text>
       <CustomInput
         placeholder="Name"
         value={name}
@@ -64,7 +64,7 @@ function Register() {
       ></CustomInput>
 
       <CustomButton text="Register" onPress={onRegisterPressed}></CustomButton>
-    </View>
+    </SafeAreaView>
   );
 }
 
