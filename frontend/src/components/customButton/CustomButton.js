@@ -13,16 +13,20 @@ function CustomButton({ onPress, text }) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "black",
-    width: "100%",
-    padding: 15,
+    width: "15%",
+    padding: 7,
     marginVertical: 5,
     alignItems: "center",
-    borderRadius: 5,
+    borderRadius: 8,
+    top: 0, left: 0, 
+    right: 0, bottom: 0, 
+    // justifyContent: 'bottom',
   },
   text: {
     fontWeight: "bold",
-    color: "white",
+    color: "#87ceeb",
   },
+  
 });
 
 export default CustomButton;

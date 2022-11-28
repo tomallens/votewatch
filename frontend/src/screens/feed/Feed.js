@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Image, Text, View, Button, Linking } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import CustomInput from "../../components/customInput/CustomInput";
+import CustomButton from "../../components/customButton/CustomButton";
 
 function Feed() {
   const [isLoading, setLoading] = useState(true);
@@ -61,7 +63,7 @@ const getDivisionAndMPData = (individualData) => {
         {`Division ID: ${individualData.PublishedDivision.DivisionId}\n`}
 
         {`Member Voted: ${individualData.MemberVotedAye ? "Aye" : "Noe"}\n`}
-        <Button
+        <CustomButton
           onPress={() =>
             Linking.openURL(
               `mailto:${mpEmail}?subject=${
@@ -73,7 +75,7 @@ const getDivisionAndMPData = (individualData) => {
               } for this Division. \n\n I would like to raise my ... because ... \n\n Yours Sincerely,\n\n`
             )
           }
-          title="EMAIL YOUR MP ABOUT THIS"
+          text="Email the MP about this vote"
         />
         {`\n\n\n`}
       </Text>
@@ -110,7 +112,7 @@ const getDivisionAndMPData = (individualData) => {
                   height: 60,
                 }}
               />
-              <Text>{`${mpData.items[0].value.id}\n`}</Text>
+                <Text>{`\n`}MP ID: {`${mpData.items[0].value.id}\n\n`}</Text>
 
               {divisionData.map((individualData) => {
                 return getDivisionAndMPData(individualData)
@@ -130,6 +132,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
   },
+
+  // text: {
+  //   fontSize: 16,
+  //   lineHeight: 21,
+  //   fontWeight: 'bold',
+  //   letterSpacing: 0.25,
+  //   color: 'white',
+  // },
 });
 
 export default Feed;

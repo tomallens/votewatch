@@ -39,7 +39,7 @@ function Login({ navigation }) {
   // }
 
   return (
-    <View>
+    <View style = {styles.container}>
       <Text>Login</Text>
 
       <CustomInput
@@ -65,6 +65,13 @@ function Login({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: 'center',
+  },
+});
 
 export default Login;
