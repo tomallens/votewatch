@@ -4,7 +4,13 @@ import { StyleSheet, Image, Text, View, SafeAreaView, Platform, Button, Linking 
 import React from "react";
 import { useEffect, useState, useRef } from "react";
 import { StatusBar } from "expo-status-bar";
+
+import { SafeAreaView } from "react-native-safe-area-context";
+import CustomInput from "../../components/customInput/CustomInput";
+import CustomButton from "../../components/customButton/CustomButton";
+
 import getDivisionAndMPData from "./getDivisionAndMPData";
+
 
 function Feed() {
   const [isLoading, setLoading] = useState(true);
@@ -104,7 +110,7 @@ function Feed() {
                   height: 60,
                 }}
               />
-              <Text>{`${mpData.items[0].value.id}\n`}</Text>
+                <Text>{`\n`}MP ID: {`${mpData.items[0].value.id}\n\n`}</Text>
 
               {divisionData.map((individualData) => {
                 return getDivisionAndMPData(mpName, mpEmail, individualData);
@@ -156,6 +162,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
   },
+
+  // text: {
+  //   fontSize: 16,
+  //   lineHeight: 21,
+  //   fontWeight: 'bold',
+  //   letterSpacing: 0.25,
+  //   color: 'white',
+  // },
 });
 
 export default Feed;

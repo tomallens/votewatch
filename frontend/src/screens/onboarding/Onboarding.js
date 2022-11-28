@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Text, View, SafeAreaView, TouchableOpacity } from "react-native";
+import { Text, View, SafeAreaView, TouchableOpacity, StyleSheet } from "react-native";
 
 import CustomButton from "../../components/customButton/CustomButton";
 
@@ -7,7 +7,7 @@ import CustomButton from "../../components/customButton/CustomButton";
 
 function Onboarding({ navigation }) {
   return (
-    <SafeAreaView>
+    <SafeAreaView style = {styles.container}>
       <Text>Welcome to Votewatch</Text>
       <Text>Keeping eyes on the ayes</Text>
 
@@ -23,5 +23,14 @@ function Onboarding({ navigation }) {
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: 'center',
+  },
+});
 
 export default Onboarding;
