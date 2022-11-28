@@ -10,19 +10,4 @@ module.exports = function (app) {
     );
     next();
   });
-
-  // add a product
-  //   app.post("/api/auth/addproduct", [jwtAuth.verifyToken], productServices.create);
-
-  // find all product
-  //   app.get("/api/auth/getproducts", [jwtAuth.verifyToken], productServices.findAll);
-
-  // find product by product id
-  //   app.post("/api/auth/getproductbyid", [jwtAuth.verifyToken], productServices.findOne);
-
-  // update product by product id
-  //   app.post("/api/auth/update", [jwtAuth.verifyToken], productServices.update);
-
-  // delete productby product id
-  //   app.post("/api/auth/delete", [jwtAuth.verifyToken], productServices.delete);
 };
