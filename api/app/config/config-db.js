@@ -2,7 +2,7 @@ module.exports = {
   HOST: 'localhost',
   USER: 'postgresdb',
   PASSWORD: 'Yuhu123',
-  DB: 'learnnode',
+  DB: 'votewatch',
   dialect: 'postgres',
   pool: {
     max: 5,

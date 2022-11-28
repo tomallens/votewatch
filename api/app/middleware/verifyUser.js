@@ -1,21 +1,21 @@
 const database = require('../models');
 const User = database.user;
 
-checkExistingUsername = (req, res, next) => {
-  User.findOne({
-    where: {
-      username: req.body.username,
-    },
-  }).then((user) => {
-    if (user) {
-      res.status(400).send({
-        message: 'Username already used!',
-      });
-      return;
-    }
-    next();
-  });
-};
+// checkExistingUsername = (req, res, next) => {
+//   User.findOne({
+//     where: {
+//       username: req.body.username,
+//     },
+//   }).then((user) => {
+//     if (user) {
+//       res.status(400).send({
+//         message: 'Username already used!',
+//       });
+//       return;
+//     }
+//     next();
+//   });
+// };
 
 checkExistingEmail = (req, res, next) => {
   User.findOne({
@@ -34,7 +34,7 @@ checkExistingEmail = (req, res, next) => {
 };
 
 const verifyUser = {
-  checkExistingUsername: checkExistingUsername,
+  //   checkExistingUsername: checkExistingUsername,
   checkExistingEmail: checkExistingEmail,
 };
 
