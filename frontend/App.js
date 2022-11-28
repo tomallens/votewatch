@@ -18,14 +18,18 @@ export default function App() {
 
   useEffect(() => {
     callCommonsApi();
-    registerForPushNotificationsAsync().then(token => setExpoPushToken(token)); // makes a push token to identify this instance of the client
+    registerForPushNotificationsAsync().then(token => setExpoPushToken(token)) // makes a push token to identify this instance of the client
+    .then(token => expoPushTokensApi.register(token));
 
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
       setNotification(notification);
     });
 
+    // Works when app is foregrounded, backgrounded, or killed
     responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-      console.log(response);
+        console.log('--- notification tapped ---');
+        console.log(response);
+        console.log('------');
     });
 
     return () => {
