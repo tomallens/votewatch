@@ -10,9 +10,10 @@ exports.signup = (req, res) => {
   validateRequest(req);
 
   User.create({
-    username: req.body.username,
+    name: req.body.name,
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password, 8),
+    mpname: req.body.mpname,
   })
     .then(res.send({ message: 'User successfully registered' }))
     .catch((exception) => {
@@ -25,7 +26,7 @@ exports.signin = (req, res) => {
 
   User.findOne({
     where: {
-      username: req.body.username,
+      email: req.body.email,
     },
   })
     .then((user) => {
@@ -54,7 +55,6 @@ exports.signin = (req, res) => {
       user.then(
         res.status(200).send({
           id: user.id,
-          username: user.username,
           email: user.email,
           accessToken: token,
         })
