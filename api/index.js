@@ -19,7 +19,7 @@ app.use(
 
 app.get('/', (req, res) => {
   res.json({
-    message: 'This is a simple CRUD project using node js and postgres sql',
+    message: 'Welcome to votewatch',
   });
 });
 require('./app/routes/division-routes')(app);
