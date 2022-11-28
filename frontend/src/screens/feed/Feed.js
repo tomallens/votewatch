@@ -1,20 +1,24 @@
-import { StatusBar } from "expo-status-bar";
-import { useEffect, useState, useRef } from "react";
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
-
 import { StyleSheet, Image, Text, View, SafeAreaView, Platform, Button } from "react-native";
 import { MpInput } from "./src/components/mpInput/MpInput";
+import React from "react";
+import { useEffect, useState, useRef } from "react";
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Image, Text, View, Button, Linking } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import getDivisionAndMPData from "./getDivisionAndMPData";
 
 function Feed() {
   const [isLoading, setLoading] = useState(true);
   const [divisionData, setDivisionData] = useState([]);
   const [mpData, setMpData] = useState([]);
-  const [mpName, setMpName] = useState("");
   const [expoPushToken, setExpoPushToken] = useState('');
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
+  const [mpName, setMpName] = useState("Boris Johnson");
+  const [mpEmail, setMPEmail] = useState("boris.johnson.mp@parlement.uk");
 
   useEffect(() => {
     callCommonsApi();
@@ -51,6 +55,7 @@ function Feed() {
   async function callCommonsApi() {
     if (mpName == "") return;
     const memberId = await getMpId(mpName);
+    await getMPContactData(memberId);
     await getMpVotes(memberId);
   }
 
@@ -75,13 +80,19 @@ function Feed() {
     setLoading(false);
   }
 
+  async function getMPContactData(memberId) {
+    const contactData = await (
+      await fetch(
+        `https://members-api.parliament.uk/api/Members/${memberId}/Contact`
+      )
+    ).json();
+    setMPEmail(contactData.value[0].email);
+  }
+
   return (
     <SafeAreaView style={styles.container}>
-      <Text>Welcome to Votewatch</Text>
-      <Text>Keeping eyes on the ayes</Text>
       <StatusBar style="auto" />
-
-      <MpInput setMpName={setMpName} />
+      {/* <MpInput setMpName={setMpName} /> */}
       <Text>Your MP is set to: {mpName}</Text>
       <View style={{ flex: 1, padding: 24 }}>
         {isLoading ? (
@@ -99,13 +110,7 @@ function Feed() {
               <Text>{`${mpData.items[0].value.id}\n`}</Text>
 
               {divisionData.map((individualData) => {
-                return `\nDate: ${
-                  individualData.PublishedDivision.Date
-                }\nDivision id: ${
-                  individualData.PublishedDivision.Date
-                }\nDivision title: ${
-                  individualData.PublishedDivision.Title
-                }\nVoted:${individualData.MemberVotedAye ? "Yes" : "No"}\n`;
+                return getDivisionAndMPData(mpName, mpEmail, individualData);
               })}
             </Text>
             <StatusBar style="auto" />
@@ -148,13 +153,11 @@ async function registerForPushNotificationsAsync() {
   return token;
 }
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center",
   },
 });
 

@@ -1,7 +1,7 @@
+import React from "react";
 import { View, StyleSheet, Text, TextInput } from "react-native";
 
-export const MpInput = ({ setMpName }) => {
-
+function MpInput({ setMpName }) {
   return (
     <View>
       <TextInput
@@ -11,7 +11,7 @@ export const MpInput = ({ setMpName }) => {
       />
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   input: {
@@ -34,3 +34,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
 });
+
+export default MpInput;
