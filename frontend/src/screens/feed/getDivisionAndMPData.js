@@ -2,8 +2,15 @@ import { Button, Linking } from "react-native";
 import { Text } from "react-native";
 
 function getDivisionAndMPData(mpName, mpEmail, individualData) {
+  const title = individualData.PublishedDivision.Title;
   return (
     <Text>
+      <Button
+        onPress={() =>
+          Linking.openURL("http://google.com/search?q=" + title, "_blank")
+        }
+        title={individualData.PublishedDivision.Title}
+      />
       {`Division Title: ${individualData.PublishedDivision.Title}\n`}
       {`Division Date: ${individualData.PublishedDivision.Date}\n`}
       {`Division ID: ${individualData.PublishedDivision.DivisionId}\n`}
