@@ -1,7 +1,7 @@
 import { Button, Linking } from "react-native";
 import { Text } from "react-native";
 
-function getDivisionAndMPData(mpEmail, individualData) {
+function getDivisionAndMPData(mpName, mpEmail, individualData) {
   return (
     <Text>
       {`Division Title: ${individualData.PublishedDivision.Title}\n`}
@@ -12,7 +12,13 @@ function getDivisionAndMPData(mpEmail, individualData) {
       <Button
         onPress={() =>
           Linking.openURL(
-            `mailto:${mpEmail}?subject=${individualData.PublishedDivision.Title}&body=${individualData.PublishedDivision.Title}`
+            `mailto:${mpEmail}?subject=${
+              individualData.PublishedDivision.Title
+            }&body=Dear ${mpName},\n\n I am writing to you about the Division "${
+              individualData.PublishedDivision.Title
+            }". \n\nIt has come to my attention that you voted ${
+              individualData.MemberVotedAye ? "Aye" : "Noe"
+            } for this Division. \n\n I would like to raise my ... because ... \n\n Yours Sincerely,\n\n`
           )
         }
         title="EMAIL YOUR MP ABOUT THIS"
