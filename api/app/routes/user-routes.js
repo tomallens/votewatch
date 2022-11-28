@@ -12,13 +12,8 @@ module.exports = function (app) {
   });
 
   //user registration
-  app.post(
-    '/api/v1/signup',
-    // [verifyUser.checkExistingUsername],
-    [verifyUser.checkExistingEmail],
-    userServices.signup
-  );
+  app.post('/register', [verifyUser.checkExistingEmail], userServices.signup);
 
   //user login
-  app.post('/api/v1/signin', userServices.signin);
+  app.post('/login', userServices.signin);
 };
