@@ -1,18 +1,17 @@
-const { Pool } = require('pg');
+const { Pool } = require("pg");
 
 const pool = new Pool({
-  user: 'me',
-  password: 'pasword',
-  host: 'localhost', // local id
-  database: 'votewatch_test',
-  port: 5432
+  user: "cas",
+  password: "password",
+  host: "localhost", // local id
+  database: "votewatch",
+  port: 5432,
 });
 // need to put config details in a separate file w/ restrictive permissions
 // when we hit production
 
-
 const getUsers = (request, response) => {
-  pool.query('SELECT * FROM users ORDER BY id ASC', (error, results) => {
+  pool.query("SELECT * FROM users ORDER BY id ASC", (error, results) => {
     if (error) {
       throw error;
     }
@@ -23,7 +22,7 @@ const getUsers = (request, response) => {
 const getUserById = (request, response) => {
   const id = parseInt(request.params.id);
 
-  pool.query('SELECT * FROM users WHERE id = $1', [id], (error, results) => {
+  pool.query("SELECT * FROM users WHERE id = $1", [id], (error, results) => {
     if (error) {
       throw error;
     }
@@ -32,11 +31,11 @@ const getUserById = (request, response) => {
 };
 
 const createUser = (request, response) => {
-  const { name, email, password, mpName } = request.body;
+  const { name, email, password, mpname } = request.body;
 
   pool.query(
-    'INSERT INTO users (name, email, password, mpName) VALUES ($1, $2, $3, $4)',
-    [name, email, password, mpName],
+    "INSERT INTO users (name, email, password, mpname) VALUES ($1, $2, $3, $4)",
+    [name, email, password, mpname],
     (error, results) => {
       if (error) {
         throw error;
@@ -48,11 +47,11 @@ const createUser = (request, response) => {
 
 const updateUser = (request, response) => {
   const id = parseInt(request.params.id);
-  const { name, email, password, mpName } = request.body;
+  const { name, email, password, mpname } = request.body;
 
   pool.query(
-    'UPDATE users SET name = $1, email = $2, password = $3, mpName = $4 WHERE id = $3',
-    [name, email, password, mpName, id],
+    "UPDATE users SET name = $1, email = $2, password = $3, mpname = $4 WHERE id = $3",
+    [name, email, password, mpname, id],
     (error, results) => {
       if (error) {
         throw error;
@@ -65,7 +64,7 @@ const updateUser = (request, response) => {
 const deleteUser = (request, response) => {
   const id = parseInt(request.params.id);
 
-  pool.query('DELETE FROM users WHERE id = $1', [id], (error, results) => {
+  pool.query("DELETE FROM users WHERE id = $1", [id], (error, results) => {
     if (error) {
       throw error;
     }
@@ -78,5 +77,5 @@ module.exports = {
   getUserById,
   createUser,
   updateUser,
-  deleteUser
+  deleteUser,
 };
