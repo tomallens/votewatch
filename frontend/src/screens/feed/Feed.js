@@ -1,12 +1,9 @@
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
-import { StyleSheet, Image, Text, View, SafeAreaView, Platform, Button } from "react-native";
-import { MpInput } from "./src/components/mpInput/MpInput";
+import { StyleSheet, Image, Text, View, SafeAreaView, Platform, Button, Linking } from "react-native";
 import React from "react";
 import { useEffect, useState, useRef } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Image, Text, View, Button, Linking } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import getDivisionAndMPData from "./getDivisionAndMPData";
 
 function Feed() {
