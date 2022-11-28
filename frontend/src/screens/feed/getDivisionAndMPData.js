@@ -2,29 +2,31 @@ import { Button, Linking } from "react-native";
 import { Text } from "react-native";
 
 function getDivisionAndMPData(mpName, mpEmail, individualData) {
-  const title = individualData.PublishedDivision.Title;
+  const divisionTitle = individualData.PublishedDivision.Title;
+  const divisionID = individualData.PublishedDivision.DivisionId;
+  const mpVote = individualData.MemberVotedAye;
+  const divisionDate = individualData.PublishedDivision.Date;
+
   return (
     <Text>
       <Button
         onPress={() =>
-          Linking.openURL("http://google.com/search?q=" + title, "_blank")
+          Linking.openURL(
+            "http://google.com/search?q=" + divisionTitle,
+            "_blank"
+          )
         }
-        title={individualData.PublishedDivision.Title}
+        title={`Division Title: ${divisionTitle}`}
       />
-      {`Division Title: ${individualData.PublishedDivision.Title}\n`}
-      {`Division Date: ${individualData.PublishedDivision.Date}\n`}
-      {`Division ID: ${individualData.PublishedDivision.DivisionId}\n`}
+      {`Division Date: ${divisionDate}\n`}
+      {`Division ID: ${divisionID}\n`}
 
-      {`Member Voted: ${individualData.MemberVotedAye ? "Aye" : "Noe"}\n`}
+      {`Member Voted: ${mpVote ? "Aye" : "Noe"}\n`}
       <Button
         onPress={() =>
           Linking.openURL(
-            `mailto:${mpEmail}?subject=${
-              individualData.PublishedDivision.Title
-            }&body=Dear ${mpName},\n\n I am writing to you about the Division "${
-              individualData.PublishedDivision.Title
-            }". \n\nIt has come to my attention that you voted ${
-              individualData.MemberVotedAye ? "Aye" : "Noe"
+            `mailto:${mpEmail}?subject=${divisionTitle}&body=Dear ${mpName},\n\n I am writing to you about the Division "${divisionTitle}". \n\nIt has come to my attention that you voted ${
+              mpVote ? "Aye" : "Noe"
             } for this Division. \n\n I would like to raise my ... because ... \n\n Yours Sincerely,\n\n`
           )
         }
