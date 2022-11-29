@@ -1,22 +1,29 @@
-import * as Device from 'expo-device';
-import * as Notifications from 'expo-notifications';
-import { StyleSheet, Image, Text, View, SafeAreaView, Platform, Button, Linking } from "react-native";
+import * as Device from "expo-device";
+import * as Notifications from "expo-notifications";
+import {
+  StyleSheet,
+  Image,
+  Text,
+  View,
+  SafeAreaView,
+  Platform,
+  Button,
+  Linking,
+} from "react-native";
 import React from "react";
 import { useEffect, useState, useRef } from "react";
 import { StatusBar } from "expo-status-bar";
+import MPData from "../../components/MPData/MPData";
 
-import { SafeAreaView } from "react-native-safe-area-context";
-import CustomInput from "../../components/customInput/CustomInput";
-import CustomButton from "../../components/customButton/CustomButton";
-
-import getDivisionAndMPData from "./getDivisionAndMPData";
-
+// import { SafeAreaView } from "react-native-safe-area-context";
+// import CustomInput from "../../components/customInput/CustomInput";
+// import CustomButton from "../../components/customButton/CustomButton";
 
 function Feed() {
   const [isLoading, setLoading] = useState(true);
   const [divisionData, setDivisionData] = useState([]);
   const [mpData, setMpData] = useState([]);
-  const [expoPushToken, setExpoPushToken] = useState('');
+  const [expoPushToken, setExpoPushToken] = useState("");
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
@@ -25,33 +32,39 @@ function Feed() {
 
   useEffect(() => {
     callCommonsApi();
-    pushNotificationHandler();  
+    pushNotificationHandler();
   }, [mpName]);
 
   function pushNotificationHandler() {
-    registerForPushNotificationsAsync().then(token => setExpoPushToken(token)); // makes a push token to identify this instance of the client
+    registerForPushNotificationsAsync().then((token) =>
+      setExpoPushToken(token)
+    ); // makes a push token to identify this instance of the client
     // .then(token => expoPushTokensApi.register(token)); <---- this is our point of entry to backend - inactive for now
 
-    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-      setNotification(notification);
-    });
+    notificationListener.current =
+      Notifications.addNotificationReceivedListener((notification) => {
+        setNotification(notification);
+      });
 
     // Works when app is foregrounded, backgrounded, or killed
-    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-        console.log('--- notification tapped ---');
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        console.log("--- notification tapped ---");
         console.log(response);
-        console.log('------');
-    });
+        console.log("------");
+      });
 
     return () => {
-      Notifications.removeNotificationSubscription(notificationListener.current); // otherwise it will never stop asking
+      Notifications.removeNotificationSubscription(
+        notificationListener.current
+      ); // otherwise it will never stop asking
       Notifications.removeNotificationSubscription(responseListener.current);
     };
   }
 
-  Notifications.setNotificationHandler({ 
+  Notifications.setNotificationHandler({
     handleNotification: async () => ({
-      shouldShowAlert: true // shows when app is in foreground too
+      shouldShowAlert: true, // shows when app is in foreground too
     }),
   });
 
@@ -110,10 +123,19 @@ function Feed() {
                   height: 60,
                 }}
               />
-                <Text>{`\n`}MP ID: {`${mpData.items[0].value.id}\n\n`}</Text>
+              <Text>
+                {`\n`}MP ID: {`${mpData.items[0].value.id}\n\n`}
+              </Text>
 
-              {divisionData.map((individualData) => {
-                return getDivisionAndMPData(mpName, mpEmail, individualData);
+              {divisionData.map((individualData, i) => {
+                return (
+                  <MPData
+                    key={`mpdata-${i}`}
+                    name={mpName}
+                    email={mpEmail}
+                    data={individualData}
+                  />
+                );
               })}
             </Text>
             <StatusBar style="auto" />
@@ -127,30 +149,32 @@ function Feed() {
 async function registerForPushNotificationsAsync() {
   let token;
 
-  if (Platform.OS === 'android') {
-    await Notifications.setNotificationChannelAsync('default', {
-      name: 'default',
+  if (Platform.OS === "android") {
+    await Notifications.setNotificationChannelAsync("default", {
+      name: "default",
       importance: Notifications.AndroidImportance.MAX,
       vibrationPattern: [0, 250, 250, 250],
-      lightColor: '#FF231F7C',
+      lightColor: "#FF231F7C",
     });
   }
 
-  if (Device.isDevice) { // gotta be real with you i just copied this part and can't quite explain it
-    const { status: existingStatus } = await Notifications.getPermissionsAsync();
+  if (Device.isDevice) {
+    // gotta be real with you i just copied this part and can't quite explain it
+    const { status: existingStatus } =
+      await Notifications.getPermissionsAsync();
     let finalStatus = existingStatus;
-    if (existingStatus !== 'granted') {
+    if (existingStatus !== "granted") {
       const { status } = await Notifications.requestPermissionsAsync();
       finalStatus = status;
     }
-    if (finalStatus !== 'granted') {
-      alert('Failed to get push token for push notification!');
+    if (finalStatus !== "granted") {
+      alert("Failed to get push token for push notification!");
       return;
     }
     token = (await Notifications.getExpoPushTokenAsync()).data;
     console.log(token);
   } else {
-    alert('Must use physical device for Push Notifications'); //none of this works on emulators
+    alert("Must use physical device for Push Notifications"); //none of this works on emulators
   }
 
   return token;
