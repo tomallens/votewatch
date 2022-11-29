@@ -1,26 +1,61 @@
-import React from "react";
-import { useEffect, useState } from "react";
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Image, Text, View, Button, Linking, ScrollView } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import Swiper from 'react-native-swiper'
+import React from 'react';
+import { useEffect, useState, useRef } from 'react';
+import { StatusBar } from 'expo-status-bar';
+import {
+  StyleSheet,
+  Image,
+  Text,
+  View,
+  Platform,
+  Button,
+  Linking,
+  ScrollView
+} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import getDivisionAndMPData from './getDivisionAndMPData';
+import Swiper from 'react-native-swiper';
 
 function Feed() {
   const [isLoading, setLoading] = useState(true);
   const [divisionData, setDivisionData] = useState([]);
   const [mpData, setMpData] = useState([]);
-  const [mpName, setMpName] = useState("Boris Johnson");
-  const [mpEmail, setMPEmail] = useState("boris.johnson.mp@parlement.uk")
-
+  const [expoPushToken, setExpoPushToken] = useState('');
+  const [notification, setNotification] = useState(false);
+  const notificationListener = useRef();
+  const responseListener = useRef();
+  const [mpName, setMpName] = useState('Boris Johnson');
+  const [mpEmail, setMPEmail] = useState('boris.johnson.mp@parlement.uk');
 
   useEffect(() => {
     callCommonsApi();
+    // pushNotificationHandler();
   }, [mpName]);
 
+  // function pushNotificationHandler() {
+  //   registerForPushNotificationsAsync().then(token => setExpoPushToken(token)); // makes a push token to identify this instance of the client
+  //   // .then(token => expoPushTokensApi.register(token)); <---- this is our point of entry to backend - inactive for now
+
+  //   notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+  //     setNotification(notification);
+  //   });
+
+  //   // Works when app is foregrounded, backgrounded, or killed
+  //   responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+  //       console.log('--- notification tapped ---');
+  //       console.log(response);
+  //       console.log('------');
+  //   });
+
+  //   return () => {
+  //     Notifications.removeNotificationSubscription(notificationListener.current); // otherwise it will never stop asking
+  //     Notifications.removeNotificationSubscription(responseListener.current);
+  //   };
+  // }
+
   async function callCommonsApi() {
-    if (mpName == "") return;
+    if (mpName == '') return;
     const memberId = await getMpId(mpName);
-    await getMPContactData(memberId)
+    await getMPContactData(memberId);
     await getMpVotes(memberId);
   }
 
@@ -54,67 +89,37 @@ function Feed() {
     setMPEmail(contactData.value[0].email);
   }
 
-const getDivisionAndMPData = (individualData) => {
-    return (
-      <Text style={styles.textSecondary}>
-      {`Name of vote: ${individualData.PublishedDivision.Title}\n`}
-      {`Vote date: ${individualData.PublishedDivision.Date}\n`}
-      {`Vote ID: ${individualData.PublishedDivision.DivisionId}\n`}
-
-      {`Member Voted:\n`}
-      <Text style={{fontSize: 100, color: 'crimson', fontWeight: '900'}}>
-      {`${individualData.MemberVotedAye ? "AYE" : "NOE"}\n`}
-      </Text>
-        <Button
-          onPress={() =>
-            Linking.openURL(
-              `mailto:${mpEmail}?subject=${
-                individualData.PublishedDivision.Title
-              }&body=Dear ${mpName},\n\n I am writing to you about the Division "${
-                individualData.PublishedDivision.Title
-              }". \n\nIt has come to my attention that you voted ${
-                individualData.MemberVotedAye ? "Aye" : "Noe"
-              } for this Division. \n\n I would like to raise my ... because ... \n\n Yours Sincerely,\n\n`
-            )
-          }
-          title="EMAIL YOUR MP ABOUT THIS"
-        />
-        {`\n\n\n`}
-      </Text>
-    );
-  };
-
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
       {/* <MpInput setMpName={setMpName} /> */}
-      <Text style={styles.text}>Your MP is set to: {mpName}</Text>
+      <Text style={styles.text}>Your MP: {mpName}</Text>
       <View style={{ flex: 1, padding: 24 }}>
         {isLoading ? (
           <Text style={styles.text}>Loading...</Text>
         ) : (
           <View style={styles.container}>
-       
-              <Image
-                source={{
-                  uri: `${mpData.items[0].value.thumbnailUrl}`,
-                  width: 60,
-                  height: 60,
-                }}
-              />
-              <Text style={styles.text}>{`${mpData.items[0].value.id}\n`}</Text>
-              <Swiper
-        loop={false}
-        showsPagination={true}
-        // autoplay={true}
-        // autoplayTimeout={0.2}
-        showsButtons={true}
-        bounces={true}
-        index={1}>
-
-              {divisionData.map((individualData) => {
-                return getDivisionAndMPData(individualData)
-              }).slice(0,10)}
+            <Image
+              source={{
+                uri: `${mpData.items[0].value.thumbnailUrl}`,
+                width: 150,
+                height: 150
+              }}
+              style={{ borderColor: 'black', borderWidth: 5, borderRadius: 75 }}
+            />
+            {/* <Text style={styles.text}>{`${mpData.items[0].value.id}\n`}</Text> */}
+            <Swiper
+              loop={false}
+              showsPagination={true}
+              showsButtons={true}
+              bounces={true}
+              index={1}
+            >
+              {divisionData
+                .map((individualData) => {
+                  return getDivisionAndMPData(mpName, mpEmail, individualData);
+                })
+                .slice(0, 12)}
             </Swiper>
             <StatusBar style="auto" />
           </View>
@@ -123,6 +128,38 @@ const getDivisionAndMPData = (individualData) => {
     </SafeAreaView>
   );
 }
+
+// async function registerForPushNotificationsAsync() {
+//   let token;
+
+//   if (Platform.OS === 'android') {
+//     await Notifications.setNotificationChannelAsync('default', {
+//       name: 'default',
+//       importance: Notifications.AndroidImportance.MAX,
+//       vibrationPattern: [0, 250, 250, 250],
+//       lightColor: '#FF231F7C',
+//     });
+//   }
+
+//   if (Device.isDevice) { // gotta be real with you i just copied this part and can't quite explain it
+//     const { status: existingStatus } = await Notifications.getPermissionsAsync();
+//     let finalStatus = existingStatus;
+//     if (existingStatus !== 'granted') {
+//       const { status } = await Notifications.requestPermissionsAsync();
+//       finalStatus = status;
+//     }
+//     if (finalStatus !== 'granted') {
+//       alert('Failed to get push token for push notification!');
+//       return;
+//     }
+//     token = (await Notifications.getExpoPushTokenAsync()).data;
+//     console.log(token);
+//   } else {
+//     alert('Must use physical device for Push Notifications'); //none of this works on emulators
+//   }
+
+//   return token;
+// }
 
 const styles = StyleSheet.create({
   container: {
