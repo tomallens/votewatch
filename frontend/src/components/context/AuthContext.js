@@ -14,27 +14,28 @@ export const AuthProvider = ({ children }) => {
     setIsLoading(false);
   };
 
-  const logout = () => {
+  const logout = async () => {
     setIsLoading(true);
     setUserToken(null);
     AsyncStorage.removeItem("userToken");
     setIsLoading(false);
   };
 
-  // const isLoggedIn = async () => {
-  //   try {
-  //     setIsLoading(true);
-  //     let userToken = AsyncStorage.getItem("userToken");
-  //     setUserToken(userToken);
-  //     setIsLoading(false);
-  //   } catch (error) {
-  //     console.log(`Logged in error ${error}`);
-  //   }
-  // };
+  const isLoggedIn = async () => {
+    // Checks if user is logged in once app is re-opened
+    try {
+      setIsLoading(true);
+      let userToken = AsyncStorage.getItem("userToken");
+      setUserToken(userToken);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(`Logged in error ${error}`);
+    }
+  };
 
-  // useEffect(() => {
-  //   isLoggedIn();
-  // }, []);
+  useEffect(() => {
+    isLoggedIn();
+  }, []);
 
   return (
     <AuthContext.Provider value={{ login, logout, isLoading, userToken }}>

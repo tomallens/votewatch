@@ -28,7 +28,7 @@ function Register() {
         mpname: mpName,
       }),
     }).then((response) => {
-      if (response.status === 201) {
+      if (response.status === 200) {
         console.log("OK");
       } else {
         console.log("OH NO");
