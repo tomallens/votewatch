@@ -1,10 +1,6 @@
 import * as React from "react";
-import { useContext } from "react";
-import {
-  NavigationContainer,
-  View,
-  ActivityIndicator,
-} from "@react-navigation/native";
+import { View, useContext, ActivityIndicator } from "react";
+import { NavigationContainer } from "@react-navigation/native";
 
 import AuthStack from "./AuthStack";
 import AppStack from "./AppStack";
