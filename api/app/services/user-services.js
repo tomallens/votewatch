@@ -1,12 +1,12 @@
-const database = require('../models');
-const configuration = require('../config/config-jwt.js');
+const database = require("../models");
+const configuration = require("../config/config-jwt.js");
 const User = database.user;
 
-var jwt = require('jsonwebtoken');
-var bcrypt = require('bcryptjs');
+var jwt = require("jsonwebtoken");
+var bcrypt = require("bcryptjs");
 
 exports.signup = (req, res) => {
-  console.log('Request : ', req.body);
+  console.log("Request : ", req.body);
   validateRequest(req);
 
   User.create({
@@ -15,7 +15,7 @@ exports.signup = (req, res) => {
     password: bcrypt.hashSync(req.body.password, 8),
     mpname: req.body.mpname,
   })
-    .then(res.send({ message: 'User successfully registered' }))
+    .then(res.send({ message: "User successfully registered" }))
     .catch((exception) => {
       res.status(500).send({ message: exception.message });
     });
@@ -32,7 +32,7 @@ exports.signin = (req, res) => {
     .then((user) => {
       if (!user) {
         return res.status(404).send({
-          message: 'User not found',
+          message: "User not found",
         });
       }
 
@@ -43,7 +43,7 @@ exports.signin = (req, res) => {
       if (!passwordIsValid) {
         return res.status(401).send({
           accessToken: null,
-          message: 'Invalid password!',
+          message: "Invalid password!",
         });
       }
 

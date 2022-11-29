@@ -1,4 +1,4 @@
-const database = require('../models');
+const database = require("../models");
 const User = database.user;
 
 checkExistingEmail = (req, res, next) => {
@@ -9,7 +9,7 @@ checkExistingEmail = (req, res, next) => {
   }).then((user) => {
     if (user) {
       res.status(400).send({
-        message: 'Email already used!',
+        message: "Email already used!",
       });
       return;
     }

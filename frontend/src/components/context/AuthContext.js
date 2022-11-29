@@ -2,15 +2,70 @@ import React from "react";
 import { createContext, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 export const AuthContext = createContext();
+import axios from "axios";
+
+import { BASE_URL } from "../../config";
 
 export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [userToken, setUserToken] = useState(null);
 
-  const login = () => {
+  const login = (email, password) => {
+    console.log(email, password);
     setIsLoading(true);
-    setUserToken("cuddlezzzzz");
-    AsyncStorage.setItem("userToken", "cuddlezzzzz");
+
+    axios
+      .post("http://localhost:8080/login", {
+        email,
+        password,
+      })
+      .then((response) => {
+        console.log("RESPONSE", response);
+        // let userInfo = response.data;
+        // setUserInfo(userInfo);
+        // setUserToken(userInfo.accessToken);
+        // AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
+        // AsyncStorage.setItem("userToken", userInfo.accessToken);
+        // console.log(response.data);
+        // console.log(response.data);
+      })
+      .catch((error) => {
+        console.log("login post error", error);
+      });
+
+    // const data = fetch(`${BASE_URL}/login`, {
+    //   method: "post",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+
+    //   body: JSON.stringify({
+    //     email: email,
+    //     password: password,
+    //   }),
+    // }).then((response) => {
+    //   if (response.status === 200) {
+    //     console.log("OK");
+    //   } else {
+    //     console.log("OH NO");
+    //   }
+    // });
+
+    // .then((response) => {
+    //   // console.log("RESPONSE DATA", response.data);
+    //   // let userInfo = response.data;
+    //   // setUserInfo(userInfo);
+    //   // setUserToken(userInfo.accessToken);
+    //   // AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
+    //   // AsyncStorage.setItem("userToken", userInfo.accessToken);
+    //   // console.log(response.data);
+    //   // console.log(response.data);
+    // })
+    // .catch((error) => {
+    //   console.log("login error", error);
+    // });
+    // setUserToken("cuddlezzzzz");
+    // AsyncStorage.setItem("userToken", "cuddlezzzzz");
     setIsLoading(false);
   };
 
@@ -21,21 +76,21 @@ export const AuthProvider = ({ children }) => {
     setIsLoading(false);
   };
 
-  const isLoggedIn = async () => {
-    // Checks if user is logged in once app is re-opened
-    try {
-      setIsLoading(true);
-      let userToken = AsyncStorage.getItem("userToken");
-      setUserToken(userToken);
-      setIsLoading(false);
-    } catch (error) {
-      console.log(`Logged in error ${error}`);
-    }
-  };
+  // const isLoggedIn = async () => {
+  //   // Checks if user is logged in once app is re-opened
+  //   try {
+  //     setIsLoading(true);
+  //     let userToken = AsyncStorage.getItem("userToken");
+  //     setUserToken(userToken);
+  //     setIsLoading(false);
+  //   } catch (error) {
+  //     console.log(`Logged in error ${error}`);
+  //   }
+  // };
 
-  useEffect(() => {
-    isLoggedIn();
-  }, []);
+  // useEffect(() => {
+  //   isLoggedIn();
+  // }, []);
 
   return (
     <AuthContext.Provider value={{ login, logout, isLoading, userToken }}>
