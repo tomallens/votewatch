@@ -1,24 +1,25 @@
-import React from "react";
-import { useState } from "react";
-import { View, StyleSheet, Text } from "react-native";
-import CustomButton from "../../components/customButton/CustomButton";
-import CustomInput from "../../components/customInput/CustomInput";
+import React from 'react';
+import { useState } from 'react';
+import { View, StyleSheet, Text } from 'react-native';
+import CustomButton from '../../components/customButton/CustomButton';
+import CustomInput from '../../components/customInput/CustomInput';
 
 function Register() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [mpName, setMpName] = useState("");
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [mpName, setMpName] = useState('');
 
   const onRegisterPressed = async () => {
     await handleRegistration();
+    navigation.navigate('Login');
   };
 
   async function handleRegistration() {
-    await fetch("http://localhost:8080/register", {
-      method: "post",
+    await fetch('http://localhost:8080/register', {
+      method: 'post',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
 
       body: JSON.stringify({
@@ -29,9 +30,9 @@ function Register() {
       }),
     }).then((response) => {
       if (response.status === 201) {
-        console.log("OK");
+        console.log('OK');
       } else {
-        console.log("OH NO");
+        console.log('OH NO');
       }
     });
   }
