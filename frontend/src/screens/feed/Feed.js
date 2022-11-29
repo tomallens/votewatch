@@ -1,8 +1,9 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Image, Text, View, Button, Linking } from "react-native";
+import { StyleSheet, Image, Text, View, Button, Linking, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Swiper from 'react-native-swiper'
 
 function Feed() {
   const [isLoading, setLoading] = useState(true);
@@ -55,12 +56,15 @@ function Feed() {
 
 const getDivisionAndMPData = (individualData) => {
     return (
-      <Text>
-        {`Division Title: ${individualData.PublishedDivision.Title}\n`}
-        {`Division Date: ${individualData.PublishedDivision.Date}\n`}
-        {`Division ID: ${individualData.PublishedDivision.DivisionId}\n`}
+      <Text style={styles.textSecondary}>
+      {`Name of vote: ${individualData.PublishedDivision.Title}\n`}
+      {`Vote date: ${individualData.PublishedDivision.Date}\n`}
+      {`Vote ID: ${individualData.PublishedDivision.DivisionId}\n`}
 
-        {`Member Voted: ${individualData.MemberVotedAye ? "Aye" : "Noe"}\n`}
+      {`Member Voted:\n`}
+      <Text style={{fontSize: 100, color: 'crimson', fontWeight: '900'}}>
+      {`${individualData.MemberVotedAye ? "AYE" : "NOE"}\n`}
+      </Text>
         <Button
           onPress={() =>
             Linking.openURL(
@@ -80,29 +84,17 @@ const getDivisionAndMPData = (individualData) => {
     );
   };
 
-
-
-
-
-
-
-
-
-
-
-
-
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
       {/* <MpInput setMpName={setMpName} /> */}
-      <Text>Your MP is set to: {mpName}</Text>
+      <Text style={styles.text}>Your MP is set to: {mpName}</Text>
       <View style={{ flex: 1, padding: 24 }}>
         {isLoading ? (
-          <Text>Loading...</Text>
+          <Text style={styles.text}>Loading...</Text>
         ) : (
           <View style={styles.container}>
-            <Text>
+       
               <Image
                 source={{
                   uri: `${mpData.items[0].value.thumbnailUrl}`,
@@ -110,12 +102,20 @@ const getDivisionAndMPData = (individualData) => {
                   height: 60,
                 }}
               />
-              <Text>{`${mpData.items[0].value.id}\n`}</Text>
+              <Text style={styles.text}>{`${mpData.items[0].value.id}\n`}</Text>
+              <Swiper
+        loop={false}
+        showsPagination={true}
+        // autoplay={true}
+        // autoplayTimeout={0.2}
+        showsButtons={true}
+        bounces={true}
+        index={1}>
 
               {divisionData.map((individualData) => {
                 return getDivisionAndMPData(individualData)
-              })}
-            </Text>
+              }).slice(0,10)}
+            </Swiper>
             <StatusBar style="auto" />
           </View>
         )}
@@ -127,9 +127,19 @@ const getDivisionAndMPData = (individualData) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
+  text: {
+    fontFamily: 'Futura',
+    fontSize: 32,
+    fontWeight: 'bold'
+  },
+  textSecondary: {
+    fontFamily: 'Futura',
+    fontSize: 10
+  }
 });
 
 export default Feed;
