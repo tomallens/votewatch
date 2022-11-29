@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useContext } from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { SafeAreaView, StyleSheet, Text } from "react-native";
 
 import CustomInput from "../../components/customInput/CustomInput";
 import CustomButton from "../../components/customButton/CustomButton";
@@ -39,8 +39,10 @@ function Login({ navigation }) {
   // }
 
   return (
-    <View>
-      <Text>Login</Text>
+    <SafeAreaView 
+    style={styles.container}>
+      <Text
+      style={styles.text}>Please enter your{`\n`}    login details</Text>
 
       <CustomInput
         placeholder="Email"
@@ -61,10 +63,27 @@ function Login({ navigation }) {
           login();
         }}
       ></CustomButton>
-    </View>
+    </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  text: {
+    fontFamily: 'Futura',
+    fontSize: 26,
+    alignItems: 'center',
+    fontWeight: 'bold'
+  },
+  textSecondary: {
+    fontFamily: 'Futura',
+    fontSize: 18
+  }
+});
 
 export default Login;
