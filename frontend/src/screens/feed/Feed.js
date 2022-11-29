@@ -1,25 +1,25 @@
-import React from "react";
-import { useEffect, useState } from "react";
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Image, Text, View, Button, Linking } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import React from 'react';
+import { useEffect, useState } from 'react';
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Image, Text, View, Button, Linking } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 function Feed() {
   const [isLoading, setLoading] = useState(true);
   const [divisionData, setDivisionData] = useState([]);
   const [mpData, setMpData] = useState([]);
-  const [mpName, setMpName] = useState("Boris Johnson");
-  const [mpEmail, setMPEmail] = useState("boris.johnson.mp@parlement.uk")
-
+  const [mpName, setMpName] = useState('Boris Johnson');
+  const [mpEmail, setMPEmail] = useState('boris.johnson.mp@parlement.uk');
+  // const [token, setToken] = useState(asyncStorage.getItem('userToken'));
 
   useEffect(() => {
     callCommonsApi();
   }, [mpName]);
 
   async function callCommonsApi() {
-    if (mpName == "") return;
+    if (mpName == '') return;
     const memberId = await getMpId(mpName);
-    await getMPContactData(memberId)
+    await getMPContactData(memberId);
     await getMpVotes(memberId);
   }
 
@@ -53,14 +53,14 @@ function Feed() {
     setMPEmail(contactData.value[0].email);
   }
 
-const getDivisionAndMPData = (individualData) => {
+  const getDivisionAndMPData = (individualData) => {
     return (
       <Text>
         {`Division Title: ${individualData.PublishedDivision.Title}\n`}
         {`Division Date: ${individualData.PublishedDivision.Date}\n`}
         {`Division ID: ${individualData.PublishedDivision.DivisionId}\n`}
 
-        {`Member Voted: ${individualData.MemberVotedAye ? "Aye" : "Noe"}\n`}
+        {`Member Voted: ${individualData.MemberVotedAye ? 'Aye' : 'Noe'}\n`}
         <Button
           onPress={() =>
             Linking.openURL(
@@ -69,7 +69,7 @@ const getDivisionAndMPData = (individualData) => {
               }&body=Dear ${mpName},\n\n I am writing to you about the Division "${
                 individualData.PublishedDivision.Title
               }". \n\nIt has come to my attention that you voted ${
-                individualData.MemberVotedAye ? "Aye" : "Noe"
+                individualData.MemberVotedAye ? 'Aye' : 'Noe'
               } for this Division. \n\n I would like to raise my ... because ... \n\n Yours Sincerely,\n\n`
             )
           }
@@ -79,18 +79,6 @@ const getDivisionAndMPData = (individualData) => {
       </Text>
     );
   };
-
-
-
-
-
-
-
-
-
-
-
-
 
   return (
     <SafeAreaView style={styles.container}>
@@ -113,7 +101,7 @@ const getDivisionAndMPData = (individualData) => {
               <Text>{`${mpData.items[0].value.id}\n`}</Text>
 
               {divisionData.map((individualData) => {
-                return getDivisionAndMPData(individualData)
+                return getDivisionAndMPData(individualData);
               })}
             </Text>
             <StatusBar style="auto" />
@@ -127,8 +115,8 @@ const getDivisionAndMPData = (individualData) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
+    backgroundColor: '#fff',
+    alignItems: 'center',
   },
 });
 
