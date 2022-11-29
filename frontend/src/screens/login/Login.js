@@ -13,7 +13,7 @@ function Login({ navigation }) {
   const [password, setPassword] = useState("");
 
   // const onLoginPressed = async () => {
-  //   //await handleLogin();
+  //   await handleLogin();
   // };
 
   // async function handleLogin() {
@@ -58,7 +58,7 @@ function Login({ navigation }) {
       <CustomButton
         text="Login"
         onPress={() => {
-          login();
+          login(email, password);
         }}
       ></CustomButton>
     </View>

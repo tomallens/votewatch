@@ -21,6 +21,7 @@
     "@react-navigation/bottom-tabs": "^6.4.1",
     "@react-navigation/native": "^6.0.14",
     "@react-navigation/native-stack": "^6.9.2",
+    "axios": "^1.2.0",
     "configuration": "^3.0.0",
     "expo": "~47.0.7",
     "expo-status-bar": "~1.4.2",
