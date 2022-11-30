@@ -1,17 +1,7 @@
 import { Button, Linking, Text, View } from 'react-native';
 
-// function ayeNoeColour {
-//   if(individualData.MemberVotedAye) {
-//     color: ('firebrick')
-//   }
-//   else if(!individualData.MemberVotedAye) {
-//     color: ('forestgreen')
-//   }
-// }
-
 function getDivisionAndMPData(mpName, mpEmail, individualData) {
   const date = new Date(individualData.PublishedDivision.Date).toDateString();
-
   return (
     <View>
       <Text
@@ -23,8 +13,8 @@ function getDivisionAndMPData(mpName, mpEmail, individualData) {
           textAlign: 'center'
         }}
       >
-        {`\n${date}\n\n`}
-        {`${individualData.PublishedDivision.Title}:\n`}
+        {`\n${date}\n`}
+        {`${individualData.PublishedDivision.Title}\n`}
 
         <Text
           style={{
@@ -59,3 +49,20 @@ function getDivisionAndMPData(mpName, mpEmail, individualData) {
 }
 
 export default getDivisionAndMPData;
+
+// *WIP vote logic function*
+// function ayeNoe() {
+//   if(individualData.MemberVotedAye) {
+//     <Text style={{
+//       fontSize: 100,
+//       color: ('forestgreen'),
+//       fontWeight: '900',
+//       alignItems: 'center'}}> 'AYE' </Text>
+//     } else if (!individualData.MemberVotedAye) {
+//       <Text style={{
+//         fontSize: 100,
+//         color: ('firebrick'),
+//         fontWeight: '900',
+//         alignItems: 'center'}}> 'NOE' </Text>
+//     }
+// }

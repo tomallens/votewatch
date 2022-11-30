@@ -31,26 +31,26 @@ function Feed() {
     // pushNotificationHandler();
   }, [mpName]);
 
-  // function pushNotificationHandler() {
-  //   registerForPushNotificationsAsync().then(token => setExpoPushToken(token)); // makes a push token to identify this instance of the client
-  //   // .then(token => expoPushTokensApi.register(token)); <---- this is our point of entry to backend - inactive for now
+  function pushNotificationHandler() {
+    registerForPushNotificationsAsync().then(token => setExpoPushToken(token)); // makes a push token to identify this instance of the client
+    // .then(token => expoPushTokensApi.register(token)); <---- this is our point of entry to backend - inactive for now
 
-  //   notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-  //     setNotification(notification);
-  //   });
+    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+      setNotification(notification);
+    });
 
-  //   // Works when app is foregrounded, backgrounded, or killed
-  //   responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-  //       console.log('--- notification tapped ---');
-  //       console.log(response);
-  //       console.log('------');
-  //   });
+    // Works when app is foregrounded, backgrounded, or killed
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+        console.log('--- notification tapped ---');
+        console.log(response);
+        console.log('------');
+    });
 
-  //   return () => {
-  //     Notifications.removeNotificationSubscription(notificationListener.current); // otherwise it will never stop asking
-  //     Notifications.removeNotificationSubscription(responseListener.current);
-  //   };
-  // }
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener.current); // otherwise it will never stop asking
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }
 
   async function callCommonsApi() {
     if (mpName == '') return;
@@ -92,7 +92,7 @@ function Feed() {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
-      {/* <MpInput setMpName={setMpName} /> */}
+      {/* <MpInput setMpName={setMpName} /> **UNCOMMENT ONCE WORKING** */}
       <Text style={styles.text}>Your MP: {mpName}</Text>
       <View style={{ flex: 1, padding: 24 }}>
         {isLoading ? (
@@ -128,37 +128,37 @@ function Feed() {
   );
 }
 
-// async function registerForPushNotificationsAsync() {
-//   let token;
+async function registerForPushNotificationsAsync() {
+  let token;
 
-//   if (Platform.OS === 'android') {
-//     await Notifications.setNotificationChannelAsync('default', {
-//       name: 'default',
-//       importance: Notifications.AndroidImportance.MAX,
-//       vibrationPattern: [0, 250, 250, 250],
-//       lightColor: '#FF231F7C',
-//     });
-//   }
+  if (Platform.OS === 'android') {
+    await Notifications.setNotificationChannelAsync('default', {
+      name: 'default',
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: '#FF231F7C',
+    });
+  }
 
-//   if (Device.isDevice) { // gotta be real with you i just copied this part and can't quite explain it
-//     const { status: existingStatus } = await Notifications.getPermissionsAsync();
-//     let finalStatus = existingStatus;
-//     if (existingStatus !== 'granted') {
-//       const { status } = await Notifications.requestPermissionsAsync();
-//       finalStatus = status;
-//     }
-//     if (finalStatus !== 'granted') {
-//       alert('Failed to get push token for push notification!');
-//       return;
-//     }
-//     token = (await Notifications.getExpoPushTokenAsync()).data;
-//     console.log(token);
-//   } else {
-//     alert('Must use physical device for Push Notifications'); //none of this works on emulators
-//   }
+  if (Device.isDevice) { // gotta be real with you i just copied this part and can't quite explain it
+    const { status: existingStatus } = await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+    if (existingStatus !== 'granted') {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+    if (finalStatus !== 'granted') {
+      alert('Failed to get push token for push notification!');
+      return;
+    }
+    token = (await Notifications.getExpoPushTokenAsync()).data;
+    console.log(token);
+  } else {
+    alert('Must use physical device for Push Notifications'); //none of this works on emulators
+  }
 
-//   return token;
-// }
+  return token;
+}
 
 const styles = StyleSheet.create({
   container: {
