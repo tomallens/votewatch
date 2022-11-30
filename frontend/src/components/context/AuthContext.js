@@ -29,12 +29,8 @@ export const AuthProvider = ({ children }) => {
 
       await AsyncStorage.setItem("userToken", JSON.stringify(data.accessToken)); //Asyncstorage is asyncronous, so we need to use await
       await AsyncStorage.setItem("userData", JSON.stringify(data));
-
-      console.log("data", data);
-      console.log("token 1 ", data.accessToken);
     } else {
       console.log(`Login error ${response.data}`);
-      console.log(response.status);
     }
     setIsLoading(false);
   };

@@ -64,9 +64,10 @@ exports.signin = (req, res) => {
 };
 
 exports.getmpname = (req, res) => {
+  const queryUserId = Object.values(req.query)[0];
   User.findOne({
     where: {
-      id: req.body.id,
+      id: queryUserId,
     },
   }).then((user) => {
     if (!user) {
@@ -74,15 +75,13 @@ exports.getmpname = (req, res) => {
         message: "User not found",
       });
     }
-    return res
-      .status(200)
-      .send({
-        mpname: user.mpname,
-      })
+    return res.status(200).send({
+      mpname: user.mpname,
+    });
 
-      .catch((exception) => {
-        res.status(500).send({ message: exception.message });
-      });
+    // .catch((exception) => {
+    //   res.status(500).send({ message: exception.message });
+    // });
   });
 };
 

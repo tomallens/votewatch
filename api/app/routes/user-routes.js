@@ -18,5 +18,5 @@ module.exports = function (app) {
   app.post("/login", userServices.signin);
 
   //user get MP name
-  app.get("/user/mpname", userServices.getmpname);
+  app.get("/mpnamebyid", userServices.getmpname);
 };

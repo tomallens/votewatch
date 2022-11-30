@@ -62,14 +62,15 @@ function Feed() {
   //   };
   // }
 
-  Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-      shouldShowAlert: true, // shows when app is in foreground too
-    }),
-  });
+  // Notifications.setNotificationHandler({
+  //   handleNotification: async () => ({
+  //     shouldShowAlert: true, // shows when app is in foreground too
+  //   }),
+  // });
 
   async function callCommonsApi() {
     if (mpName == "") return;
+    await getMpName();
     const memberId = await getMpId(mpName);
     await getMPContactData(memberId);
     await getMpVotes(memberId);
@@ -103,6 +104,15 @@ function Feed() {
       )
     ).json();
     setMPEmail(contactData.value[0].email);
+  }
+
+  async function getMpName() {
+    const data = await fetch(`http://localhost:8080/mpnamebyid?id=${9}`, {})
+      .then((response) => response.json())
+      .then((data) => {
+        return data.mpname;
+      });
+    console.log(data);
   }
 
   return (
@@ -175,7 +185,6 @@ async function registerForPushNotificationsAsync() {
       return;
     }
     token = (await Notifications.getExpoPushTokenAsync()).data;
-    console.log(token);
   } else {
     alert("Must use physical device for Push Notifications"); //none of this works on emulators
   }
