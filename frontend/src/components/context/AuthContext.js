@@ -1,6 +1,6 @@
-import React from 'react';
-import { createContext, useEffect, useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React from "react";
+import { createContext, useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -10,10 +10,10 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     setIsLoading(true);
-    let response = await fetch('http://localhost:8080/login', {
-      method: 'post',
+    let response = await fetch("http://localhost:8080/login", {
+      method: "post",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
 
       body: JSON.stringify({
@@ -27,11 +27,11 @@ export const AuthProvider = ({ children }) => {
       setUserData(data);
       setUserToken(data.accessToken);
 
-      await AsyncStorage.setItem('userToken', JSON.stringify(data.accessToken)); //Asyncstorage is asyncronous, so we need to use await
-      await AsyncStorage.setItem('userData', JSON.stringify(data));
+      // await AsyncStorage.setItem('userToken', JSON.stringify(data.accessToken)); //Asyncstorage is asyncronous, so we need to use await
+      // await AsyncStorage.setItem('userData', JSON.stringify(data));
 
-      console.log('data', data);
-      console.log('token 1 ', data.accessToken);
+      console.log("data", data);
+      console.log("token 1 ", data.accessToken);
     } else {
       console.log(`Login error ${response.data}`);
       console.log(response.status);
@@ -42,27 +42,27 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setIsLoading(true);
     setUserToken(null);
-    AsyncStorage.removeItem('userData');
-    AsyncStorage.removeItem('userToken');
+    // AsyncStorage.removeItem('userData');
+    // AsyncStorage.removeItem('userToken');
     setIsLoading(false);
   };
 
-  const isLoggedIn = async () => {
-    console.log(
-      'user token from isLoggedIn: ',
-      await AsyncStorage.getItem('userToken')
-    );
-    let userToken = await AsyncStorage.getItem('userToken');
-    let userData = await AsyncStorage.getItem('userData');
+  // const isLoggedIn = async () => {
+  //   console.log(
+  //     'user token from isLoggedIn: ',
+  //     await AsyncStorage.getItem('userToken')
+  //   );
+  //   let userToken = await AsyncStorage.getItem('userToken');
+  //   let userData = await AsyncStorage.getItem('userData');
 
-    if (userToken) {
-      setUserToken(userToken);
-    }
-  };
+  //   if (userToken) {
+  //     setUserToken(userToken);
+  //   }
+  // };
 
-  useEffect(() => {
-    isLoggedIn();
-  }, []);
+  // useEffect(() => {
+  //   isLoggedIn();
+  // }, []);
 
   return (
     <AuthContext.Provider
