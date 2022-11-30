@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { SafeAreaView, StyleSheet, Text } from 'react-native';
 import CustomButton from '../../components/customButton/CustomButton';
 import CustomInput from '../../components/customInput/CustomInput';
 
@@ -26,8 +26,8 @@ function Register() {
         name: name,
         email: email,
         password: password,
-        mpname: mpName,
-      }),
+        mpname: mpName
+      })
     }).then((response) => {
       if (response.status === 201) {
         console.log('OK');
@@ -37,8 +37,11 @@ function Register() {
     });
   }
   return (
-    <View style = {styles.container}>
-      <Text>Welcome!</Text>
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.text}>Welcome</Text>
+      <Text style={styles.textSecondary}>
+        Please enter your details to sign up
+      </Text>
       <CustomInput
         placeholder="Name"
         value={name}
@@ -65,17 +68,26 @@ function Register() {
       ></CustomInput>
 
       <CustomButton text="Register" onPress={onRegisterPressed}></CustomButton>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
+    backgroundColor: '#fff',
     justifyContent: 'center',
+    alignItems: 'center'
   },
+  text: {
+    fontFamily: 'Futura',
+    fontSize: 32,
+    fontWeight: 'bold'
+  },
+  textSecondary: {
+    fontFamily: 'Futura',
+    fontSize: 18
+  }
 });
 
 export default Register;

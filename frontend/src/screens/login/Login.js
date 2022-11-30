@@ -1,7 +1,6 @@
-import React from 'react';
-import { useState, useContext } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
-
+import React from "react";
+import { useState, useContext } from "react";
+import { SafeAreaView, StyleSheet, Text } from "react-native";
 import CustomInput from '../../components/customInput/CustomInput';
 import CustomButton from '../../components/customButton/CustomButton';
 import { AuthContext } from '../../components/context/AuthContext.js';
@@ -39,8 +38,11 @@ function Login({ navigation }) {
   // }
 
   return (
-    <View style = {styles.container}>
-      <Text>Login</Text>
+    <SafeAreaView 
+    style={styles.container}>
+      <Text
+      style={styles.text}>Please enter your{`\n`}    login details</Text>
+
 
       <CustomInput
         placeholder="Email"
@@ -61,17 +63,27 @@ function Login({ navigation }) {
           login(email, password);
         }}
       ></CustomButton>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
+    backgroundColor: '#fff',
     justifyContent: 'center',
+    alignItems: 'center'
   },
+  text: {
+    fontFamily: 'Futura',
+    fontSize: 26,
+    alignItems: 'center',
+    fontWeight: 'bold'
+  },
+  textSecondary: {
+    fontFamily: 'Futura',
+    fontSize: 18
+  }
 });
 
 export default Login;

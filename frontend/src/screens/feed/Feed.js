@@ -1,6 +1,6 @@
-import React from "react";
-import { useEffect, useState, useRef } from "react";
-import { StatusBar } from "expo-status-bar";
+import React from 'react';
+import { useEffect, useState, useRef } from 'react';
+import { StatusBar } from 'expo-status-bar';
 import {
   StyleSheet,
   Image,
@@ -9,15 +9,16 @@ import {
   Platform,
   Button,
   Linking,
+  ScrollView
+} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import Swiper from 'react-native-swiper';
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 import MPData from "../../components/MPData/MPData";
-
 import CustomInput from "../../components/customInput/CustomInput";
 import CustomButton from "../../components/customButton/CustomButton";
-import getDivisionAndMPData from "./getDivisionAndMPData";
 
 function Feed() {
   const [isLoading, setLoading] = useState(true);
@@ -62,6 +63,7 @@ function Feed() {
     };
   }
 
+
   Notifications.setNotificationHandler({
     handleNotification: async () => ({
       shouldShowAlert: true, // shows when app is in foreground too
@@ -69,7 +71,7 @@ function Feed() {
   });
 
   async function callCommonsApi() {
-    if (mpName == "") return;
+    if (mpName == '') return;
     const memberId = await getMpId(mpName);
     await getMPContactData(memberId);
     await getMpVotes(memberId);
@@ -104,28 +106,33 @@ function Feed() {
     ).json();
     setMPEmail(contactData.value[0].email);
   }
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
-      {/* <MpInput setMpName={setMpName} /> */}
-      <Text>Your MP is set to: {mpName}</Text>
+      {/* <MpInput setMpName={setMpName} /> **UNCOMMENT ONCE WORKING** */}
+      <Text style={styles.text}>Your MP: {mpName}</Text>
       <View style={{ flex: 1, padding: 24 }}>
         {isLoading ? (
-          <Text>Loading...</Text>
+          <Text style={styles.text}>Loading...</Text>
         ) : (
           <View style={styles.container}>
-            <Text>
-              <Image
-                source={{
-                  uri: `${mpData.items[0].value.thumbnailUrl}`,
-                  width: 60,
-                  height: 60,
-                }}
-              />
-              <Text>
-                {`\n`}MP ID: {`${mpData.items[0].value.id}\n\n`}
-              </Text>
-              {divisionData.map((individualData, i) => {
+            <Image
+              source={{
+                uri: `${mpData.items[0].value.thumbnailUrl}`,
+                width: 150,
+                height: 150
+              }}
+              style={{ borderColor: 'black', borderWidth: 5, borderRadius: 75 }}
+            />
+            <Swiper
+              loop={false}
+              showsPagination={true}
+              showsButtons={true}
+              bounces={true}
+              index={1}
+            >
+                  {divisionData.map((individualData, i) => {
                 return (
                   <MPData
                     key={`mpdata-${i}`}
@@ -134,8 +141,8 @@ function Feed() {
                     data={individualData}
                   />
                 );
-              })}
-            </Text>
+              }).slice(0, 12)}
+            </Swiper>
             <StatusBar style="auto" />
           </View>
         )}
@@ -146,6 +153,7 @@ function Feed() {
 
 async function registerForPushNotificationsAsync() {
   let token;
+
 
   if (Platform.OS === "android") {
     await Notifications.setNotificationChannelAsync("default", {
@@ -172,6 +180,7 @@ async function registerForPushNotificationsAsync() {
     token = (await Notifications.getExpoPushTokenAsync()).data;
     console.log(token);
   } else {
+
     alert("Must use physical device for Push Notifications"); //none of this works on emulators
   }
 
@@ -181,17 +190,19 @@ async function registerForPushNotificationsAsync() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
+  text: {
+    fontFamily: 'Futura',
+    fontSize: 32,
+    fontWeight: 'bold'
+  },
+  textSecondary: {
+    fontFamily: 'Futura',
+    fontSize: 10
+  }
 
-  // text: {
-  //   fontSize: 16,
-  //   lineHeight: 21,
-  //   fontWeight: 'bold',
-  //   letterSpacing: 0.25,
-  //   color: 'white',
-  // },
-});
 
 export default Feed;

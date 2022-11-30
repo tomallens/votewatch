@@ -32,6 +32,7 @@
     "react-dom": "18.1.0",
     "react-native": "0.70.5",
     "react-native-safe-area-context": "^4.4.1",
+    "react-native-swiper": "^1.6.0",
     "react-native-web": "~0.18.9",
     "web": "^0.0.2"
   },

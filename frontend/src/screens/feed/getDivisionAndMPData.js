@@ -1,14 +1,34 @@
-import { Button, Linking } from "react-native";
-import { Text } from "react-native";
+import { Button, Linking, Text, View } from 'react-native';
 
 function getDivisionAndMPData(mpName, mpEmail, individualData) {
+  const date = new Date(individualData.PublishedDivision.Date).toDateString();
   return (
-    <Text>
-      {`Division Title: ${individualData.PublishedDivision.Title}\n`}
-      {`Division Date: ${individualData.PublishedDivision.Date}\n`}
-      {`Division ID: ${individualData.PublishedDivision.DivisionId}\n`}
+    <View>
+      <Text
+        style={{
+          borderColor: 'black',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: 10,
+          textAlign: 'center'
+        }}
+      >
+        {`\n${date}\n`}
+        {`${individualData.PublishedDivision.Title}\n`}
 
-      {`Member Voted: ${individualData.MemberVotedAye ? "Aye" : "Noe"}\n`}
+        <Text
+          style={{
+            fontSize: 100,
+            color: 'firebrick',
+            fontWeight: '900',
+            alignItems: 'center'
+          }}
+        >
+          {`${individualData.MemberVotedAye ? 'AYE' : 'NOE'}\n`}
+        </Text>
+
+        {`\n\n\n`}
+      </Text>
       <Button
         onPress={() =>
           Linking.openURL(
@@ -17,15 +37,35 @@ function getDivisionAndMPData(mpName, mpEmail, individualData) {
             }&body=Dear ${mpName},\n\n I am writing to you about the Division "${
               individualData.PublishedDivision.Title
             }". \n\nIt has come to my attention that you voted ${
-              individualData.MemberVotedAye ? "Aye" : "Noe"
+              individualData.MemberVotedAye ? 'Aye' : 'Noe'
+
             } for this Division. \n\n I would like to raise my ... because ... \n\n Yours Sincerely,\n\n`
           )
         }
         title="EMAIL YOUR MP ABOUT THIS"
       />
-      {`\n\n\n`}
+    </View>
+
     </Text>
   );
 }
 
 export default getDivisionAndMPData;
+
+// *WIP vote logic function*
+// function ayeNoe() {
+//   if(individualData.MemberVotedAye) {
+//     <Text style={{
+//       fontSize: 100,
+//       color: ('forestgreen'),
+//       fontWeight: '900',
+//       alignItems: 'center'}}> 'AYE' </Text>
+//     } else if (!individualData.MemberVotedAye) {
+//       <Text style={{
+//         fontSize: 100,
+//         color: ('firebrick'),
+//         fontWeight: '900',
+//         alignItems: 'center'}}> 'NOE' </Text>
+//     }
+// }
+
