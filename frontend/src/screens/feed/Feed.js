@@ -1,14 +1,12 @@
+import React from 'react';
+import { useEffect, useState, useRef } from 'react';
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Image, Text, View, SafeAreaView, Platform, Button, Linking } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
-import { StyleSheet, Image, Text, View, SafeAreaView, Platform, Button, Linking } from "react-native";
-import React from "react";
-import { useEffect, useState, useRef } from "react";
-import { StatusBar } from "expo-status-bar";
-
-import { SafeAreaView } from "react-native-safe-area-context";
 import CustomInput from "../../components/customInput/CustomInput";
 import CustomButton from "../../components/customButton/CustomButton";
-
 import getDivisionAndMPData from "./getDivisionAndMPData";
 
 
@@ -16,12 +14,12 @@ function Feed() {
   const [isLoading, setLoading] = useState(true);
   const [divisionData, setDivisionData] = useState([]);
   const [mpData, setMpData] = useState([]);
+  const [mpName, setMpName] = useState('Boris Johnson');
+  const [mpEmail, setMPEmail] = useState('boris.johnson.mp@parlement.uk');
   const [expoPushToken, setExpoPushToken] = useState('');
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
-  const [mpName, setMpName] = useState("Boris Johnson");
-  const [mpEmail, setMPEmail] = useState("boris.johnson.mp@parlement.uk");
 
   useEffect(() => {
     callCommonsApi();
@@ -56,7 +54,7 @@ function Feed() {
   });
 
   async function callCommonsApi() {
-    if (mpName == "") return;
+    if (mpName == '') return;
     const memberId = await getMpId(mpName);
     await getMPContactData(memberId);
     await getMpVotes(memberId);
@@ -91,7 +89,6 @@ function Feed() {
     ).json();
     setMPEmail(contactData.value[0].email);
   }
-
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
@@ -159,8 +156,8 @@ async function registerForPushNotificationsAsync() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
+    backgroundColor: '#fff',
+    alignItems: 'center',
   },
 
   // text: {
