@@ -1,6 +1,6 @@
-import React from 'react';
-import { useEffect, useState, useRef } from 'react';
-import { StatusBar } from 'expo-status-bar';
+import React from "react";
+import { useEffect, useState, useRef } from "react";
+import { StatusBar } from "expo-status-bar";
 import {
   StyleSheet,
   Image,
@@ -9,12 +9,12 @@ import {
   Platform,
   Button,
   Linking,
-  ScrollView
-} from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-// import Swiper from 'react-native-swiper';
+  ScrollView,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+// import Swiper from "react-native-swiper";
 import * as Device from "expo-device";
-// import * as Notifications from "expo-notifications";
+import * as Notifications from "expo-notifications";
 import MPData from "../../components/MPData/mpData";
 import CustomInput from "../../components/customInput/CustomInput";
 import CustomButton from "../../components/customButton/CustomButton";
@@ -62,15 +62,14 @@ function Feed() {
   //   };
   // }
 
-
-  // Notifications.setNotificationHandler({
-  //   handleNotification: async () => ({
-  //     shouldShowAlert: true, // shows when app is in foreground too
-  //   }),
-  // });
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true, // shows when app is in foreground too
+    }),
+  });
 
   async function callCommonsApi() {
-    if (mpName == '') return;
+    if (mpName == "") return;
     const memberId = await getMpId(mpName);
     await getMPContactData(memberId);
     await getMpVotes(memberId);
@@ -120,9 +119,9 @@ function Feed() {
               source={{
                 uri: `${mpData.items[0].value.thumbnailUrl}`,
                 width: 150,
-                height: 150
+                height: 150,
               }}
-              style={{ borderColor: 'black', borderWidth: 5, borderRadius: 75 }}
+              style={{ borderColor: "black", borderWidth: 5, borderRadius: 75 }}
             />
             {/* <Swiper
               loop={false}
@@ -150,10 +149,8 @@ function Feed() {
   );
 }
 
-
 async function registerForPushNotificationsAsync() {
   let token;
-
 
   if (Platform.OS === "android") {
     await Notifications.setNotificationChannelAsync("default", {
@@ -180,7 +177,6 @@ async function registerForPushNotificationsAsync() {
     token = (await Notifications.getExpoPushTokenAsync()).data;
     console.log(token);
   } else {
-
     alert("Must use physical device for Push Notifications"); //none of this works on emulators
   }
 
@@ -188,17 +184,17 @@ async function registerForPushNotificationsAsync() {
 }
 
 const styles = StyleSheet.create({
- container: {
-  flex: 1,
-  backgroundColor: "#fff",
-  justifyContent: 'center',
-  alignItems: "center"
- },
- text: {
-fontFamily: 'Futura',
-fontSize: 32,
-fontWeight: 'bold'
- }
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  text: {
+    fontFamily: "Futura",
+    fontSize: 32,
+    fontWeight: "bold",
+  },
 });
 
 export default Feed;
