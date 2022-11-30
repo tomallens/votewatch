@@ -12,31 +12,35 @@ function Login({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // const onLoginPressed = async () => {
-  //   //await handleLogin();
-  // };
+  const [errors, setErrors] = React.useState({});
 
-  // async function handleLogin() {
-  //   await fetch("http://localhost:3000/users", {
-  //     method: "post",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
+  const handleError = (error, input) => {
+    setErrors((prevState) => ({ ...prevState, [input]: error }));
+  };
 
-  //     body: JSON.stringify({
-  //       name: name,
-  //       email: email,
-  //       password: password,
-  //       mpname: mpName,
-  //     }),
-  //   }).then((response) => {
-  //     if (response.status === 201) {
-  //       console.log("OK");
-  //     } else {
-  //       console.log("OH NO");
-  //     }
-  //   });
-  // }
+  const validate = async () => {
+    let isValid = true;
+
+    if (!email) {
+      handleError('Please input email', 'email');
+      isValid = false;
+    } else if (!email.match(/\S+@\S+\.\S+/)) {
+      handleError('Please input a valid email', 'email');
+      isValid = false;
+    }
+
+    if (!password) {
+      handleError('Please input password', 'password');
+      isValid = false;
+    } else if (password.length < 7) {
+      handleError('Password needs to be at least 8 characters.', 'password');
+      isValid = false;
+    }
+
+    if (isValid) {
+      login(email, password);
+    }
+  };
 
   return (
     <View>
@@ -47,6 +51,7 @@ function Login({ navigation }) {
         value={email}
         setValue={setEmail}
       ></CustomInput>
+      <span style={{ color: 'red' }}>{errors['email']}</span>
 
       <CustomInput
         placeholder="Password"
@@ -54,11 +59,12 @@ function Login({ navigation }) {
         setValue={setPassword}
         secureTextEntry
       ></CustomInput>
+      <span style={{ color: 'red' }}>{errors['password']}</span>
 
       <CustomButton
         text="Login"
         onPress={() => {
-          login(email, password);
+          validate();
         }}
       ></CustomButton>
     </View>
