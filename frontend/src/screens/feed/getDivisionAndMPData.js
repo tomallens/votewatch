@@ -24,6 +24,7 @@ function getDivisionAndMPData(mpName, mpEmail, individualData) {
         title="EMAIL YOUR MP ABOUT THIS"
       />
       {`\n\n\n`}
+      
     </Text>
   );
 }

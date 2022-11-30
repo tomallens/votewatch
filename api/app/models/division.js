@@ -1,12 +1,12 @@
 module.exports = (sequelize, Sequelize) => {
   const Division = sequelize.define('division', {
-    name: {
-      type: Sequelize.STRING,
+    approved: {
+      type: Sequelize.BOOLEAN,
     },
-    approves: {
+    divisionId: {
       type: Sequelize.INTEGER,
     },
-    disapproves: {
+    mpId: {
       type: Sequelize.INTEGER,
     },
   });

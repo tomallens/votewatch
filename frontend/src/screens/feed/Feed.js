@@ -131,6 +131,7 @@ function Feed() {
                     key={`mpdata-${i}`}
                     name={mpName}
                     email={mpEmail}
+                    mpId={mpData.items[0].value.id}
                     data={individualData}
                   />
                 );
