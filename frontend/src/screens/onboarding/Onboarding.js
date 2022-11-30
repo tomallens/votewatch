@@ -45,7 +45,7 @@ function Onboarding({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "gainsboro",
     justifyContent: 'top', 
     alignItems: "center"},
     text:{
