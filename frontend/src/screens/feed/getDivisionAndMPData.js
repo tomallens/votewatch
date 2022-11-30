@@ -29,7 +29,6 @@ function getDivisionAndMPData(mpName, mpEmail, individualData) {
 
         {`\n\n\n`}
       </Text>
-
       <Button
         onPress={() =>
           Linking.openURL(
@@ -39,12 +38,15 @@ function getDivisionAndMPData(mpName, mpEmail, individualData) {
               individualData.PublishedDivision.Title
             }". \n\nIt has come to my attention that you voted ${
               individualData.MemberVotedAye ? 'Aye' : 'Noe'
+
             } for this Division. \n\n I would like to raise my ... because ... \n\n Yours Sincerely,\n\n`
           )
         }
         title="EMAIL YOUR MP ABOUT THIS"
       />
     </View>
+
+    </Text>
   );
 }
 
@@ -66,3 +68,4 @@ export default getDivisionAndMPData;
 //         alignItems: 'center'}}> 'NOE' </Text>
 //     }
 // }
+

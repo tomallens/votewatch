@@ -8,7 +8,6 @@ import {
   Image,
   // ImageBackground
 } from 'react-native';
-
 import CustomButton from '../../components/customButton/CustomButton';
 const image = ('../../../assets/BG2.png')
 

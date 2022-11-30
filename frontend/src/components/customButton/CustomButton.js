@@ -17,13 +17,17 @@ const styles = StyleSheet.create({
     padding: 15,
     marginVertical: 5,
     alignItems: "center",
-    borderRadius: 5,
+    borderRadius: 8,
+    top: 0, left: 0, 
+    right: 0, bottom: 0, 
+    // justifyContent: 'bottom',
   },
   text: {
     fontWeight: "bold",
     fontSize: 18,
     color: "white",
   },
+  
 });
 
 export default CustomButton;

@@ -12,13 +12,14 @@ function Register() {
 
   const onRegisterPressed = async () => {
     await handleRegistration();
+    navigation.navigate('Login');
   };
 
   async function handleRegistration() {
-    await fetch('http://localhost:3000/users', {
+    await fetch('http://localhost:8080/register', {
       method: 'post',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
 
       body: JSON.stringify({

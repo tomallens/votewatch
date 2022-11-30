@@ -1,16 +1,15 @@
 import React from "react";
 import { useState, useContext } from "react";
 import { SafeAreaView, StyleSheet, Text } from "react-native";
-
-import CustomInput from "../../components/customInput/CustomInput";
-import CustomButton from "../../components/customButton/CustomButton";
-import { AuthContext } from "../../components/context/AuthContext.js";
+import CustomInput from '../../components/customInput/CustomInput';
+import CustomButton from '../../components/customButton/CustomButton';
+import { AuthContext } from '../../components/context/AuthContext.js';
 
 function Login({ navigation }) {
   const { login } = useContext(AuthContext);
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   // const onLoginPressed = async () => {
   //   //await handleLogin();
@@ -44,6 +43,7 @@ function Login({ navigation }) {
       <Text
       style={styles.text}>Please enter your{`\n`}    login details</Text>
 
+
       <CustomInput
         placeholder="Email"
         value={email}
@@ -60,7 +60,7 @@ function Login({ navigation }) {
       <CustomButton
         text="Login"
         onPress={() => {
-          login();
+          login(email, password);
         }}
       ></CustomButton>
     </SafeAreaView>
