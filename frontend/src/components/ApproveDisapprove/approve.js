@@ -1,25 +1,26 @@
 import CustomButton from "../customButton/CustomButton";
 
 const addApprove = (divisionId, mpId) => {
-  console.log('Data', divisionId, mpId)
-  fetch('https://localhost:8080/approvals', {
-    method: 'PATCH',
+  console.log("Data", divisionId, mpId);
+  fetch("http://localhost:8080/approvals", {
+    method: "PATCH",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       approved: true,
       divisionId: divisionId,
-      mpId: mpId
+      mpId: mpId,
     }),
-  })
-}
+  });
+};
 
 function approve(divisionId, mpId) {
   return (
     <CustomButton
       text="Approve"
-      onPress={() => { addApprove(divisionId, mpId)
+      onPress={() => {
+        addApprove(divisionId, mpId);
         // console.log("Approve was clicked!")
         // const requestOptions = {
         //   method: 'PATCH',
@@ -35,8 +36,7 @@ function approve(divisionId, mpId) {
         //   .then(data => console.log(data));
       }}
     />
-    
-  )
+  );
 }
 
 export default approve;

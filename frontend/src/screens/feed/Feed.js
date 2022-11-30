@@ -32,7 +32,7 @@ function Feed() {
 
   useEffect(() => {
     callCommonsApi();
-    pushNotificationHandler(); // << Currently needs to be commented out in order for google and email links to work. -JOE2k22
+    // pushNotificationHandler(); // << Currently needs to be commented out in order for google and email links to work. -JOE2k22
   }, [mpName]);
 
   function pushNotificationHandler() {
