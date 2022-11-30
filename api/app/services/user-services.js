@@ -68,15 +68,22 @@ exports.getmpname = (req, res) => {
     where: {
       id: req.body.id,
     },
-  })
-    .then((user) => {
-      return res.status(200).send({
-        mpname: user.mpname,
+  }).then((user) => {
+    if (!user) {
+      return res.status(404).send({
+        message: "User not found",
       });
-    })
-    .catch((exception) => {
-      res.status(500).send({ message: exception.message });
-    });
+    }
+    return res
+      .status(200)
+      .send({
+        mpname: user.mpname,
+      })
+
+      .catch((exception) => {
+        res.status(500).send({ message: exception.message });
+      });
+  });
 };
 
 function validateRequest(req) {
