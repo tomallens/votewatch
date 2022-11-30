@@ -2,10 +2,10 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Pressable } from "react-native";
 
-function CustomButton({ onPress, text }) {
+function CustomButton(props) {
   return (
-    <Pressable onPress={onPress} style={styles.container}>
-      <Text style={styles.text}>{text}</Text>
+    <Pressable onPress={props.onPress} style={styles.container}>
+      <Text style={styles.text}>{props.text}</Text>
     </Pressable>
   );
 }

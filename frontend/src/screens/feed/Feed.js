@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect, useState, useRef } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Image, Text, View, SafeAreaView, Platform, Button, Linking } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+// import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import CustomInput from "../../components/customInput/CustomInput";
@@ -89,6 +89,9 @@ function Feed() {
     ).json();
     setMPEmail(contactData.value[0].email);
   }
+
+  const mpId = mpData.items[0].value.id
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
@@ -107,10 +110,10 @@ function Feed() {
                   height: 60,
                 }}
               />
-                <Text>{`\n`}MP ID: {`${mpData.items[0].value.id}\n\n`}</Text>
+                <Text>{`\n`}MP ID: {`${mpId}\n\n`}</Text>
 
               {divisionData.map((individualData) => {
-                return getDivisionAndMPData(mpName, mpEmail, individualData);
+                return getDivisionAndMPData(mpName, mpEmail, mpId, individualData);
               })}
             </Text>
             <StatusBar style="auto" />
