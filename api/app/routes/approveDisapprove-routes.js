@@ -1,16 +1,18 @@
 // const { verifyUser } = require('../middleware');
-const approvalServices = require("../services/approval-services.js");
+const approveDisapproveServices = require("../services/approveDisapprove-services.js");
 
 module.exports = function (app) {
   app.use(function (req, res, next) {
     res.header(
-      "Access-Control-Allow-Headers",
+      "Access-Control-Allow-Origin",
       "Authorization",
       "Origin, Content-Type, Accept"
     );
     next();
   });
 
-  //user registration
-  app.patch("/approvals", approvalServices.addApproval);
+  app.patch(
+    "/approveDisapprove",
+    approveDisapproveServices.addApproveDisapprove
+  );
 };

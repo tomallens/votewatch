@@ -1,14 +1,15 @@
 const database = require("../models");
-const Approval = database.approval;
+const approveDisapprove = database.approveDisapprove;
 
-exports.addApproval = (req, res) => {
+exports.addApproveDisapprove = (req, res) => {
   console.log("Request : ", req.body);
 
-  Approval.create({
-    approved: req.body.approved,
-    divisionId: req.body.divisionId,
-    mpId: req.body.mpId,
-  })
+  approveDisapprove
+    .create({
+      approved: req.body.approved,
+      divisionId: req.body.divisionId,
+      mpId: req.body.mpId,
+    })
     .then(
       res.send({ message: "Approval sent!" }),
       console.log("Approval sent!")

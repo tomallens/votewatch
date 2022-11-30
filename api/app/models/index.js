@@ -20,7 +20,10 @@ const sequelize = new Sequelize(
 const database = {};
 database.Sequelize = Sequelize;
 database.sequelize = sequelize;
-database.approval = require("./approval.js")(sequelize, Sequelize);
+database.approveDisapprove = require("./approveDisapprove.js")(
+  sequelize,
+  Sequelize
+);
 database.user = require("./user.js")(sequelize, Sequelize);
 
 module.exports = database;

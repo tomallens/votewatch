@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-  const Approval = sequelize.define("approval", {
+  const approveDisapprove = sequelize.define("approveDisapprove", {
     approved: {
       type: Sequelize.BOOLEAN,
     },
@@ -10,5 +10,5 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.INTEGER,
     },
   });
-  return Approval;
+  return approveDisapprove;
 };

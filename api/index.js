@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
     message: "Welcome to votewatch",
   });
 });
-require("./app/routes/approval-routes")(app);
+require("./app/routes/approveDisapprove-routes")(app);
 require("./app/routes/user-routes")(app);
 
 const PORT = process.env.PORT || 8080;
