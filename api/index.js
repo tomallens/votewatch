@@ -1,7 +1,7 @@
 const express = require("express")
 const cors = require("cors")
 const app = express();
-const timeInterval = 1000;
+const timeInterval = 10000;
 const checkNewVotes = require("./app/middleware/voteHandler")
 
 startRepeating = () => {
