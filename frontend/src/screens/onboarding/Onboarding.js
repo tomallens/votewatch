@@ -5,10 +5,12 @@ import {
   StyleSheet,
   SafeAreaView,
   TouchableOpacity,
-  Image
+  Image,
+  // ImageBackground
 } from 'react-native';
 
 import CustomButton from '../../components/customButton/CustomButton';
+const image = ('../../../assets/BG2.png')
 
 // import { AuthProvider } from "../../components/context/AuthContext";
 
@@ -17,6 +19,7 @@ function Onboarding({ navigation }) {
     <SafeAreaView
       style={ styles.container }
     >
+      {/* <ImageBackground source={require('./../../../assets/BG1.png')} resizeMode="stretch" style={styles.image}> */}
       <Image
         source={require('./../../../assets/logo.png')}
         style={{ marginTop: 80, marginBottom: 20, width: 180, height: 100, blurRadius: 1000 }}
@@ -35,6 +38,7 @@ function Onboarding({ navigation }) {
         text="Login"
         onPress={() => navigation.navigate('Login')}
       ></CustomButton>
+      {/* </ImageBackground> */}
     </SafeAreaView>
   );
 }
@@ -48,6 +52,10 @@ const styles = StyleSheet.create({
     text:{
     fontFamily: 'Futura', fontSize: 32, fontWeight: 'bold'
   },
+  // image: {
+    // flex: 1,
+    // justifyContent: "center"
+  // }
 });
 
 export default Onboarding;

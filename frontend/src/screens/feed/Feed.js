@@ -107,7 +107,6 @@ function Feed() {
               }}
               style={{ borderColor: 'black', borderWidth: 5, borderRadius: 75 }}
             />
-            {/* <Text style={styles.text}>{`${mpData.items[0].value.id}\n`}</Text> */}
             <Swiper
               loop={false}
               showsPagination={true}

@@ -45,7 +45,6 @@ function Register() {
         placeholder="Name"
         value={name}
         setValue={setName}
-        autoCapitalize='words'
       ></CustomInput>
 
       <CustomInput

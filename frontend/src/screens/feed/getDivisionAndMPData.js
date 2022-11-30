@@ -1,5 +1,14 @@
 import { Button, Linking, Text, View } from 'react-native';
 
+// function ayeNoeColour {
+//   if(individualData.MemberVotedAye) {
+//     color: ('firebrick')
+//   }
+//   else if(!individualData.MemberVotedAye) {
+//     color: ('forestgreen')
+//   }
+// }
+
 function getDivisionAndMPData(mpName, mpEmail, individualData) {
   const date = new Date(individualData.PublishedDivision.Date).toDateString();
 
@@ -14,14 +23,13 @@ function getDivisionAndMPData(mpName, mpEmail, individualData) {
           textAlign: 'center'
         }}
       >
-        {`Name of vote:\n${individualData.PublishedDivision.Title}\n\n`}
-        {`Date of vote:\n${date}\n`}
-        {/* {`Vote ID: ${individualData.PublishedDivision.DivisionId}\n`} */}
+        {`\n${date}\n\n`}
+        {`${individualData.PublishedDivision.Title}:\n`}
 
         <Text
           style={{
             fontSize: 100,
-            color: 'crimson',
+            color: 'firebrick',
             fontWeight: '900',
             alignItems: 'center'
           }}
