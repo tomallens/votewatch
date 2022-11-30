@@ -13,10 +13,9 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Swiper from 'react-native-swiper';
-} from "react-native";
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
-import MPData from "../../components/MPData/MPData";
+import MPData from "../../components/MPData/mpData";
 import CustomInput from "../../components/customInput/CustomInput";
 import CustomButton from "../../components/customButton/CustomButton";
 
@@ -33,35 +32,35 @@ function Feed() {
 
   useEffect(() => {
     callCommonsApi();
-    pushNotificationHandler(); // << Currently needs to be commented out in order for google and email links to work. -JOE2k22
+    // pushNotificationHandler(); // << Currently needs to be commented out in order for google and email links to work. -JOE2k22
   }, [mpName]);
 
-  function pushNotificationHandler() {
-    registerForPushNotificationsAsync().then((token) =>
-      setExpoPushToken(token)
-    ); // makes a push token to identify this instance of the client
-    // .then(token => expoPushTokensApi.register(token)); <---- this is our point of entry to backend - inactive for now
+  // function pushNotificationHandler() {
+  //   registerForPushNotificationsAsync().then((token) =>
+  //     setExpoPushToken(token)
+  //   ); // makes a push token to identify this instance of the client
+  //   // .then(token => expoPushTokensApi.register(token)); <---- this is our point of entry to backend - inactive for now
 
-    notificationListener.current =
-      Notifications.addNotificationReceivedListener((notification) => {
-        setNotification(notification);
-      });
+  //   notificationListener.current =
+  //     Notifications.addNotificationReceivedListener((notification) => {
+  //       setNotification(notification);
+  //     });
 
-    // Works when app is foregrounded, backgrounded, or killed
-    responseListener.current =
-      Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log("--- notification tapped ---");
-        console.log(response);
-        console.log("------");
-      });
+  //   // Works when app is foregrounded, backgrounded, or killed
+  //   responseListener.current =
+  //     Notifications.addNotificationResponseReceivedListener((response) => {
+  //       console.log("--- notification tapped ---");
+  //       console.log(response);
+  //       console.log("------");
+  //     });
 
-    return () => {
-      Notifications.removeNotificationSubscription(
-        notificationListener.current
-      ); // otherwise it will never stop asking
-      Notifications.removeNotificationSubscription(responseListener.current);
-    };
-  }
+  //   return () => {
+  //     Notifications.removeNotificationSubscription(
+  //       notificationListener.current
+  //     ); // otherwise it will never stop asking
+  //     Notifications.removeNotificationSubscription(responseListener.current);
+  //   };
+  // }
 
 
   Notifications.setNotificationHandler({
@@ -151,6 +150,7 @@ function Feed() {
   );
 }
 
+
 async function registerForPushNotificationsAsync() {
   let token;
 
@@ -188,21 +188,17 @@ async function registerForPushNotificationsAsync() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  text: {
-    fontFamily: 'Futura',
-    fontSize: 32,
-    fontWeight: 'bold'
-  },
-  textSecondary: {
-    fontFamily: 'Futura',
-    fontSize: 10
-  }
-
+ container: {
+  flex: 1,
+  backgroundColor: "#fff",
+  justifyContent: 'center',
+  alignItems: "center"
+ },
+ text: {
+fontFamily: 'Futura',
+fontSize: 32,
+fontWeight: 'bold'
+ }
+});
 
 export default Feed;
