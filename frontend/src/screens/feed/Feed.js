@@ -17,7 +17,7 @@ import MPData from "../../components/MPData/MPData";
 
 import CustomInput from "../../components/customInput/CustomInput";
 import CustomButton from "../../components/customButton/CustomButton";
-import getDivisionAndMPData from "./getDivisionAndMPData";
+import APIRequests from "./apiRequests";
 
 function Feed() {
   const [isLoading, setLoading] = useState(true);
@@ -32,7 +32,7 @@ function Feed() {
 
   useEffect(() => {
     callCommonsApi();
-    pushNotificationHandler(); // << Currently needs to be commented out in order for google and email links to work. -JOE2k22
+    // pushNotificationHandler(); // << Currently needs to be commented out in order for google and email links to work. -JOE2k22
   }, [mpName]);
 
   function pushNotificationHandler() {
@@ -70,40 +70,16 @@ function Feed() {
 
   async function callCommonsApi() {
     if (mpName == "") return;
-    const memberId = await getMpId(mpName);
-    await getMPContactData(memberId);
-    await getMpVotes(memberId);
-  }
-
-  async function getMpId(mpName) {
-    const data = await (
-      await fetch(
-        `https://members-api.parliament.uk/api/Members/Search?Name=${mpName}`
-      )
-    ).json();
-    setMpData(data);
-
-    return data.items[0].value.id;
-  }
-
-  async function getMpVotes(memberId) {
-    const votes = await (
-      await fetch(
-        `https://commonsvotes-api.parliament.uk/data/divisions.json/membervoting?memberId=${memberId}`
-      )
-    ).json();
-    setDivisionData(votes);
+    const memberId = await APIRequests.getMPID(mpName);
+    const memberData = await APIRequests.getMPData(mpName);
+    const memberVotes = await APIRequests.getMpVotes(memberId);
+    const memberContactData = await APIRequests.getMPContactData(memberId);
+    setMpData(memberData);
+    setDivisionData(memberVotes);
     setLoading(false);
+    setMPEmail(memberContactData);
   }
 
-  async function getMPContactData(memberId) {
-    const contactData = await (
-      await fetch(
-        `https://members-api.parliament.uk/api/Members/${memberId}/Contact`
-      )
-    ).json();
-    setMPEmail(contactData.value[0].email);
-  }
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
