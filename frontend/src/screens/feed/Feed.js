@@ -12,9 +12,9 @@ import {
   ScrollView
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Swiper from 'react-native-swiper';
+// import Swiper from 'react-native-swiper';
 import * as Device from "expo-device";
-import * as Notifications from "expo-notifications";
+// import * as Notifications from "expo-notifications";
 import MPData from "../../components/MPData/mpData";
 import CustomInput from "../../components/customInput/CustomInput";
 import CustomButton from "../../components/customButton/CustomButton";
@@ -63,11 +63,11 @@ function Feed() {
   // }
 
 
-  Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-      shouldShowAlert: true, // shows when app is in foreground too
-    }),
-  });
+  // Notifications.setNotificationHandler({
+  //   handleNotification: async () => ({
+  //     shouldShowAlert: true, // shows when app is in foreground too
+  //   }),
+  // });
 
   async function callCommonsApi() {
     if (mpName == '') return;
@@ -124,7 +124,7 @@ function Feed() {
               }}
               style={{ borderColor: 'black', borderWidth: 5, borderRadius: 75 }}
             />
-            <Swiper
+            {/* <Swiper
               loop={false}
               showsPagination={true}
               showsButtons={true}
@@ -141,7 +141,7 @@ function Feed() {
                   />
                 );
               }).slice(0, 12)}
-            </Swiper>
+            </Swiper> */}
             <StatusBar style="auto" />
           </View>
         )}

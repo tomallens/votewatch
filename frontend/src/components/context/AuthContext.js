@@ -47,22 +47,22 @@ export const AuthProvider = ({ children }) => {
     setIsLoading(false);
   };
 
-  const isLoggedIn = async () => {
-    console.log(
-      'user token from isLoggedIn: ',
-      await AsyncStorage.getItem('userToken')
-    );
-    let userToken = await AsyncStorage.getItem('userToken');
-    let userData = await AsyncStorage.getItem('userData');
+  // const isLoggedIn = async () => {
+  //   console.log(
+  //     'user token from isLoggedIn: ',
+  //     await AsyncStorage.getItem('userToken')
+  //   );
+  //   let userToken = await AsyncStorage.getItem('userToken');
+  //   let userData = await AsyncStorage.getItem('userData');
 
-    if (userToken) {
-      setUserToken(userToken);
-    }
-  };
+  //   if (userToken) {
+  //     setUserToken(userToken);
+  //   }
+  // };
 
-  useEffect(() => {
-    isLoggedIn();
-  }, []);
+  // useEffect(() => {
+  //   isLoggedIn();
+  // }, []);
 
   return (
     <AuthContext.Provider
