@@ -1,43 +1,78 @@
-import { Button, Linking } from "react-native";
-import { Text } from "react-native";
+import { Button, Linking, View, Text } from 'react-native';
 
 function mpData(props) {
   const mpName = props.name;
   const mpEmail = props.email;
   const individualData = props.data;
-
   const divisionTitle = individualData.PublishedDivision.Title;
-  const divisionDate = individualData.PublishedDivision.Date;
-  const divisionId = individualData.PublishedDivision.DivisionId;
+  const divisionDate = new Date(
+    individualData.PublishedDivision.Date
+  ).toDateString();
   const mpVote = individualData.MemberVotedAye;
 
   return (
-    <Text>
+    <View>
+      <Text
+        style={{
+          borderColor: 'black',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: 10,
+          textAlign: 'center'
+        }}
+      >
+        {`\n${divisionDate}\n\n`}
+        <Button
+          onPress={() =>
+            Linking.openURL(
+              'http://google.com/search?q=' + divisionTitle,
+              '_blank'
+            )
+          }
+          title={`${divisionTitle}`}
+        />{' '}
+        {/* {ayeNoe()} */}
+        <Text
+          style={{
+            fontSize: 100,
+            color: 'firebrick',
+            textAlign: 'center',
+            fontWeight: '900',
+         
+          }}
+        >
+          {`${mpVote ? 'AYE' : 'NOE'}\n`}
+        </Text>
+        {`\n\n\n`}
+      </Text>
       <Button
         onPress={() =>
           Linking.openURL(
-            "http://google.com/search?q=" + divisionTitle,
-            "_blank"
-          )
-        }
-        title={`Division Title: ${divisionTitle}`}
-      />{" "}
-      {`Division Date: ${divisionDate}\n`}
-      {`Division ID: ${divisionId}\n`}
-      {`Member Voted: ${mpVote ? "Aye" : "Noe"}\n`}
-      <Button
-        onPress={() =>
-          Linking.openURL(
-            `mailto:${mpEmail}?subject=${divisionTitle}&body=Dear ${mpName},\n\n I am writing to you about the Division "${divisionTitle}". \n\nIt has come to my attention that you voted ${
-              mpVote ? "Aye" : "Noe"
-            } for this Division. \n\n I would like to raise my ... because ... \n\n Yours Sincerely,\n\n`
+            `mailto:${mpEmail}?subject=${divisionTitle}&body=Dear ${mpName},\n\n I am writing to you regarding your vote on the recent division titled: "${divisionTitle}". \n\nIt has come to my attention that you voted ${
+              mpVote ? 'Aye' : 'Noe'
+            } for this Division. \n\n I would therefore share my [SUPPORT / CONCERN] because [ENTER REASON]. \n\n Yours Sincerely,\n\n [ENTER NAME]`
           )
         }
         title="EMAIL YOUR MP ABOUT THIS"
       />
-      {`\n\n\n`}
-    </Text>
+    </View>
   );
 }
 
 export default mpData;
+
+// function ayeNoe() {
+//   if(mpVote) {
+//     <Text style={{
+//       fontSize: 100,
+//       color: ('forestgreen'),
+//       fontWeight: '900',
+//       alignItems: 'center'}}> 'AYE' </Text>
+//     } else if (!mpVote) {
+//       <Text style={{
+//         fontSize: 100,
+//         color: ('firebrick'),
+//         fontWeight: '900',
+//         alignItems: 'center'}}> 'NOE' </Text>
+//     }
+// }

@@ -1,6 +1,6 @@
-import React from "react";
-import { useEffect, useState, useRef } from "react";
-import { StatusBar } from "expo-status-bar";
+import React from 'react';
+import { useEffect, useState, useRef } from 'react';
+import { StatusBar } from 'expo-status-bar';
 import {
   StyleSheet,
   Image,
@@ -9,15 +9,18 @@ import {
   Platform,
   Button,
   Linking,
-} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+  ScrollView
+} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import Swiper from 'react-native-swiper';
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
-import MPData from "../../components/MPData/MPData";
-
+import MPData from "../../components/MPData/mpData";
 import CustomInput from "../../components/customInput/CustomInput";
 import CustomButton from "../../components/customButton/CustomButton";
 import APIRequests from "./apiRequests";
+
+
 
 function Feed() {
   const [isLoading, setLoading] = useState(true);
@@ -35,32 +38,33 @@ function Feed() {
     // pushNotificationHandler(); // << Currently needs to be commented out in order for google and email links to work. -JOE2k22
   }, [mpName]);
 
-  function pushNotificationHandler() {
-    registerForPushNotificationsAsync().then((token) =>
-      setExpoPushToken(token)
-    ); // makes a push token to identify this instance of the client
-    // .then(token => expoPushTokensApi.register(token)); <---- this is our point of entry to backend - inactive for now
+  // function pushNotificationHandler() {
+  //   registerForPushNotificationsAsync().then((token) =>
+  //     setExpoPushToken(token)
+  //   ); // makes a push token to identify this instance of the client
+  //   // .then(token => expoPushTokensApi.register(token)); <---- this is our point of entry to backend - inactive for now
 
-    notificationListener.current =
-      Notifications.addNotificationReceivedListener((notification) => {
-        setNotification(notification);
-      });
+  //   notificationListener.current =
+  //     Notifications.addNotificationReceivedListener((notification) => {
+  //       setNotification(notification);
+  //     });
 
-    // Works when app is foregrounded, backgrounded, or killed
-    responseListener.current =
-      Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log("--- notification tapped ---");
-        console.log(response);
-        console.log("------");
-      });
+  //   // Works when app is foregrounded, backgrounded, or killed
+  //   responseListener.current =
+  //     Notifications.addNotificationResponseReceivedListener((response) => {
+  //       console.log("--- notification tapped ---");
+  //       console.log(response);
+  //       console.log("------");
+  //     });
 
-    return () => {
-      Notifications.removeNotificationSubscription(
-        notificationListener.current
-      ); // otherwise it will never stop asking
-      Notifications.removeNotificationSubscription(responseListener.current);
-    };
-  }
+  //   return () => {
+  //     Notifications.removeNotificationSubscription(
+  //       notificationListener.current
+  //     ); // otherwise it will never stop asking
+  //     Notifications.removeNotificationSubscription(responseListener.current);
+  //   };
+  // }
+
 
   Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -69,6 +73,7 @@ function Feed() {
   });
 
   async function callCommonsApi() {
+
     if (mpName == "") return;
     const memberId = await APIRequests.getMPID(mpName);
     const memberData = await APIRequests.getMPData(mpName);
@@ -76,32 +81,37 @@ function Feed() {
     const memberContactData = await APIRequests.getMPContactData(memberId);
     setMpData(memberData);
     setDivisionData(memberVotes);
+
     setLoading(false);
     setMPEmail(memberContactData);
   }
-
+ 
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
-      {/* <MpInput setMpName={setMpName} /> */}
-      <Text>Your MP is set to: {mpName}</Text>
+      {/* <MpInput setMpName={setMpName} /> **UNCOMMENT ONCE WORKING** */}
+      <Text style={styles.text}>Your MP: {mpName}</Text>
       <View style={{ flex: 1, padding: 24 }}>
         {isLoading ? (
-          <Text>Loading...</Text>
+          <Text style={styles.text}>Loading...</Text>
         ) : (
           <View style={styles.container}>
-            <Text>
-              <Image
-                source={{
-                  uri: `${mpData.items[0].value.thumbnailUrl}`,
-                  width: 60,
-                  height: 60,
-                }}
-              />
-              <Text>
-                {`\n`}MP ID: {`${mpData.items[0].value.id}\n\n`}
-              </Text>
-              {divisionData.map((individualData, i) => {
+            <Image
+              source={{
+                uri: `${mpData.items[0].value.thumbnailUrl}`,
+                width: 150,
+                height: 150
+              }}
+              style={{ borderColor: 'black', borderWidth: 5, borderRadius: 75 }}
+            />
+            <Swiper
+              loop={false}
+              showsPagination={true}
+              showsButtons={true}
+              bounces={true}
+              index={1}
+            >
+                  {divisionData.map((individualData, i) => {
                 return (
                   <MPData
                     key={`mpdata-${i}`}
@@ -110,8 +120,8 @@ function Feed() {
                     data={individualData}
                   />
                 );
-              })}
-            </Text>
+              }).slice(0, 12)}
+            </Swiper>
             <StatusBar style="auto" />
           </View>
         )}
@@ -120,8 +130,10 @@ function Feed() {
   );
 }
 
+
 async function registerForPushNotificationsAsync() {
   let token;
+
 
   if (Platform.OS === "android") {
     await Notifications.setNotificationChannelAsync("default", {
@@ -148,6 +160,7 @@ async function registerForPushNotificationsAsync() {
     token = (await Notifications.getExpoPushTokenAsync()).data;
     console.log(token);
   } else {
+
     alert("Must use physical device for Push Notifications"); //none of this works on emulators
   }
 
@@ -155,19 +168,16 @@ async function registerForPushNotificationsAsync() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-  },
-
-  // text: {
-  //   fontSize: 16,
-  //   lineHeight: 21,
-  //   fontWeight: 'bold',
-  //   letterSpacing: 0.25,
-  //   color: 'white',
-  // },
+ container: {
+  flex: 1,
+  backgroundColor: "gainsboro",
+  justifyContent: 'center',
+  alignItems: "center"
+ },
+ text: {
+fontSize: 32,
+fontWeight: 'bold'
+ }
 });
 
 export default Feed;

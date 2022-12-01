@@ -8,6 +8,7 @@
     "morgan": "^1.10.0",
     "pg": "^8.8.0",
     "pg-hstore": "^2.3.4",
+    "react-native-input-validator": "^1.0.12",
     "react-native-safe-area-context": "^4.4.1",
     "react-native-screens": "^3.18.2",
     "react-native-web": "~0.18.7",
