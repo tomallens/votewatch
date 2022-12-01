@@ -2,7 +2,7 @@ const { loadLastPublishedDate } = require('./commonsVotesAPI')
 const { loadLastPublishedTitle } = require('./commonsVotesAPI')
 const sendPushNotification = require("../../utilities/pushNotifications")
 
-const targetExpoPushToken = 'ExponentPushToken[TW4kCMMJB-rfxUHiTa2dtf]'
+const targetExpoPushToken = 'ExponentPushToken[DpsvtbIE_mri5Uwbg913HU]'
 
 let lastPublished = new Date("2022-11-29T12:42:06")
 
