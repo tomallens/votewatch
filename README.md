@@ -9,18 +9,17 @@ npm install
 npm start
 ```
 
-# Votewatch
-(working title)
+# Aye-Spy
 
 Keep track of what your representative is doing in the House of Commons and let them know what you think about how they vote on your behalf!
 
-Votewatch will optionally notify you every time your MP casts a vote and inform you what was up for debate, when, and which way they voted. Each vote is presented for you to register your approval/disapproval, with the option to directly open an email popup to their official contact address if you feel particularly strongly about the issue at hand and their registered stance on it.
+Aye-Spy will optionally notify you every time your MP casts a vote and inform you what was up for debate, when, and which way they voted. Each vote is presented for you to register your approval/disapproval, with the option to directly open an email popup to their official contact address if you feel particularly strongly about the issue at hand and their registered stance on it.
 
 (put media here)
 
 ## How to use
 
-- Android: download the Votewatch .apk [here](wherever we host it)
+- Android: download the Aye-Spy .apk [here](wherever we host it)
 - iPhone: download the (how do iphones work?) [here](wherever we host it)
 
 Alternatively, us anything with a web browser and visit the site at [the hosting service](wherever we deploy to)
@@ -49,6 +48,7 @@ Search for your MP by name or constituency, or alternatively use our postcode se
 [Joe Osborne](https://github.com/JoeOsborne77)\
 [Patricia Garcia Nieto](https://github.com/PatriciaGN)\
 [Tom Allen](https://github.com/tomallens)\
+[Forest Aston](picture here)
 
 You can also get an idea of what our development process was like by checking out [Patricia](Patricia's blog address) or [Joe](Joe's blog address)'s blogs!
 

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "823978794098",
+    "project_id": "votewatch-f8e34",
+    "storage_bucket": "votewatch-f8e34.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:823978794098:android:f1332ecb6fa19d682c36eb",
+        "android_client_info": {
+          "package_name": "com.valegro.votewatch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "823978794098-md5545ovv4fefl8umgv0pevald127m83.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoddB0lS03mQg7QRKLqqfJOyfisMfRyNY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "823978794098-md5545ovv4fefl8umgv0pevald127m83.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
