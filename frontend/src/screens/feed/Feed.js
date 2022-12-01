@@ -153,7 +153,9 @@ function Feed() {
               <Text>
                 {`\n`}MP ID: {`${mpData.items[0].value.id}\n\n`}
               </Text>
-              <Text>{`Approval Rating: ${approvalRating.toFixed()}%`}</Text>
+              <Text>{`Approval Rating: ${
+                isNaN(approvalRating.toFixed()) ? 100 : approvalRating.toFixed()
+              }%`}</Text>
 
               {divisionData.map((individualData, i) => {
                 return (
