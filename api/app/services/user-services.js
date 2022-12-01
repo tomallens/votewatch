@@ -13,7 +13,7 @@ exports.signup = (req, res) => {
     name: req.body.name,
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password, 8),
-    mpname: req.body.mpname,
+    mpname: req.body.mpname
   })
     .then(res.send({ message: 'User successfully registered' }))
     .catch((exception) => {
@@ -26,13 +26,13 @@ exports.signin = (req, res) => {
 
   User.findOne({
     where: {
-      email: req.body.email,
-    },
+      email: req.body.email
+    }
   })
     .then((user) => {
       if (!user) {
         return res.status(404).send({
-          message: 'User not found',
+          message: 'User not found'
         });
       }
 
@@ -43,19 +43,19 @@ exports.signin = (req, res) => {
       if (!passwordIsValid) {
         return res.status(401).send({
           accessToken: null,
-          message: 'Invalid password!',
+          message: 'Invalid password!'
         });
       }
 
       // Set expired token in 10 minutes
       var token = jwt.sign({ id: user.id }, configuration.secret, {
-        expiresIn: 86400,
+        expiresIn: 86400
       });
 
       return res.status(200).send({
         id: user.id,
         email: user.email,
-        accessToken: token,
+        accessToken: token
       });
     })
     .catch((err) => {
@@ -63,10 +63,20 @@ exports.signin = (req, res) => {
     });
 };
 
+exports.pushtoken = (req, res) => {
+  User.update({
+    where: { id: req.body.userId, pushtoken: req.body.pushtoken }
+  }).then((data) => {
+    res.status(200).send({
+      data
+    })
+  })
+};
+
 function validateRequest(req) {
   if (!req.body) {
     res.status(400).send({
-      message: "Request can't be empty!",
+      message: "Request can't be empty!"
     });
     return;
   }

@@ -48,8 +48,8 @@ Notifications.setNotificationHandler({
 });
 
 async function handleRegistration(token) {
-  await fetch('http://localhost:8080/register', {
-    method: 'post',
+  await fetch('http://10.86.152.195:8080/register', {
+    method: 'put',
     headers: {
       'Content-Type': 'application/json',
     },
