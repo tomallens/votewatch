@@ -1,7 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
 import { SafeAreaView, View, StyleSheet, Text, Alert } from 'react-native';
-
 import CustomButton from '../../components/customButton/CustomButton';
 import CustomInput from '../../components/customInput/CustomInput';
 
@@ -63,11 +62,63 @@ function Register({navigation}) {
     }
   };
 
+  const [errors, setErrors] = React.useState({});
+
+  const handleError = (error, input) => {
+    setErrors((prevState) => ({ ...prevState, [input]: error }));
+  };
+
+  const validate = async () => {
+    let isValid = true;
+
+    if (!email) {
+      handleError('Please input email', 'email');
+      isValid = false;
+    } else if (!email.match(/\S+@\S+\.\S+/)) {
+      handleError('Please input a valid email', 'email');
+      isValid = false;
+    }
+
+    if (!name) {
+      handleError('Please input a name', 'name');
+      isValid = false;
+    } else if (!name.match(/^[a-zA-Z0-9 '-]*$/)) {
+      handleError(
+        'Name can only contain letters, spaces, hyphons and apostrophes.',
+        'name'
+      );
+      isValid = false;
+    }
+
+    if (!password) {
+      handleError('Please input password', 'password');
+      isValid = false;
+    } else if (password.length < 7) {
+      handleError('Password needs to be at least 8 characters.', 'password');
+      isValid = false;
+    }
+
+    if (!mpName) {
+      handleError('Please input an MP name.', 'mpName');
+      isValid = false;
+    } else if (!mpName.match(/^[a-zA-Z0-9 '-]*$/)) {
+      handleError(
+        'Name can only contain letters, spaces, hyphons and apostrophes.',
+        'name'
+      );
+      isValid = false;
+    }
+
+    if (isValid) {
+      await handleRegistration();
+      navigation.navigate('Login');
+    }
+  };
+
   const onRegisterPressed = async () => {
     await handleRegistration();
     navigation.goBack();
     validate();
-
   };
 
   async function handleRegistration() {
@@ -103,7 +154,7 @@ function Register({navigation}) {
         setValue={setName}
         error={errors.name}
       ></CustomInput>
-      <span style={{ color: 'red' }}>{errors['name']}</span>
+      {/* <Text style={{ color: 'red' }}>{errors['name']}</Text> */}
 
       <CustomInput
         placeholder="Email"
@@ -111,24 +162,22 @@ function Register({navigation}) {
         setValue={setEmail}
         error={errors.email}
       ></CustomInput>
-      <span style={{ color: 'red' }}>{errors['email']}</span>
-
+      {/* <Text style={{ color: 'red' }}>{errors['email']}</Text> */}
       <CustomInput
         placeholder="Password"
         value={password}
         setValue={setPassword}
-        secureTextEntry
-        error={errors.password}
-      ></CustomInput>
-      <span style={{ color: 'red' }}>{errors['password']}</span>
-
-      <CustomInput
-        placeholder="Your MP's name"
-        value={mpName}
-        setValue={setMpName}
-        error={errors.mpName}
-      ></CustomInput>
-      <span style={{ color: 'red' }}>{errors['mpName']}</span>
+        secureTextEntry   error={errors.password}
+        ></CustomInput>
+        {/* <Text style={{ color: 'red' }}>{errors['password']}</Text> */}
+  
+        <CustomInput
+          placeholder="Your MP's name"
+          value={mpName}
+          setValue={setMpName}
+          error={errors.mpName}
+        ></CustomInput>
+        {/* <Text style={{ color: 'red' }}>{errors['mpName']}</Text> */}
 
       <CustomButton text="Register" onPress={onRegisterPressed}></CustomButton>
     </SafeAreaView>

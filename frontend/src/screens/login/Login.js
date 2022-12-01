@@ -10,6 +10,35 @@ function Login({ navigation }) {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState({});
+
+  const handleError = (error, input) => {
+    setErrors((prevState) => ({ ...prevState, [input]: error }));
+  };
+
+  const validate = async () => {
+    let isValid = true;
+
+    if (!email) {
+      handleError('Please input email', 'email');
+      isValid = false;
+    } else if (!email.match(/\S+@\S+\.\S+/)) {
+      handleError('Please input a valid email', 'email');
+      isValid = false;
+    }
+
+    if (!password) {
+      handleError('Please input password', 'password');
+      isValid = false;
+    } else if (password.length < 7) {
+      handleError('Password needs to be at least 8 characters.', 'password');
+      isValid = false;
+    }
+
+    if (isValid) {
+      login(email, password);
+    }
+  };
 
   const [errors, setErrors] = React.useState({});
 
@@ -66,6 +95,7 @@ function Login({ navigation }) {
       <CustomButton
         text="Login"
         onPress={() => {
+          login(email, password);
           validate();
         }}
       ></CustomButton>

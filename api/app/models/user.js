@@ -2,16 +2,16 @@ module.exports = (sequelize, Sequelize) => {
   const User = sequelize.define('user', {
     name: {
       type: Sequelize.STRING,
-      validate: {
-        notEmpty: true,
-      },
+      // validate: {
+      //   notEmpty: true,
+      // },
     },
     email: {
       type: Sequelize.STRING,
-      validate: {
-        isEmail: { msg: 'Email format is invalid' },
-        notEmpty: { args: true, msg: 'Email cannot be empty' },
-      },
+      // validate: {
+      //   isEmail: { msg: 'Email format is invalid' },
+      //   notEmpty: { args: true, msg: 'Email cannot be empty' },
+      // },
     },
     password: {
       type: Sequelize.STRING,
