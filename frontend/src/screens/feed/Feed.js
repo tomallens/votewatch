@@ -70,8 +70,8 @@ function Feed() {
 
   async function callCommonsApi() {
     if (mpName == "") return;
-    await getMpName();
-    const memberId = await getMpId(mpName);
+    const usersMpName = await getMpName();
+    const memberId = await getMpId(usersMpName);
     await getMPContactData(memberId);
     await getMpVotes(memberId);
   }
@@ -107,12 +107,16 @@ function Feed() {
   }
 
   async function getMpName() {
-    const data = await fetch(`http://localhost:8080/mpnamebyid?id=${9}`, {})
+    const usersMpName = await fetch(
+      `http://localhost:8080/mpnamebyid?id=${9}`,
+      {}
+    )
       .then((response) => response.json())
       .then((data) => {
         return data.mpname;
       });
-    console.log(data);
+    setMpName(usersMpName);
+    return usersMpName;
   }
 
   return (
