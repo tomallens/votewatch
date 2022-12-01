@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 import { StatusBar } from "expo-status-bar";
 import {
   StyleSheet,
@@ -9,7 +9,7 @@ import {
   Platform,
   Button,
   Linking,
-  ScrollView,
+  ScrollView
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 // import Swiper from "react-native-swiper";
@@ -18,6 +18,7 @@ import * as Notifications from "expo-notifications";
 import MPData from "../../components/MPData/mpData";
 import CustomInput from "../../components/customInput/CustomInput";
 import CustomButton from "../../components/customButton/CustomButton";
+import { AuthContext } from "../../components/context/AuthContext";
 
 function Feed() {
   const [isLoading, setLoading] = useState(true);
@@ -29,6 +30,7 @@ function Feed() {
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
+  const { userData } = useContext(AuthContext);
 
   useEffect(() => {
     callCommonsApi();
@@ -108,7 +110,7 @@ function Feed() {
 
   async function getMpName() {
     const usersMpName = await fetch(
-      `http://localhost:8080/mpnamebyid?id=${9}`,
+      `http://localhost:8080/mpnamebyid?id=${userData.id}`,
       {}
     )
       .then((response) => response.json())
