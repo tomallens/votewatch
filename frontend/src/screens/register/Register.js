@@ -135,13 +135,13 @@ function Register({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "gainsboro",
-    justifyContent: 'center',
+    backgroundColor: "mintcream",
     alignItems: 'center'
   },
   text: {
     fontSize: 32,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    marginTop: 200
   },
   textSecondary: {
     fontSize: 18

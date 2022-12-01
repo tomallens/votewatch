@@ -14,6 +14,25 @@ function mpData(props) {
   ).toDateString();
   const mpVote = individualData.MemberVotedAye;
 
+  function ayeNoe() {
+    if(mpVote) {
+      return (
+      <Text style={{
+        fontSize: 100,
+        color: ('forestgreen'),
+        fontWeight: '900',
+        alignItems: 'center'}}>{`\n`}AYE</Text>)
+      } else if (!mpVote) {
+        return (
+        <Text style={{
+          fontSize: 100,
+          color: ('firebrick'),
+          fontWeight: '900',
+          alignItems: 'center'}}>{`\n`}NOE</Text>
+        )
+      }
+  }
+
   // useEffect(() => {
   //   fetchPosts();
   // }, []);
@@ -35,7 +54,9 @@ function mpData(props) {
   // };
 
   return (
-    <View>
+         <View style={{ flex: 1,
+      alignItems: 'center'
+    }}>
       <Text>
       <Text
         style={{
@@ -56,18 +77,8 @@ function mpData(props) {
           }
           title={`${divisionTitle}`}
         />{' '}
-        {/* {ayeNoe()} */}
-        <Text
-          style={{
-            fontSize: 100,
-            color: 'firebrick',
-            textAlign: 'center',
-            fontWeight: '900',
-         
-          }}
-        >
-          {`${mpVote ? 'AYE' : 'NOE'}\n`}
-        </Text>
+        {ayeNoe()}
+       
       </Text>
       <Button
         onPress={() =>

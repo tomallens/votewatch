@@ -24,7 +24,7 @@ function Onboarding({ navigation }) {
       <Text style={{ fontSize: 20, marginBottom: 20 }}>Political transparency in your hands</Text>
       <Image
         source={require('./../../../assets/logo.png')}
-        style={{ marginBottom: 100, width: 180, height: 100, blurRadius: 1000 }}
+        style={{ marginBottom: 50, width: 180, height: 100, blurRadius: 1000 }}
       ></Image>
       <CustomButton
         text="Register"
@@ -43,7 +43,7 @@ function Onboarding({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "gainsboro",
+    backgroundColor: "mintcream",
     justifyContent: 'top', 
     alignItems: "center"},
     text:{
