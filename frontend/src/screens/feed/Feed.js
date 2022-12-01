@@ -19,6 +19,7 @@ import MPData from "../../components/MPData/mpData";
 import CustomInput from "../../components/customInput/CustomInput";
 import CustomButton from "../../components/customButton/CustomButton";
 import APIRequests from "./apiRequests";
+// import getApprovesDisapproves from "./getApprovesDisapproves";
 
 
 
@@ -32,6 +33,8 @@ function Feed() {
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
+  const [approvesDisapproves, setApprovesDisapproves] = useState(0);
+  const [approves, setApproves] = useState(0);
 
   useEffect(() => {
     callCommonsApi();
@@ -86,6 +89,32 @@ function Feed() {
     setMPEmail(memberContactData);
   }
  
+  async function getApprovesDisapproves() {
+    const approvalNumber = [];
+    let approvalsDisapprovals = "";
+    const approveDisapproves = await fetch(
+      `http://10.86.152.195:8080/approveDisapproves`,
+      {}
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        approvalsDisapprovals = data;
+      });
+    // setApprovals();
+
+    approvalsDisapprovals.data.forEach((approves) => {
+      if (approves.approved === true) {
+        approvalNumber.push(approves.approved);
+        setApproves(approvalNumber.length);
+      }
+    });
+    setApprovesDisapproves(approvalsDisapprovals.data.length);
+    // console.log(approvalsDisapprovals.data.length);
+  }
+
+  const approvalRating = (approves / approvesDisapproves) * 100;
+
+  {getApprovesDisapproves()} // **** LOOK HERE GUYS ****
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
@@ -96,6 +125,10 @@ function Feed() {
           <Text style={styles.text}>Loading...</Text>
         ) : (
           <View style={styles.container}>
+
+             <Text>{`Approval Rating: ${
+                isNaN(approvalRating.toFixed()) ? 100 : approvalRating.toFixed()
+              }%`}</Text>
             <Image
               source={{
                 uri: `${mpData.items[0].value.thumbnailUrl}`,
@@ -111,13 +144,17 @@ function Feed() {
               bounces={true}
               index={1}
             >
+        
                   {divisionData.map((individualData, i) => {
+                     
                 return (
+                  
                   <MPData
                     key={`mpdata-${i}`}
                     name={mpName}
                     email={mpEmail}
                     data={individualData}
+                    
                   />
                 );
               }).slice(0, 12)}

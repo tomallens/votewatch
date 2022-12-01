@@ -1,17 +1,42 @@
 import { Button, Linking, View, Text } from 'react-native';
+import approve from "../approveDisapprove/approve";
+import disapprove from "../approveDisapprove/disapprove";
 
 function mpData(props) {
   const mpName = props.name;
   const mpEmail = props.email;
+  const mpId = props.mpId;
   const individualData = props.data;
   const divisionTitle = individualData.PublishedDivision.Title;
+  const divisionId = individualData.PublishedDivision.Id;
   const divisionDate = new Date(
     individualData.PublishedDivision.Date
   ).toDateString();
   const mpVote = individualData.MemberVotedAye;
 
+  // useEffect(() => {
+  //   fetchPosts();
+  // }, []);
+
+  // const fetchPosts = () => {
+  //   if (token) {
+  //     fetch("/posts", {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     })
+  //       .then((response) => response.json())
+  //       .then(async (data) => {
+  //         window.localStorage.setItem("token", data.token);
+  //         setToken(window.localStorage.getItem("token"));
+  //         setPosts(data.posts);
+  //       });
+  //   }
+  // };
+
   return (
     <View>
+      <Text>
       <Text
         style={{
           borderColor: 'black',
@@ -43,7 +68,6 @@ function mpData(props) {
         >
           {`${mpVote ? 'AYE' : 'NOE'}\n`}
         </Text>
-        {`\n\n\n`}
       </Text>
       <Button
         onPress={() =>
@@ -55,24 +79,15 @@ function mpData(props) {
         }
         title="EMAIL YOUR MP ABOUT THIS"
       />
+       {`\n\n\n`}
+   
+   {approve(divisionId, mpId)}
+   {disapprove(divisionId, mpId)}
+   </Text>  
     </View>
   );
 }
 
 export default mpData;
 
-// function ayeNoe() {
-//   if(mpVote) {
-//     <Text style={{
-//       fontSize: 100,
-//       color: ('forestgreen'),
-//       fontWeight: '900',
-//       alignItems: 'center'}}> 'AYE' </Text>
-//     } else if (!mpVote) {
-//       <Text style={{
-//         fontSize: 100,
-//         color: ('firebrick'),
-//         fontWeight: '900',
-//         alignItems: 'center'}}> 'NOE' </Text>
-//     }
-// }
+
