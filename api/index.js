@@ -1,6 +1,14 @@
-const express = require("express");
-const cors = require("cors");
+const express = require("express")
+const cors = require("cors")
 const app = express();
+const timeInterval = 20000;
+const checkNewVotes = require("./app/middleware/voteHandler")
+
+startRepeating = () => {
+  setInterval(() => {
+    checkNewVotes();
+  }, timeInterval)
+}
 
 var corsOptions = {
   origin: "http://localhost:19006",
@@ -29,3 +37,5 @@ const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log("Running on port ", PORT);
 });
+
+startRepeating();
