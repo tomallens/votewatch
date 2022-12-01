@@ -19,6 +19,9 @@ module.exports = (sequelize, Sequelize) => {
     mpname: {
       type: Sequelize.STRING,
     },
+    pushtoken: {
+      type: Sequelize.STRING,
+    }
   });
 
   return User;

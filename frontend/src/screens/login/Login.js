@@ -10,65 +10,35 @@ function Login({ navigation }) {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errors, setErrors] = useState({});
+  // const [errors, setErrors] = React.useState({});
 
-  const handleError = (error, input) => {
-    setErrors((prevState) => ({ ...prevState, [input]: error }));
-  };
+  // const handleError = (error, input) => {
+  //   setErrors((prevState) => ({ ...prevState, [input]: error }));
+  // };
 
-  const validate = async () => {
-    let isValid = true;
+  // const validate = async () => {
+  //   let isValid = true;
 
-    if (!email) {
-      handleError('Please input email', 'email');
-      isValid = false;
-    } else if (!email.match(/\S+@\S+\.\S+/)) {
-      handleError('Please input a valid email', 'email');
-      isValid = false;
-    }
+  //   if (!email) {
+  //     handleError('Please input email', 'email');
+  //     isValid = false;
+  //   } else if (!email.match(/\S+@\S+\.\S+/)) {
+  //     handleError('Please input a valid email', 'email');
+  //     isValid = false;
+  //   }
 
-    if (!password) {
-      handleError('Please input password', 'password');
-      isValid = false;
-    } else if (password.length < 7) {
-      handleError('Password needs to be at least 8 characters.', 'password');
-      isValid = false;
-    }
+  //   if (!password) {
+  //     handleError('Please input password', 'password');
+  //     isValid = false;
+  //   } else if (password.length < 7) {
+  //     handleError('Password needs to be at least 8 characters.', 'password');
+  //     isValid = false;
+  //   }
 
-    if (isValid) {
-      login(email, password);
-    }
-  };
-
-  const [errors, setErrors] = React.useState({});
-
-  const handleError = (error, input) => {
-    setErrors((prevState) => ({ ...prevState, [input]: error }));
-  };
-
-  const validate = async () => {
-    let isValid = true;
-
-    if (!email) {
-      handleError('Please input email', 'email');
-      isValid = false;
-    } else if (!email.match(/\S+@\S+\.\S+/)) {
-      handleError('Please input a valid email', 'email');
-      isValid = false;
-    }
-
-    if (!password) {
-      handleError('Please input password', 'password');
-      isValid = false;
-    } else if (password.length < 7) {
-      handleError('Password needs to be at least 8 characters.', 'password');
-      isValid = false;
-    }
-
-    if (isValid) {
-      login(email, password);
-    }
-  };
+  //   if (isValid) {
+  //     login(email, password);
+  //   }
+  // };
 
   return (
     <SafeAreaView 
@@ -81,22 +51,24 @@ function Login({ navigation }) {
         placeholder="Email"
         value={email}
         setValue={setEmail}
+        // error={errors.email}
       ></CustomInput>
-      <span style={{ color: 'red' }}>{errors['email']}</span>
+      {/* <Text style={{ color: 'red' }}>{errors['email']}</Text> */}
 
       <CustomInput
         placeholder="Password"
         value={password}
         setValue={setPassword}
         secureTextEntry
+        // error={errors.password}
       ></CustomInput>
-      <span style={{ color: 'red' }}>{errors['password']}</span>
+      {/* <Text style={{ color: 'red' }}>{errors['password']}</Text> */}
 
       <CustomButton
         text="Login"
         onPress={() => {
           login(email, password);
-          validate();
+          // validate();
         }}
       ></CustomButton>
     </SafeAreaView>
