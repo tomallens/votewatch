@@ -1,5 +1,5 @@
-const configuration = require('../config/config-db.js');
-const Sequelize = require('sequelize');
+const configuration = require("../config/config-db.js");
+const Sequelize = require("sequelize");
 
 const sequelize = new Sequelize(
   configuration.DB,
@@ -20,7 +20,10 @@ const sequelize = new Sequelize(
 const database = {};
 database.Sequelize = Sequelize;
 database.sequelize = sequelize;
-database.division = require('./division.js')(sequelize, Sequelize);
-database.user = require('./user.js')(sequelize, Sequelize);
+database.approveDisapprove = require("./approveDisapprove.js")(
+  sequelize,
+  Sequelize
+);
+database.user = require("./user.js")(sequelize, Sequelize);
 
 module.exports = database;

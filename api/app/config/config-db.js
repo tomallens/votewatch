@@ -1,9 +1,11 @@
 module.exports = {
+
   HOST: 'localhost',
   USER: 'benedictsmith',
   PASSWORD: 'password',
   DB: 'votewatch',
   dialect: 'postgres',
+
   pool: {
     max: 5,
     min: 0,

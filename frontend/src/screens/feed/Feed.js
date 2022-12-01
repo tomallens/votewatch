@@ -18,9 +18,8 @@ import * as Notifications from "expo-notifications";
 import MPData from "../../components/MPData/mpData";
 import CustomInput from "../../components/customInput/CustomInput";
 import CustomButton from "../../components/customButton/CustomButton";
+import getApprovesDisapproves from "../../components/MPData/getApprovesDisapproves";
 import APIRequests from "./apiRequests";
-
-
 
 function Feed() {
   const [isLoading, setLoading] = useState(true);
@@ -28,6 +27,8 @@ function Feed() {
   const [mpData, setMpData] = useState([]);
   const [mpName, setMpName] = useState("Boris Johnson");
   const [mpEmail, setMPEmail] = useState("boris.johnson.mp@parlement.uk");
+  const [approvesDisapproves, setApprovesDisapproves] = useState(0);
+  const [approves, setApproves] = useState(0);
   const [expoPushToken, setExpoPushToken] = useState("");
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
@@ -73,6 +74,20 @@ function Feed() {
   });
 
   async function callCommonsApi() {
+    if (mpName == "") return;
+    const memberId = await getMpId(mpName);
+    await getMPContactData(memberId);
+    await getMpVotes(memberId);
+    await getApprovesDisapproves();
+  }
+
+  async function getMpId(mpName) {
+    const data = await (
+      await fetch(
+        `https://members-api.parliament.uk/api/Members/Search?Name=${mpName}`
+      )
+    ).json();
+    setMpData(data);
 
     if (mpName == "") return;
     const memberId = await APIRequests.getMPID(mpName);
@@ -85,7 +100,40 @@ function Feed() {
     setLoading(false);
     setMPEmail(memberContactData);
   }
- 
+
+  async function getMPContactData(memberId) {
+    const contactData = await (
+      await fetch(
+        `https://members-api.parliament.uk/api/Members/${memberId}/Contact`
+      )
+    ).json();
+    setMPEmail(contactData.value[0].email);
+  }
+
+  async function getApprovesDisapproves() {
+    const approvalNumber = [];
+    let approvalsDisapprovals = "";
+    const approveDisapproves = await fetch(
+      `http://localhost:8080/approveDisapproves`,
+      {}
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        approvalsDisapprovals = data;
+      });
+    // setApprovals();
+    console.log("approvalsDisapprovals.data:", approvalsDisapprovals.data);
+    approvalsDisapprovals.data.forEach((approves) => {
+      if (approves.approved === true) {
+        approvalNumber.push(approves.approved);
+        setApproves(approvalNumber.length);
+      }
+    });
+    setApprovesDisapproves(approvalsDisapprovals.data.length);
+    // console.log(approvalsDisapprovals.data.length);
+  }
+
+  const approvalRating = (approves / approvesDisapproves) * 100;
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
@@ -96,6 +144,22 @@ function Feed() {
           <Text style={styles.text}>Loading...</Text>
         ) : (
           <View style={styles.container}>
+            <Text>
+              <Image
+                source={{
+                  uri: `${mpData.items[0].value.thumbnailUrl}`,
+                  width: 60,
+                  height: 60,
+                }}
+              />
+              <Text>
+                {`\n`}MP ID: {`${mpData.items[0].value.id}\n\n`}
+              </Text>
+              <Text>{`Approval Rating: ${
+                isNaN(approvalRating.toFixed()) ? 100 : approvalRating.toFixed()
+              }%`}</Text>
+
+              {divisionData.map((individualData, i) => {
             <Image
               source={{
                 uri: `${mpData.items[0].value.thumbnailUrl}`,
@@ -117,6 +181,7 @@ function Feed() {
                     key={`mpdata-${i}`}
                     name={mpName}
                     email={mpEmail}
+                    mpId={mpData.items[0].value.id}
                     data={individualData}
                   />
                 );

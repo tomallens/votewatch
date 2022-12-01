@@ -1,14 +1,38 @@
+import approve from "../ApproveDisapprove/approve";
+import disapprove from "../ApproveDisapprove/disapprove";
+import getApprovesDisapproves from "./getApprovesDisapproves";
 import { Button, Linking, View, Text } from 'react-native';
 
 function mpData(props) {
   const mpName = props.name;
   const mpEmail = props.email;
+  const mpId = props.mpId;
   const individualData = props.data;
   const divisionTitle = individualData.PublishedDivision.Title;
   const divisionDate = new Date(
     individualData.PublishedDivision.Date
   ).toDateString();
   const mpVote = individualData.MemberVotedAye;
+
+  // useEffect(() => {
+  //   fetchPosts();
+  // }, []);
+
+  // const fetchPosts = () => {
+  //   if (token) {
+  //     fetch("/posts", {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     })
+  //       .then((response) => response.json())
+  //       .then(async (data) => {
+  //         window.localStorage.setItem("token", data.token);
+  //         setToken(window.localStorage.getItem("token"));
+  //         setPosts(data.posts);
+  //       });
+  //   }
+  // };
 
   return (
     <View>
@@ -55,6 +79,10 @@ function mpData(props) {
         }
         title="EMAIL YOUR MP ABOUT THIS"
       />
+      {`\n\n\n`}
+      {approve(divisionId, mpId)}
+      {disapprove(divisionId, mpId)}
+    </Text>
     </View>
   );
 }
