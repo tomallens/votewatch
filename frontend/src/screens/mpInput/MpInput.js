@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Text, TextInput } from "react-native";
 
-function MpInput({ setMpName }) {
+export default function MpInput({ setMpName }) {
   return (
     <View>
       <TextInput
@@ -35,4 +35,3 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MpInput;

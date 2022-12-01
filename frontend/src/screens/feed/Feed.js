@@ -19,6 +19,8 @@ import MPData from "../../components/MPData/mpData";
 import CustomInput from "../../components/customInput/CustomInput";
 import CustomButton from "../../components/customButton/CustomButton";
 import { AuthContext } from "../../components/context/AuthContext";
+import MpInput from "../mpInput/MpInput";
+
 
 function Feed() {
   const [isLoading, setLoading] = useState(true);
@@ -26,16 +28,22 @@ function Feed() {
   const [mpData, setMpData] = useState([]);
   const [mpName, setMpName] = useState("Boris Johnson");
   const [mpEmail, setMPEmail] = useState("boris.johnson.mp@parlement.uk");
-  const [expoPushToken, setExpoPushToken] = useState("");
+  const [expoPushToken, setExpoPushToken] = useState();
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
   const { userData } = useContext(AuthContext);
 
   useEffect(() => {
+    getUsersMpName()
     callCommonsApi();
+  }, [])
+
+  useEffect(() => {
+     callCommonsApi();
     // pushNotificationHandler(); // << Currently needs to be commented out in order for google and email links to work. -JOE2k22
   }, [mpName]);
+
 
   // function pushNotificationHandler() {
   //   registerForPushNotificationsAsync().then((token) =>
@@ -71,9 +79,7 @@ function Feed() {
   // });
 
   async function callCommonsApi() {
-    if (mpName == "") return;
-    const usersMpName = await getMpName();
-    const memberId = await getMpId(usersMpName);
+    const memberId = await getMpId(mpName);
     await getMPContactData(memberId);
     await getMpVotes(memberId);
   }
@@ -108,7 +114,7 @@ function Feed() {
     setMPEmail(contactData.value[0].email);
   }
 
-  async function getMpName() {
+  async function getUsersMpName() {
     const usersMpName = await fetch(
       `http://localhost:8080/mpnamebyid?id=${userData.id}`,
       {}
@@ -124,7 +130,7 @@ function Feed() {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
-      {/* <MpInput setMpName={setMpName} /> **UNCOMMENT ONCE WORKING** */}
+      <MpInput setMpName={setMpName} />
       <Text style={styles.text}>Your MP: {mpName}</Text>
       <View style={{ flex: 1, padding: 24 }}>
         {isLoading ? (
