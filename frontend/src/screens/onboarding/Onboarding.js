@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {
   Text,
-  View,
   StyleSheet,
   SafeAreaView,
   TouchableOpacity,
@@ -19,15 +18,14 @@ function Onboarding({ navigation }) {
       style={ styles.container }
     >
       {/* <ImageBackground source={require('./../../../assets/BG1.png')} resizeMode="stretch" style={styles.image}> */}
+      <Text style={ styles.text}>
+        Aye Spy
+      </Text>
+      <Text style={{ fontSize: 20, marginBottom: 20 }}>Political transparency in your hands</Text>
       <Image
         source={require('./../../../assets/logo.png')}
-        style={{ marginTop: 80, marginBottom: 20, width: 180, height: 100, blurRadius: 1000 }}
+        style={{ marginBottom: 100, width: 180, height: 100, blurRadius: 1000 }}
       ></Image>
-      <Text style={ styles.text}>
-        Welcome to Aye Spy
-      </Text>
-      <Text style={{ marginBottom: 150, fontSize: 18 }}>Political transparency in your hands</Text>
-
       <CustomButton
         text="Register"
         onPress={() => navigation.navigate('Register')}
@@ -49,7 +47,11 @@ const styles = StyleSheet.create({
     justifyContent: 'top', 
     alignItems: "center"},
     text:{
-    fontFamily: 'Futura', fontSize: 32, fontWeight: 'bold'
+      // fontFamily: 'Futura',
+      marginTop: 80,
+      marginBottom: 5,
+      fontSize: 60,
+      fontWeight: 'bold'
   },
   // image: {
     // flex: 1,

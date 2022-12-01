@@ -5,7 +5,7 @@ import { SafeAreaView, View, StyleSheet, Text, Alert } from 'react-native';
 import CustomButton from '../../components/customButton/CustomButton';
 import CustomInput from '../../components/customInput/CustomInput';
 
-function Register() {
+function Register({navigation}) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -64,11 +64,14 @@ function Register() {
   };
 
   const onRegisterPressed = async () => {
+    await handleRegistration();
+    navigation.goBack();
     validate();
+
   };
 
   async function handleRegistration() {
-    await fetch('http://localhost:8080/register', {
+    await fetch('http://10.86.152.195:8080/register', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
@@ -135,17 +138,15 @@ function Register() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "gainsboro",
     justifyContent: 'center',
     alignItems: 'center'
   },
   text: {
-    fontFamily: 'Futura',
     fontSize: 32,
     fontWeight: 'bold'
   },
   textSecondary: {
-    fontFamily: 'Futura',
     fontSize: 18
   }
 });

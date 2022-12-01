@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     setIsLoading(true);
-    let response = await fetch('http://localhost:8080/login', {
+    let response = await fetch('http://10.86.152.195:8080/login', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',

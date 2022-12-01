@@ -76,18 +76,16 @@ function Login({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "gainsboro",
     justifyContent: 'center',
     alignItems: 'center'
   },
   text: {
-    fontFamily: 'Futura',
     fontSize: 26,
     alignItems: 'center',
     fontWeight: 'bold'
   },
   textSecondary: {
-    fontFamily: 'Futura',
     fontSize: 18
   }
 });
