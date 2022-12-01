@@ -9,6 +9,7 @@ import Profile from "../screens/profile/Profile";
 
 const Tab = createBottomTabNavigator();
 
+
 async function registerForPushNotificationsAsync() {
   let token;
   if (Device.isDevice) {
@@ -40,6 +41,12 @@ async function registerForPushNotificationsAsync() {
   return token;
 }
 
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true
+  }),
+});
+
 async function handleRegistration(token) {
   await fetch('http://localhost:8080/register', {
     method: 'post',
@@ -62,7 +69,7 @@ async function handleRegistration(token) {
 function TabNavigator() {
   
   useEffect(() => {
-    registerForPushNotificationsAsync().then(token => expoPushTokensApi.register(token));
+    registerForPushNotificationsAsync();
   }, []);
   return (
     <Tab.Navigator>
