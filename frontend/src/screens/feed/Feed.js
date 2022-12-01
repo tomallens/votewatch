@@ -79,6 +79,7 @@ function Feed() {
   // });
 
   async function callCommonsApi() {
+    if (mpName === "") return
     const memberId = await getMpId(mpName);
     await getMPContactData(memberId);
     await getMpVotes(memberId);
