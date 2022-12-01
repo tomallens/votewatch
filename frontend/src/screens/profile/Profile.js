@@ -23,12 +23,12 @@ function Profile() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "gainsboro",
     justifyContent: 'center',
     alignItems: 'center'
   },
   text: {
-    fontFamily: 'Futura',
+    // fontFamily: 'Futura',
     fontSize: 26,
     alignItems: 'center',
     fontWeight: 'bold'

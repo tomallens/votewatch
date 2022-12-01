@@ -4,7 +4,6 @@ function mpData(props) {
   const mpName = props.name;
   const mpEmail = props.email;
   const individualData = props.data;
-
   const divisionTitle = individualData.PublishedDivision.Title;
   const divisionDate = new Date(
     individualData.PublishedDivision.Date
@@ -32,6 +31,7 @@ function mpData(props) {
           }
           title={`${divisionTitle}`}
         />{' '}
+        {/* {ayeNoe()} */}
         <Text
           style={{
             fontSize: 100,
@@ -61,15 +61,14 @@ function mpData(props) {
 
 export default mpData;
 
-// *WIP vote logic function*
 // function ayeNoe() {
-//   if(individualData.MemberVotedAye) {
+//   if(mpVote) {
 //     <Text style={{
 //       fontSize: 100,
 //       color: ('forestgreen'),
 //       fontWeight: '900',
 //       alignItems: 'center'}}> 'AYE' </Text>
-//     } else if (!individualData.MemberVotedAye) {
+//     } else if (!mpVote) {
 //       <Text style={{
 //         fontSize: 100,
 //         color: ('firebrick'),
