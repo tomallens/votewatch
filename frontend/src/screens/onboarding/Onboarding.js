@@ -5,7 +5,6 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Image,
-  // ImageBackground
 } from 'react-native';
 import CustomButton from '../../components/customButton/CustomButton';
 const image = ('../../../assets/BG2.png')
@@ -17,14 +16,13 @@ function Onboarding({ navigation }) {
     <SafeAreaView
       style={ styles.container }
     >
-      {/* <ImageBackground source={require('./../../../assets/BG1.png')} resizeMode="stretch" style={styles.image}> */}
       <Text style={ styles.text}>
         Aye Spy
       </Text>
       <Text style={{ fontSize: 20, marginBottom: 20 }}>Political transparency in your hands</Text>
       <Image
         source={require('./../../../assets/logo.png')}
-        style={{ marginBottom: 100, width: 180, height: 100, blurRadius: 1000 }}
+        style={{ marginBottom: 50, width: 180, height: 100, blurRadius: 1000 }}
       ></Image>
       <CustomButton
         text="Register"
@@ -35,7 +33,6 @@ function Onboarding({ navigation }) {
         text="Login"
         onPress={() => navigation.navigate('Login')}
       ></CustomButton>
-      {/* </ImageBackground> */}
     </SafeAreaView>
   );
 }
@@ -43,7 +40,7 @@ function Onboarding({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "gainsboro",
+    backgroundColor: "mintcream",
     justifyContent: 'top', 
     alignItems: "center"},
     text:{

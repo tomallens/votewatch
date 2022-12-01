@@ -1,26 +1,55 @@
 import { Button, Linking, View, Text } from 'react-native';
+import disapprove from "../approveDisapprove/disapprove";
+import approve from "../approveDisapprove/approve";
+import getApprovesDisapproves from "./getApprovesDisapproves";
 
 function mpData(props) {
   const mpName = props.name;
   const mpEmail = props.email;
+  const mpId = props.mpId;
   const individualData = props.data;
+  const divisionId = individualData.PublishedDivision.divisionId;
+
   const divisionTitle = individualData.PublishedDivision.Title;
   const divisionDate = new Date(
     individualData.PublishedDivision.Date
   ).toDateString();
   const mpVote = individualData.MemberVotedAye;
 
+
+
+  function ayeNoe() {
+    if(mpVote) {
+      return (
+      <Text style={{
+        fontSize: 100,
+        color: ('forestgreen'),
+        fontWeight: '900',
+        alignItems: 'center'}}>{`\n`}AYE</Text>)
+      } else if (!mpVote) {
+        return (
+        <Text style={{
+          fontSize: 100,
+          color: ('firebrick'),
+          fontWeight: '900',
+          alignItems: 'center'}}>{`\n`}NOE</Text>
+        )
+      }
+  }
+
   return (
-    <View>
+    <View style={{ flex: 1,
+      alignItems: 'center'
+    }}>
       <Text
         style={{
           borderColor: 'black',
           justifyContent: 'center',
-          alignItems: 'center',
           padding: 10,
           textAlign: 'center'
         }}
       >
+      
         {`\n${divisionDate}\n\n`}
         <Button
           onPress={() =>
@@ -30,20 +59,10 @@ function mpData(props) {
             )
           }
           title={`${divisionTitle}`}
-        />{' '}
-        {/* {ayeNoe()} */}
-        <Text
-          style={{
-            fontSize: 100,
-            color: 'firebrick',
-            textAlign: 'center',
-            fontWeight: '900',
-         
-          }}
-        >
-          {`${mpVote ? 'AYE' : 'NOE'}\n`}
-        </Text>
-        {`\n\n\n`}
+        />
+        
+        {ayeNoe()}
+    
       </Text>
       <Button
         onPress={() =>
@@ -55,24 +74,15 @@ function mpData(props) {
         }
         title="EMAIL YOUR MP ABOUT THIS"
       />
+      {`\n\n\n`}
+      <Text>
+      {approve(divisionId, mpId)}
+      {disapprove(divisionId, mpId)}
+      </Text>
     </View>
   );
 }
 
 export default mpData;
 
-// function ayeNoe() {
-//   if(mpVote) {
-//     <Text style={{
-//       fontSize: 100,
-//       color: ('forestgreen'),
-//       fontWeight: '900',
-//       alignItems: 'center'}}> 'AYE' </Text>
-//     } else if (!mpVote) {
-//       <Text style={{
-//         fontSize: 100,
-//         color: ('firebrick'),
-//         fontWeight: '900',
-//         alignItems: 'center'}}> 'NOE' </Text>
-//     }
-// }
+
