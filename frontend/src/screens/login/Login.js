@@ -1,52 +1,59 @@
 import React from "react";
 import { useState, useContext } from "react";
-import { View, StyleSheet, Text } from "react-native";
-
-import CustomInput from "../../components/customInput/CustomInput";
-import CustomButton from "../../components/customButton/CustomButton";
-import { AuthContext } from "../../components/context/AuthContext.js";
+import { SafeAreaView, StyleSheet, Text } from "react-native";
+import CustomInput from '../../components/customInput/CustomInput';
+import CustomButton from '../../components/customButton/CustomButton';
+import { AuthContext } from '../../components/context/AuthContext.js';
 
 function Login({ navigation }) {
   const { login } = useContext(AuthContext);
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  // const onLoginPressed = async () => {
-  //   //await handleLogin();
-  // };
+  const [errors, setErrors] = React.useState({});
 
-  // async function handleLogin() {
-  //   await fetch("http://localhost:3000/users", {
-  //     method: "post",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
+  const handleError = (error, input) => {
+    setErrors((prevState) => ({ ...prevState, [input]: error }));
+  };
 
-  //     body: JSON.stringify({
-  //       name: name,
-  //       email: email,
-  //       password: password,
-  //       mpname: mpName,
-  //     }),
-  //   }).then((response) => {
-  //     if (response.status === 201) {
-  //       console.log("OK");
-  //     } else {
-  //       console.log("OH NO");
-  //     }
-  //   });
-  // }
+  const validate = async () => {
+    let isValid = true;
+
+    if (!email) {
+      handleError('Please input email', 'email');
+      isValid = false;
+    } else if (!email.match(/\S+@\S+\.\S+/)) {
+      handleError('Please input a valid email', 'email');
+      isValid = false;
+    }
+
+    if (!password) {
+      handleError('Please input password', 'password');
+      isValid = false;
+    } else if (password.length < 7) {
+      handleError('Password needs to be at least 8 characters.', 'password');
+      isValid = false;
+    }
+
+    if (isValid) {
+      login(email, password);
+    }
+  };
 
   return (
-    <View>
-      <Text>Login</Text>
+    <SafeAreaView 
+    style={styles.container}>
+      <Text
+      style={styles.text}>Please enter your{`\n`}    login details</Text>
+
 
       <CustomInput
         placeholder="Email"
         value={email}
         setValue={setEmail}
       ></CustomInput>
+      <span style={{ color: 'red' }}>{errors['email']}</span>
 
       <CustomInput
         placeholder="Password"
@@ -54,17 +61,35 @@ function Login({ navigation }) {
         setValue={setPassword}
         secureTextEntry
       ></CustomInput>
+      <span style={{ color: 'red' }}>{errors['password']}</span>
 
       <CustomButton
         text="Login"
         onPress={() => {
-          login();
+          validate();
         }}
       ></CustomButton>
-    </View>
+    </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  text: {
+    fontFamily: 'Futura',
+    fontSize: 26,
+    alignItems: 'center',
+    fontWeight: 'bold'
+  },
+  textSecondary: {
+    fontFamily: 'Futura',
+    fontSize: 18
+  }
+});
 
 export default Login;

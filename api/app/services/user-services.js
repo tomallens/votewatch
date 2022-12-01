@@ -52,13 +52,11 @@ exports.signin = (req, res) => {
         expiresIn: 86400,
       });
 
-      user.then(
-        res.status(200).send({
-          id: user.id,
-          email: user.email,
-          accessToken: token,
-        })
-      );
+      return res.status(200).send({
+        id: user.id,
+        email: user.email,
+        accessToken: token,
+      });
     })
     .catch((err) => {
       res.status(500).send({ message: err.message });
