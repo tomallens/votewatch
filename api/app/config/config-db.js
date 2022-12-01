@@ -1,6 +1,6 @@
 module.exports = {
   HOST: 'localhost',
-  USER: 'tomallen',
+  USER: 'benedictsmith',
   PASSWORD: 'password',
   DB: 'votewatch',
   dialect: 'postgres',

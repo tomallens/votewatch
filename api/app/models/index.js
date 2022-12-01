@@ -20,7 +20,7 @@ const sequelize = new Sequelize(
 const database = {};
 database.Sequelize = Sequelize;
 database.sequelize = sequelize;
-database.product = require('./division.js')(sequelize, Sequelize);
+database.division = require('./division.js')(sequelize, Sequelize);
 database.user = require('./user.js')(sequelize, Sequelize);
 
 module.exports = database;

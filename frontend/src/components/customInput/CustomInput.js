@@ -18,11 +18,14 @@ function CustomInput({ value, setValue, placeholder, secureTextEntry }) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "white",
-    width: "100%",
+    width: "40%",
+    height: 25,
     borderColor: "black",
-    borderWidth: 1,
+    justifyContent: "center",
+    borderWidth: 2,
+    margin: 4,
     borderRadius: 5,
-    paddingHorizontal: 10,
+    paddingHorizontal: 8,
   },
   input: {},
 });

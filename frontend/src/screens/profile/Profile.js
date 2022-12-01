@@ -9,7 +9,7 @@ function Profile() {
   const { logout } = useContext(AuthContext);
   return (
     <View style={styles.container}>
-      <Text>Profile</Text>
+      <Text style={styles.text}>Profile</Text>
       <CustomButton
         text="Logout"
         onPress={() => {
@@ -23,9 +23,16 @@ function Profile() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
+    backgroundColor: "gainsboro",
+    justifyContent: 'center',
+    alignItems: 'center'
   },
+  text: {
+    // fontFamily: 'Futura',
+    fontSize: 26,
+    alignItems: 'center',
+    fontWeight: 'bold'
+  }
 });
 
 export default Profile;
