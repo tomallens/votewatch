@@ -3,7 +3,7 @@ import CustomButton from "../customButton/CustomButton";
 const addDisapprove = (divisionId, mpId) => {
   console.log("Data", divisionId, mpId);
   fetch("http://localhost:8080/approveDisapprove", {
-    method: "PATCH",
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
     },

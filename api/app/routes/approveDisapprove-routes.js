@@ -11,8 +11,13 @@ module.exports = function (app) {
     next();
   });
 
-  app.patch(
+  app.post(
     "/approveDisapprove",
-    approveDisapproveServices.addApproveDisapprove
+    approveDisapproveServices.addAndReturnApproveDisapprove
+  );
+
+  app.get(
+    "/approveDisapproves",
+    approveDisapproveServices.getApprovesAndDisapproves
   );
 };

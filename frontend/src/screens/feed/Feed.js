@@ -17,7 +17,7 @@ import MPData from "../../components/MPData/MPData";
 
 import CustomInput from "../../components/customInput/CustomInput";
 import CustomButton from "../../components/customButton/CustomButton";
-import getDivisionAndMPData from "./getDivisionAndMPData";
+import getApprovesDisapproves from "../../components/MPData/getApprovesDisapproves";
 
 function Feed() {
   const [isLoading, setLoading] = useState(true);
@@ -25,6 +25,8 @@ function Feed() {
   const [mpData, setMpData] = useState([]);
   const [mpName, setMpName] = useState("Boris Johnson");
   const [mpEmail, setMPEmail] = useState("boris.johnson.mp@parlement.uk");
+  const [approvesDisapproves, setApprovesDisapproves] = useState(0);
+  const [approves, setApproves] = useState(0);
   const [expoPushToken, setExpoPushToken] = useState("");
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
@@ -73,6 +75,7 @@ function Feed() {
     const memberId = await getMpId(mpName);
     await getMPContactData(memberId);
     await getMpVotes(memberId);
+    await getApprovesDisapproves();
   }
 
   async function getMpId(mpName) {
@@ -104,6 +107,31 @@ function Feed() {
     ).json();
     setMPEmail(contactData.value[0].email);
   }
+
+  async function getApprovesDisapproves() {
+    const approvalNumber = [];
+    let approvalsDisapprovals = "";
+    const approveDisapproves = await fetch(
+      `http://localhost:8080/approveDisapproves`,
+      {}
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        approvalsDisapprovals = data;
+      });
+    // setApprovals();
+    console.log("approvalsDisapprovals.data:", approvalsDisapprovals.data);
+    approvalsDisapprovals.data.forEach((approves) => {
+      if (approves.approved === true) {
+        approvalNumber.push(approves.approved);
+        setApproves(approvalNumber.length);
+      }
+    });
+    setApprovesDisapproves(approvalsDisapprovals.data.length);
+    // console.log(approvalsDisapprovals.data.length);
+  }
+
+  const approvalRating = (approves / approvesDisapproves) * 100;
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
@@ -125,6 +153,8 @@ function Feed() {
               <Text>
                 {`\n`}MP ID: {`${mpData.items[0].value.id}\n\n`}
               </Text>
+              <Text>{`Approval Rating: ${approvalRating.toFixed()}%`}</Text>
+
               {divisionData.map((individualData, i) => {
                 return (
                   <MPData

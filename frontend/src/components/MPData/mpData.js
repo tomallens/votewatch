@@ -2,6 +2,7 @@ import { Button, Linking } from "react-native";
 import { Text } from "react-native";
 import approve from "../ApproveDisapprove/approve";
 import disapprove from "../ApproveDisapprove/disapprove";
+import getApprovesDisapproves from "./getApprovesDisapproves";
 
 function mpData(props) {
   const mpName = props.name;
@@ -13,6 +14,26 @@ function mpData(props) {
   const divisionDate = individualData.PublishedDivision.Date;
   const divisionId = individualData.PublishedDivision.DivisionId;
   const mpVote = individualData.MemberVotedAye;
+
+  // useEffect(() => {
+  //   fetchPosts();
+  // }, []);
+
+  // const fetchPosts = () => {
+  //   if (token) {
+  //     fetch("/posts", {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     })
+  //       .then((response) => response.json())
+  //       .then(async (data) => {
+  //         window.localStorage.setItem("token", data.token);
+  //         setToken(window.localStorage.getItem("token"));
+  //         setPosts(data.posts);
+  //       });
+  //   }
+  // };
 
   return (
     <Text>

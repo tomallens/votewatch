@@ -1,7 +1,7 @@
 const database = require("../models");
 const approveDisapprove = database.approveDisapprove;
 
-exports.addApproveDisapprove = (req, res) => {
+exports.addAndReturnApproveDisapprove = (req, res) => {
   console.log("Request : ", req.body);
 
   approveDisapprove
@@ -17,4 +17,12 @@ exports.addApproveDisapprove = (req, res) => {
     .catch((exception) => {
       res.status(500).send({ message: exception.message });
     });
+
+  approveDisapprove.index({});
+};
+
+exports.getApprovesAndDisapproves = (req, res) => {
+  approveDisapprove.findAll().then((data) => {
+    res.status(200).send({ data });
+  });
 };
