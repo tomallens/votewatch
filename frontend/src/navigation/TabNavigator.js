@@ -1,15 +1,13 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import * as Notifications from 'expo-notifications';
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import * as Device from 'expo-device';
 
 import Feed from "../screens/feed/Feed";
 import Profile from "../screens/profile/Profile";
-const register = require('../expoPushTokens')
 
 const Tab = createBottomTabNavigator();
-
 
 async function registerForPushNotificationsAsync() {
   let token;
@@ -38,32 +36,33 @@ async function registerForPushNotificationsAsync() {
       lightColor: '#FF231F7C',
     });
   }
-
+  handleRegistration(token);
   return token;
 }
 
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true
-  }),
-});
+async function handleRegistration(token) {
+  await fetch('http://localhost:8080/register', {
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+
+    body: JSON.stringify({
+      pushtoken: token
+    })
+  }).then((response) => {
+    if (response.status === 201) {
+      console.log('OK');
+    } else {
+      console.log('OH NO');
+    }
+  });
+}
 
 function TabNavigator() {
-
-  const responseListener = useRef();
   
   useEffect(() => {
     registerForPushNotificationsAsync().then(token => expoPushTokensApi.register(token));
-
-      responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-        console.log('--- notification tapped ---');
-        console.log(response);
-        console.log('------');
-    });
-    
-    return () => {
-        Notifications.removeNotificationSubscription(responseListener.current);
-    };
   }, []);
   return (
     <Tab.Navigator>
