@@ -1,7 +1,7 @@
 export default async function getApprovesDisapproves() {
   let approvalsDisapprovals = "";
   const approveDisapproves = await fetch(
-    `http://10.86.152.195:8080/approveDisapproves`,
+    `http://10.86.153.239:8080/approveDisapproves`,
     {}
   )
     .then((res) => res.json())

@@ -7,7 +7,7 @@ import {
 
 const addDisapprove = (divisionId, mpId) => {
   console.log("Data", divisionId, mpId);
-  fetch("http://10.86.152.195:8080/approveDisapprove", {
+  fetch("http://10.86.153.239:8080/approveDisapprove", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -27,6 +27,7 @@ function disapprove(divisionId, mpId) {
       onPress={() => {
         addDisapprove(divisionId, mpId);
       }}
+      style={{margin: 'auto'}}
     />
   );
 }

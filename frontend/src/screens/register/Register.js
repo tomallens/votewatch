@@ -69,7 +69,7 @@ function Register({navigation}) {
   };
 
   async function handleRegistration() {
-    await fetch('http://10.86.152.195:8080/register', {
+    await fetch('http://10.86.153.239:8080/register', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',

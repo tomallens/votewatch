@@ -13,23 +13,21 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Swiper from 'react-native-swiper';
-import * as Device from "expo-device";
-import * as Notifications from "expo-notifications";
-import MPData from "../../components/MPData/mpData";
-import CustomInput from "../../components/customInput/CustomInput";
-import CustomButton from "../../components/customButton/CustomButton";
-import APIRequests from "./apiRequests";
+import * as Device from 'expo-device';
+import * as Notifications from 'expo-notifications';
+import MPData from '../../components/MPData/mpData';
+import CustomInput from '../../components/customInput/CustomInput';
+import CustomButton from '../../components/customButton/CustomButton';
+import APIRequests from './apiRequests';
 // import getApprovesDisapproves from "./getApprovesDisapproves";
-
-
 
 function Feed() {
   const [isLoading, setLoading] = useState(true);
   const [divisionData, setDivisionData] = useState([]);
   const [mpData, setMpData] = useState([]);
-  const [mpName, setMpName] = useState("Boris Johnson");
-  const [mpEmail, setMPEmail] = useState("boris.johnson.mp@parlement.uk");
-  const [expoPushToken, setExpoPushToken] = useState("");
+  const [mpName, setMpName] = useState('Boris Johnson');
+  const [mpEmail, setMPEmail] = useState('boris.johnson.mp@parlement.uk');
+  const [expoPushToken, setExpoPushToken] = useState('');
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
@@ -38,6 +36,7 @@ function Feed() {
 
   useEffect(() => {
     callCommonsApi();
+    getApprovesDisapproves(); // **** LOOK HERE GUYS ****
     // pushNotificationHandler(); // << Currently needs to be commented out in order for google and email links to work. -JOE2k22
   }, [mpName]);
 
@@ -68,16 +67,14 @@ function Feed() {
   //   };
   // }
 
-
   Notifications.setNotificationHandler({
     handleNotification: async () => ({
-      shouldShowAlert: true, // shows when app is in foreground too
-    }),
+      shouldShowAlert: true // shows when app is in foreground too
+    })
   });
 
   async function callCommonsApi() {
-
-    if (mpName == "") return;
+    if (mpName == '') return;
     const memberId = await APIRequests.getMPID(mpName);
     const memberData = await APIRequests.getMPData(mpName);
     const memberVotes = await APIRequests.getMpVotes(memberId);
@@ -88,33 +85,27 @@ function Feed() {
     setLoading(false);
     setMPEmail(memberContactData);
   }
- 
+
   async function getApprovesDisapproves() {
-    const approvalNumber = [];
-    let approvalsDisapprovals = "";
-    const approveDisapproves = await fetch(
-      `http://10.86.152.195:8080/approveDisapproves`,
-      {}
-    )
+    await fetch(`http://10.86.153.239:8080/approveDisapproves`, {})
       .then((res) => res.json())
-      .then((data) => {
-        approvalsDisapprovals = data;
+      .then((approvalsDisapprovals) => {
+        const approvalNumber = [];
+        approvalsDisapprovals.data.forEach((approves) => {
+          if (approves.approved === true) {
+            approvalNumber.push(approves.approved);
+          }
+        });
+        setApproves(approvalNumber.length);
+        setApprovesDisapproves(approvalsDisapprovals.data.length);
       });
     // setApprovals();
 
-    approvalsDisapprovals.data.forEach((approves) => {
-      if (approves.approved === true) {
-        approvalNumber.push(approves.approved);
-        setApproves(approvalNumber.length);
-      }
-    });
-    setApprovesDisapproves(approvalsDisapprovals.data.length);
     // console.log(approvalsDisapprovals.data.length);
   }
 
   const approvalRating = (approves / approvesDisapproves) * 100;
 
-  {getApprovesDisapproves()} // **** LOOK HERE GUYS ****
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
@@ -125,10 +116,9 @@ function Feed() {
           <Text style={styles.text}>Loading...</Text>
         ) : (
           <View style={styles.container}>
-
-             <Text>{`Approval Rating: ${
-                isNaN(approvalRating.toFixed()) ? 100 : approvalRating.toFixed()
-              }%`}</Text>
+            <Text>{`Your Approval Rating: ${
+              isNaN(approvalRating.toFixed()) ? 100 : approvalRating.toFixed()
+            }%\n`}</Text>
             <Image
               source={{
                 uri: `${mpData.items[0].value.thumbnailUrl}`,
@@ -139,25 +129,23 @@ function Feed() {
             />
             <Swiper
               loop={false}
-              showsPagination={true}
+              showsPagination={false}
               showsButtons={true}
               bounces={true}
               index={1}
             >
-        
-                  {divisionData.map((individualData, i) => {
-                     
-                return (
-                  
-                  <MPData
-                    key={`mpdata-${i}`}
-                    name={mpName}
-                    email={mpEmail}
-                    data={individualData}
-                    
-                  />
-                );
-              }).slice(0, 12)}
+              {divisionData
+                .map((individualData, i) => {
+                  return (
+                    <MPData
+                      key={`mpdata-${i}`}
+                      name={mpName}
+                      email={mpEmail}
+                      data={individualData}
+                    />
+                  );
+                })
+                .slice(0, 12)}
             </Swiper>
             <StatusBar style="auto" />
           </View>
@@ -167,17 +155,15 @@ function Feed() {
   );
 }
 
-
 async function registerForPushNotificationsAsync() {
   let token;
 
-
-  if (Platform.OS === "android") {
-    await Notifications.setNotificationChannelAsync("default", {
-      name: "default",
+  if (Platform.OS === 'android') {
+    await Notifications.setNotificationChannelAsync('default', {
+      name: 'default',
       importance: Notifications.AndroidImportance.MAX,
       vibrationPattern: [0, 250, 250, 250],
-      lightColor: "#FF231F7C",
+      lightColor: '#FF231F7C'
     });
   }
 
@@ -186,35 +172,38 @@ async function registerForPushNotificationsAsync() {
     const { status: existingStatus } =
       await Notifications.getPermissionsAsync();
     let finalStatus = existingStatus;
-    if (existingStatus !== "granted") {
+    if (existingStatus !== 'granted') {
       const { status } = await Notifications.requestPermissionsAsync();
       finalStatus = status;
     }
-    if (finalStatus !== "granted") {
-      alert("Failed to get push token for push notification!");
+    if (finalStatus !== 'granted') {
+      alert('Failed to get push token for push notification!');
       return;
     }
     token = (await Notifications.getExpoPushTokenAsync()).data;
     console.log(token);
   } else {
-
-    alert("Must use physical device for Push Notifications"); //none of this works on emulators
+    alert('Must use physical device for Push Notifications'); //none of this works on emulators
   }
 
   return token;
 }
 
 const styles = StyleSheet.create({
- container: {
-  flex: 1,
-  backgroundColor: "mintcream",
-  justifyContent: 'center',
-  alignItems: "center"
- },
- text: {
-fontSize: 32,
-fontWeight: 'bold'
- }
+  container: {
+    flex: 1,
+    backgroundColor: 'mintcream',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  text: {
+    fontSize: 32,
+    fontWeight: 'bold'
+  },
+  swiper: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 });
 
 export default Feed;

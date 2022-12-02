@@ -6,7 +6,7 @@ import {
 
 const addApprove = (divisionId, mpId) => {
   console.log("Data", divisionId, mpId);
-  fetch("http://10.86.152.195:8080/approveDisapprove", {
+  fetch("http://10.86.153.239:8080/approveDisapprove", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -26,6 +26,7 @@ function approve(divisionId, mpId) {
       onPress={() => {
         addApprove(divisionId, mpId);
       }}
+      style={{margin: 'auto'}}
     />
   );
 }

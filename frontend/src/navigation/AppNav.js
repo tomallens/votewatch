@@ -12,7 +12,7 @@ function AppNav() {
 
   if (isLoading) {
     return (
-      <View style={{ flex: 1, justifyContext: 'center', alignItems: 'center' }}>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <ActivityIndicator size={'large'} />
       </View>
     );
