@@ -1,3 +1,6 @@
+import approve from "../ApproveDisapprove/approve";
+import disapprove from "../ApproveDisapprove/disapprove";
+import getApprovesDisapproves from "./getApprovesDisapproves";
 import { Button, Linking, View, Text } from 'react-native';
 import approve from '../approveDisapprove/approve';
 import disapprove from '../approveDisapprove/disapprove';
@@ -13,6 +16,7 @@ function mpData(props) {
     individualData.PublishedDivision.Date
   ).toDateString();
   const mpVote = individualData.MemberVotedAye;
+
 
   function ayeNoe() {
     if (mpVote) {
@@ -43,6 +47,7 @@ function mpData(props) {
       );
     }
   }
+
 
   // useEffect(() => {
   //   fetchPosts();
@@ -106,10 +111,28 @@ function mpData(props) {
         />
       {`\n`}
       </Text>
+
       <View style={{alignItems: 'center', width: '100%', flexDirection: 'column', display: 'flex'}}>
         {approve(divisionId, mpId)}
         {disapprove(divisionId, mpId)}
         </View>
+
+// on original main
+     // <Button
+     //   onPress={() =>
+     //     Linking.openURL(
+     //       `mailto:${mpEmail}?subject=${divisionTitle}&body=Dear ${mpName},\n\n I am writing to you regarding your vote on the recent division titled: "${divisionTitle}". \n\nIt has come to my attention that you voted ${
+     //         mpVote ? 'Aye' : 'Noe'
+     //       } for this Division. \n\n I would therefore share my [SUPPORT / CONCERN] because [ENTER REASON]. \n\n Yours Sincerely,\n\n [ENTER NAME]`
+      //    )
+     //   }
+     //   title="EMAIL YOUR MP ABOUT THIS"
+     // />
+    //  {`\n\n\n`}
+    //  {approve(divisionId, mpId)}
+     // {disapprove(divisionId, mpId)}
+    // </Text>
+
     </View>
   );
 }

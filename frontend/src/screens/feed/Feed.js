@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Swiper from 'react-native-swiper';
+
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import MPData from '../../components/MPData/mpData';
@@ -20,6 +21,7 @@ import CustomInput from '../../components/customInput/CustomInput';
 import CustomButton from '../../components/customButton/CustomButton';
 import APIRequests from './apiRequests';
 // import getApprovesDisapproves from "./getApprovesDisapproves";
+
 
 function Feed() {
   const [isLoading, setLoading] = useState(true);
@@ -74,7 +76,27 @@ function Feed() {
   });
 
   async function callCommonsApi() {
+
     if (mpName == '') return;
+
+// original main
+   // if (mpName == "") return;
+   // const memberId = await getMpId(mpName);
+  //  await getMPContactData(memberId);
+  //  await getMpVotes(memberId);
+  //  await getApprovesDisapproves();
+ // }
+
+  // async function getMpId(mpName) {
+  //  const data = await (
+  //    await fetch(
+   //     `https://members-api.parliament.uk/api/Members/Search?Name=${mpName}`
+   //   )
+   // ).json();
+   // setMpData(data);
+
+   // if (mpName == "") return;
+
     const memberId = await APIRequests.getMPID(mpName);
     const memberData = await APIRequests.getMPData(mpName);
     const memberVotes = await APIRequests.getMpVotes(memberId);
@@ -85,6 +107,7 @@ function Feed() {
     setLoading(false);
     setMPEmail(memberContactData);
   }
+
 
   async function getApprovesDisapproves() {
     await fetch(`http://10.86.153.239:8080/approveDisapproves`, {})
@@ -101,6 +124,36 @@ function Feed() {
       });
     // setApprovals();
 
+
+ // async function getMPContactData(memberId) {
+  //  const contactData = await (
+  //    await fetch(
+  //      `https://members-api.parliament.uk/api/Members/${memberId}/Contact`
+  //    )
+ //   ).json();
+ //   setMPEmail(contactData.value[0].email);
+//  }
+
+ // async function getApprovesDisapproves() {
+  //  const approvalNumber = [];
+  //  let approvalsDisapprovals = "";
+  //  const approveDisapproves = await fetch(
+  //    `http://localhost:8080/approveDisapproves`,
+   //   {}
+  //  )
+   //   .then((res) => res.json())
+   //   .then((data) => {
+        approvalsDisapprovals = data;
+  //    });
+    // setApprovals();
+  //  console.log("approvalsDisapprovals.data:", approvalsDisapprovals.data);
+  //  approvalsDisapprovals.data.forEach((approves) => {
+  //    if (approves.approved === true) {
+   //     approvalNumber.push(approves.approved);
+  //      setApproves(approvalNumber.length);
+  //    }
+  //  });
+   // setApprovesDisapproves(approvalsDisapprovals.data.length);
     // console.log(approvalsDisapprovals.data.length);
   }
 
@@ -116,9 +169,29 @@ function Feed() {
           <Text style={styles.text}>Loading...</Text>
         ) : (
           <View style={styles.container}>
+
             <Text>{`Your Approval Rating: ${
               isNaN(approvalRating.toFixed()) ? 100 : approvalRating.toFixed()
             }%\n`}</Text>
+
+          // orignal main
+        //  <Text>
+          //    <Image
+           //     source={{
+           //       uri: `${mpData.items[0].value.thumbnailUrl}`,
+           //       width: 60,
+           //       height: 60,
+            //    }}
+            //  />
+            //  <Text>
+            //    {`\n`}MP ID: {`${mpData.items[0].value.id}\n\n`}
+           //   </Text>
+           //   <Text>{`Approval Rating: ${
+           //     isNaN(approvalRating.toFixed()) ? 100 : approvalRating.toFixed()
+            //  }%`}</Text>
+
+            //  {divisionData.map((individualData, i) => {
+
             <Image
               source={{
                 uri: `${mpData.items[0].value.thumbnailUrl}`,
@@ -134,6 +207,7 @@ function Feed() {
               bounces={true}
               index={1}
             >
+
               {divisionData
                 .map((individualData, i) => {
                   return (
@@ -146,6 +220,10 @@ function Feed() {
                   );
                 })
                 .slice(0, 12)}
+
+                  // original main
+                   // mpId={mpData.items[0].value.id}
+
             </Swiper>
             <StatusBar style="auto" />
           </View>

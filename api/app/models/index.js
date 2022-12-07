@@ -1,5 +1,5 @@
-const configuration = require('../config/config-db.js');
-const Sequelize = require('sequelize');
+const configuration = require("../config/config-db.js");
+const Sequelize = require("sequelize");
 
 const sequelize = new Sequelize(
   configuration.DB,
@@ -25,5 +25,6 @@ database.approveDisapprove = require("./approveDisapprove.js")(
   Sequelize
 );
 database.user = require('./user.js')(sequelize, Sequelize);
+
 
 module.exports = database;
