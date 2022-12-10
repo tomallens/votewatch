@@ -18,11 +18,14 @@ exports.addAndReturnApproveDisapprove = (req, res) => {
       res.status(500).send({ message: exception.message });
     });
 
-  approveDisapprove.index({});
+  // approveDisapprove.index({});
+
 };
 
 exports.getApprovesAndDisapproves = (req, res) => {
   approveDisapprove.findAll().then((data) => {
     res.status(200).send({ data });
   });
+
 };
+

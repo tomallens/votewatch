@@ -69,7 +69,7 @@ function Register({navigation}) {
   };
 
   async function handleRegistration() {
-    await fetch('http://10.86.152.195:8080/register', {
+    await fetch('http://10.86.153.239:8080/register', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
@@ -135,13 +135,13 @@ function Register({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "gainsboro",
-    justifyContent: 'center',
+    backgroundColor: "mintcream",
     alignItems: 'center'
   },
   text: {
     fontSize: 32,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    marginTop: 200
   },
   textSecondary: {
     fontSize: 18

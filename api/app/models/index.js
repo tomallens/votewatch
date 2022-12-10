@@ -24,6 +24,7 @@ database.approveDisapprove = require("./approveDisapprove.js")(
   sequelize,
   Sequelize
 );
-database.user = require("./user.js")(sequelize, Sequelize);
+database.user = require('./user.js')(sequelize, Sequelize);
+
 
 module.exports = database;
